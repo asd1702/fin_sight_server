@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fin-sight-server"
+version = "1.0.0"
+description = "Financial news collection and analysis system"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "sqlalchemy",
+    "alembic",
+    "psycopg2-binary",
+    "python-dotenv",
+    "openai",
+    "requests",
+    "newspaper3k",
+    "kss",
+    "numpy",
+    "tqdm",
+    "pgvector",
+    "python-dateutil",
+    "prometheus-fastapi-instrumentator",
+    "psutil",
+    "prometheus-client"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
