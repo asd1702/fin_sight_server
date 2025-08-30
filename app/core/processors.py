@@ -1,0 +1,131 @@
+import json
+import time
+from ..core.config import settings
+from openai import OpenAI, RateLimitError, APIConnectionError, APIStatusError
+import numpy as np
+
+from logs.logging_config import get_logger
+from .monitoring import monitor_performance
+
+logger = get_logger(__name__)
+
+OPENAI_API_KEY = settings.OPENAI_API_KEY
+if not OPENAI_API_KEY:
+    raise ValueError("'.env' 파일에 OPENAI_API_KEY가 설정되지 않았습니다.")
+openai_client = OpenAI(api_key=OPENAI_API_KEY, max_retries=2, timeout=20.0)
+
+
+@monitor_performance(include_memory=True)
+def get_embeddings_in_batch(texts: list[str], model="text-embedding-3-small", rate_limit_retries: int = 1) -> list[list[float]] | None:
+    """
+    여러 개의 텍스트를 배치로 처리하여 임베딩 벡터 리스트를 반환합니다.
+    """
+    # API 입력 형식에 맞게 줄바꿈 문자를 공백으로 바꿉니다.
+    texts = [text.replace("\n", " ") for text in texts]
+    
+    for attempt in range(rate_limit_retries + 1):
+        try:
+            response = openai_client.embeddings.create(input=texts, model=model)
+            logger.debug(f"{len(texts)}개의 문장에 대한 임베딩 생성 완료")
+            # 각 텍스트에 대한 임베딩 결과를 순서대로 리스트에 담아 반환
+            return [data.embedding for data in response.data]
+        except RateLimitError:
+            if attempt < rate_limit_retries:
+                wait_time = (attempt + 1) * 60
+                logger.warning("OpenAI 임베딩 API 속도 제한 발생. {wait_time}초 후 재시도합니다.")
+                time.sleep(wait_time)
+            else:
+                logger.error("RateLimitError: 재시도 횟수 초과로 임베딩을 포기합니다.")
+                return None
+        except (APIConnectionError, APIStatusError) as e:
+            logger.error(f"OpenAI 임베딩 API 연결 에러 발생: {e.__class__.__name__} - {e}")
+            return None
+        except Exception as e:
+            logger.critical(f"OpenAI 임베딩 API 호출 중 예상치 못한 에러 발생: {e}", exc_info=True)
+            return None
+
+@monitor_performance(include_memory=True)
+def extract_core_sentences(sentence_objects: list, num_sentences: int = 10) -> list[str]:
+    """
+    센트로이드(평균) 벡터를 활용하여 기사의 핵심 문장을 추출합니다.
+    
+    Args:
+        sentence_objects: ArticleSentence ORM 객체들의 리스트. 각 객체는 .embedding 속성을 가져야 합니다.
+        num_sentences: 추출할 핵심 문장의 개수.
+
+    Returns:
+        핵심 문장 텍스트들의 리스트.
+    """
+    if not sentence_objects:
+        logger.debug("핵심 문장을 추출할 문장 객체가 없습니다")
+        return []
+    
+    try:
+        # 모든 문장 임베딩을 numpy 배열로 변환합니다.
+        all_embeddings = np.array([s.embedding for s in sentence_objects])
+    
+        # 센트로이드(평균 벡터)를 계산합니다. 이것이 기사 전체의 주제를 나타냅니다.
+        centroid_vector = np.mean(all_embeddings, axis=0)
+    
+        # 각 문장 벡터와 센트로이드 벡터 간의 코사인 유사도를 계산합니다.
+        # A·B / (|A| * |B|)
+        similarities = [
+            np.dot(emb, centroid_vector) / (np.linalg.norm(emb) * np.linalg.norm(centroid_vector))
+            for emb in all_embeddings
+        ]
+    
+        # 유사도 점수와 문장 객체를 묶어서 정렬합니다.
+        sorted_sentences = sorted(zip(similarities, sentence_objects), key=lambda x: x[0], reverse=True)
+    
+        # 가장 유사도가 높은 상위 N개의 문장 텍스트만 반환합니다.
+        return [s.sentence for _, s in sorted_sentences[:num_sentences]]
+    except Exception as e:
+        logger.error(f"핵심 문장 추출 중 에러 발생: {e}", exc_info=True)
+        return []
+
+@monitor_performance(include_memory=True)
+def get_enrichment_from_llm(core_sentences: list[str], top_terms: list[str], model="gpt-4o-mini") -> dict | None:
+    """
+    LLM을 호출하여 배경지식과 카테고리를 추출합니다.
+    """
+    system_prompt = f"""
+    당신은 금융 뉴스 분석 전문가입니다. 다음 '핵심 용어'들을 반드시 참고하여, 주어진 '핵심 문장들'의 내용을 분석해주세요.
+
+    [참고할 핵심 용어]
+    {', '.join(top_terms)}
+
+    [분석 작업]
+    1. 'background': '핵심 문장들'의 배경지식을 설명합니다.
+    2. 'category': 기사를 '금융', '증권', '글로벌 경제', '생활 경제' 네 가지 중 가장 적합한 하나로 분류합니다.
+
+    반드시 아래의 JSON 형식으로만 응답해주세요. 키워드는 응답에 포함하지 마세요.
+    {{
+      "background": "...",
+      "category": "..."
+    }}
+    """
+    
+    user_content = "[분석할 핵심 문장들]\n" + "\n".join(core_sentences)
+
+    try:
+        response = openai_client.chat.completions.create(
+            model=model,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_content}
+            ],
+            response_format={"type": "json_object"},
+            temperature=0,
+        )
+        result = json.loads(response.choices[0].message.content)
+        logger.debug("LLM 분석 데이터 수신 완료")
+        return result
+    except json.JSONDecodeError:
+        logger.error("LLM 응답이 유효한 JSON 형식이 아닙니다.")
+        return None
+    except (APIConnectionError, APIStatusError) as e:
+        logger.error(f"OpenAI 챗 API 연결 에러 발생: {e.__class__.__name__} - {e}")
+        return None
+    except Exception as e:
+        logger.critical(f"OpenAI 챗 API 호출 중 예상치 못한 에러 발생: {e}", exc_info=True)
+        return None

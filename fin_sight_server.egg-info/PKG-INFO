@@ -1,0 +1,18 @@
+Metadata-Version: 2.4
+Name: fin-sight-server
+Version: 1.0.0
+Summary: Financial news collection and analysis system
+Requires-Dist: fastapi
+Requires-Dist: uvicorn
+Requires-Dist: sqlalchemy
+Requires-Dist: alembic
+Requires-Dist: psycopg2-binary
+Requires-Dist: python-dotenv
+Requires-Dist: openai
+Requires-Dist: requests
+Requires-Dist: newspaper3k
+Requires-Dist: kss
+Requires-Dist: numpy
+Requires-Dist: tqdm
+Requires-Dist: pgvector
+Requires-Dist: python-dateutil
