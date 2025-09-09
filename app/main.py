@@ -1,4 +1,5 @@
 from fastapi import FastAPI, BackgroundTasks
+from fastapi.staticfiles import StaticFiles
 from prometheus_fastapi_instrumentator import Instrumentator
 from app.api import articles, health
 from app.core.monitoring import log_system_metrics
@@ -31,6 +32,8 @@ async def startup_event():
 app.include_router(articles.router)
 app.include_router(health.router)
 
+# 정적 파일 서빙 (HTML 뷰어용)
+app.mount("/static", StaticFiles(directory="."), name="static")
 
 @app.get("/")
 def read_root():

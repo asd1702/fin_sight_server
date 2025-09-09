@@ -69,3 +69,986 @@
 2025-08-30 16:17:09,496 - INFO - app.core.monitoring - 시스템 상태 - CPU: 7.4%, 메모리: 52.8% (여유: 3.6GB), 디스크: 6.3% (여유: 892.1GB)
 2025-08-30 16:18:10,499 - INFO - app.core.monitoring - 시스템 상태 - CPU: 3.1%, 메모리: 51.2% (여유: 3.7GB), 디스크: 6.3% (여유: 892.1GB)
 2025-08-30 16:19:11,501 - INFO - app.core.monitoring - 시스템 상태 - CPU: 2.6%, 메모리: 52.3% (여유: 3.6GB), 디스크: 6.3% (여유: 892.1GB)
+2025-09-07 17:31:56,942 - INFO - __main__ - '/home/asd1702/fin_sight_server/data/catalog_core15.json'에서 지표 메타데이터를 로드합니다.
+2025-09-07 17:31:56,962 - CRITICAL - __main__ - DB 구축 중 예상치 못한 오류 발생: When initializing mapper Mapper[Article(articles)], expression 'ArticleSentence' failed to locate a name ('ArticleSentence'). If this is a class name, consider adding this relationship() to the <class 'app.models.article.Article'> class after both dependent classes have been defined.
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/clsregistry.py", line 516, in _resolve_name
+    rval = d[token]
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/util/_collections.py", line 345, in __missing__
+    self[key] = val = self.creator(key)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/clsregistry.py", line 484, in _access_cls
+    return self.fallback[key]
+KeyError: 'ArticleSentence'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/scripts/seed_statistics.py", line 39, in seed_statistics_data
+    indicator = Indicator(
+  File "<string>", line 4, in __init__
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 566, in _initialize_instance
+    manager.dispatch.init(self, args, kwargs)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/event/attr.py", line 497, in __call__
+    fn(*args, **kw)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/mapper.py", line 4410, in _event_on_init
+    instrumenting_mapper._check_configure()
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/mapper.py", line 2401, in _check_configure
+    _configure_registries({self.registry}, cascade=True)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/mapper.py", line 4218, in _configure_registries
+    _do_configure_registries(registries, cascade)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/mapper.py", line 4259, in _do_configure_registries
+    mapper._post_configure_properties()
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/mapper.py", line 2418, in _post_configure_properties
+    prop.init()
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/interfaces.py", line 595, in init
+    self.do_init()
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/relationships.py", line 1655, in do_init
+    self._setup_entity()
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/relationships.py", line 1865, in _setup_entity
+    self._clsregistry_resolve_name(argument)(),
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/clsregistry.py", line 520, in _resolve_name
+    self._raise_for_name(name, err)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/clsregistry.py", line 501, in _raise_for_name
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: When initializing mapper Mapper[Article(articles)], expression 'ArticleSentence' failed to locate a name ('ArticleSentence'). If this is a class name, consider adding this relationship() to the <class 'app.models.article.Article'> class after both dependent classes have been defined.
+2025-09-07 17:35:43,566 - INFO - __main__ - '/home/asd1702/fin_sight_server/data/catalog_core15.json'에서 지표 메타데이터를 로드합니다.
+2025-09-07 17:35:43,590 - CRITICAL - __main__ - DB 구축 중 예상치 못한 오류 발생: When initializing mapper Mapper[Article(articles)], expression 'ArticleTermMapping' failed to locate a name ('ArticleTermMapping'). If this is a class name, consider adding this relationship() to the <class 'app.models.article.Article'> class after both dependent classes have been defined.
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/clsregistry.py", line 516, in _resolve_name
+    rval = d[token]
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/util/_collections.py", line 345, in __missing__
+    self[key] = val = self.creator(key)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/clsregistry.py", line 484, in _access_cls
+    return self.fallback[key]
+KeyError: 'ArticleTermMapping'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/scripts/seed_statistics.py", line 39, in seed_statistics_data
+    indicator = Indicator(
+  File "<string>", line 4, in __init__
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 566, in _initialize_instance
+    manager.dispatch.init(self, args, kwargs)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/event/attr.py", line 497, in __call__
+    fn(*args, **kw)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/mapper.py", line 4410, in _event_on_init
+    instrumenting_mapper._check_configure()
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/mapper.py", line 2401, in _check_configure
+    _configure_registries({self.registry}, cascade=True)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/mapper.py", line 4218, in _configure_registries
+    _do_configure_registries(registries, cascade)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/mapper.py", line 4259, in _do_configure_registries
+    mapper._post_configure_properties()
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/mapper.py", line 2418, in _post_configure_properties
+    prop.init()
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/interfaces.py", line 595, in init
+    self.do_init()
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/relationships.py", line 1655, in do_init
+    self._setup_entity()
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/relationships.py", line 1865, in _setup_entity
+    self._clsregistry_resolve_name(argument)(),
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/clsregistry.py", line 520, in _resolve_name
+    self._raise_for_name(name, err)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/clsregistry.py", line 501, in _raise_for_name
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: When initializing mapper Mapper[Article(articles)], expression 'ArticleTermMapping' failed to locate a name ('ArticleTermMapping'). If this is a class name, consider adding this relationship() to the <class 'app.models.article.Article'> class after both dependent classes have been defined.
+2025-09-07 17:38:47,649 - INFO - __main__ - '/home/asd1702/fin_sight_server/data/catalog_core15.json'에서 지표 메타데이터를 로드합니다.
+2025-09-07 17:38:47,725 - CRITICAL - __main__ - DB 구축 중 예상치 못한 오류 발생: (psycopg2.errors.UndefinedTable) relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+[SQL: SELECT statistics.indicators.indicator_id AS statistics_indicators_indicator_id, statistics.indicators.name AS statistics_indicators_name, statistics.indicators.frequency AS statistics_indicators_frequency, statistics.indicators.unit AS statistics_indicators_unit, statistics.indicators.source AS statistics_indicators_source, statistics.indicators.notes AS statistics_indicators_notes, statistics.indicators.stat_code AS statistics_indicators_stat_code, statistics.indicators.item_code1 AS statistics_indicators_item_code1, statistics.indicators.item_code2 AS statistics_indicators_item_code2, statistics.indicators.item_code3 AS statistics_indicators_item_code3, statistics.indicators.item_code4 AS statistics_indicators_item_code4 
+FROM statistics.indicators 
+WHERE statistics.indicators.indicator_id = %(pk_1)s]
+[parameters: {'pk_1': 'kr.cpi.headline.m'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UndefinedTable: relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/scripts/seed_statistics.py", line 52, in seed_statistics_data
+    db.merge(indicator) # Primary Key 기준으로 없으면 INSERT, 있으면 UPDATE
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3959, in merge
+    return self._merge(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 4037, in _merge
+    merged = self.get(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3694, in get
+    return self._get_impl(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3873, in _get_impl
+    return db_load_fn(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/loading.py", line 695, in load_on_pk_identity
+    session.execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+[SQL: SELECT statistics.indicators.indicator_id AS statistics_indicators_indicator_id, statistics.indicators.name AS statistics_indicators_name, statistics.indicators.frequency AS statistics_indicators_frequency, statistics.indicators.unit AS statistics_indicators_unit, statistics.indicators.source AS statistics_indicators_source, statistics.indicators.notes AS statistics_indicators_notes, statistics.indicators.stat_code AS statistics_indicators_stat_code, statistics.indicators.item_code1 AS statistics_indicators_item_code1, statistics.indicators.item_code2 AS statistics_indicators_item_code2, statistics.indicators.item_code3 AS statistics_indicators_item_code3, statistics.indicators.item_code4 AS statistics_indicators_item_code4 
+FROM statistics.indicators 
+WHERE statistics.indicators.indicator_id = %(pk_1)s]
+[parameters: {'pk_1': 'kr.cpi.headline.m'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-09-07 17:51:44,158 - INFO - __main__ - '/home/asd1702/fin_sight_server/data/catalog_core15.json'에서 지표 메타데이터를 로드합니다.
+2025-09-07 17:51:44,205 - CRITICAL - __main__ - DB 구축 중 예상치 못한 오류 발생: (psycopg2.errors.UndefinedTable) relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+[SQL: SELECT statistics.indicators.indicator_id AS statistics_indicators_indicator_id, statistics.indicators.name AS statistics_indicators_name, statistics.indicators.frequency AS statistics_indicators_frequency, statistics.indicators.unit AS statistics_indicators_unit, statistics.indicators.source AS statistics_indicators_source, statistics.indicators.notes AS statistics_indicators_notes, statistics.indicators.stat_code AS statistics_indicators_stat_code, statistics.indicators.item_code1 AS statistics_indicators_item_code1, statistics.indicators.item_code2 AS statistics_indicators_item_code2, statistics.indicators.item_code3 AS statistics_indicators_item_code3, statistics.indicators.item_code4 AS statistics_indicators_item_code4 
+FROM statistics.indicators 
+WHERE statistics.indicators.indicator_id = %(pk_1)s]
+[parameters: {'pk_1': 'kr.cpi.headline.m'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UndefinedTable: relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/scripts/seed_statistics.py", line 52, in seed_statistics_data
+    db.merge(indicator) # Primary Key 기준으로 없으면 INSERT, 있으면 UPDATE
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3959, in merge
+    return self._merge(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 4037, in _merge
+    merged = self.get(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3694, in get
+    return self._get_impl(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3873, in _get_impl
+    return db_load_fn(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/loading.py", line 695, in load_on_pk_identity
+    session.execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+[SQL: SELECT statistics.indicators.indicator_id AS statistics_indicators_indicator_id, statistics.indicators.name AS statistics_indicators_name, statistics.indicators.frequency AS statistics_indicators_frequency, statistics.indicators.unit AS statistics_indicators_unit, statistics.indicators.source AS statistics_indicators_source, statistics.indicators.notes AS statistics_indicators_notes, statistics.indicators.stat_code AS statistics_indicators_stat_code, statistics.indicators.item_code1 AS statistics_indicators_item_code1, statistics.indicators.item_code2 AS statistics_indicators_item_code2, statistics.indicators.item_code3 AS statistics_indicators_item_code3, statistics.indicators.item_code4 AS statistics_indicators_item_code4 
+FROM statistics.indicators 
+WHERE statistics.indicators.indicator_id = %(pk_1)s]
+[parameters: {'pk_1': 'kr.cpi.headline.m'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-09-07 18:31:24,525 - INFO - __main__ - '/home/asd1702/fin_sight_server/data/catalog_core15.json'에서 지표 메타데이터를 로드합니다.
+2025-09-07 18:31:24,569 - CRITICAL - __main__ - DB 구축 중 예상치 못한 오류 발생: (psycopg2.errors.UndefinedTable) relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+[SQL: SELECT statistics.indicators.indicator_id AS statistics_indicators_indicator_id, statistics.indicators.name AS statistics_indicators_name, statistics.indicators.frequency AS statistics_indicators_frequency, statistics.indicators.unit AS statistics_indicators_unit, statistics.indicators.source AS statistics_indicators_source, statistics.indicators.notes AS statistics_indicators_notes, statistics.indicators.stat_code AS statistics_indicators_stat_code, statistics.indicators.item_code1 AS statistics_indicators_item_code1, statistics.indicators.item_code2 AS statistics_indicators_item_code2, statistics.indicators.item_code3 AS statistics_indicators_item_code3, statistics.indicators.item_code4 AS statistics_indicators_item_code4 
+FROM statistics.indicators 
+WHERE statistics.indicators.indicator_id = %(pk_1)s]
+[parameters: {'pk_1': 'kr.cpi.headline.m'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UndefinedTable: relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/scripts/seed_statistics.py", line 52, in seed_statistics_data
+    db.merge(indicator) # Primary Key 기준으로 없으면 INSERT, 있으면 UPDATE
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3959, in merge
+    return self._merge(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 4037, in _merge
+    merged = self.get(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3694, in get
+    return self._get_impl(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3873, in _get_impl
+    return db_load_fn(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/loading.py", line 695, in load_on_pk_identity
+    session.execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+[SQL: SELECT statistics.indicators.indicator_id AS statistics_indicators_indicator_id, statistics.indicators.name AS statistics_indicators_name, statistics.indicators.frequency AS statistics_indicators_frequency, statistics.indicators.unit AS statistics_indicators_unit, statistics.indicators.source AS statistics_indicators_source, statistics.indicators.notes AS statistics_indicators_notes, statistics.indicators.stat_code AS statistics_indicators_stat_code, statistics.indicators.item_code1 AS statistics_indicators_item_code1, statistics.indicators.item_code2 AS statistics_indicators_item_code2, statistics.indicators.item_code3 AS statistics_indicators_item_code3, statistics.indicators.item_code4 AS statistics_indicators_item_code4 
+FROM statistics.indicators 
+WHERE statistics.indicators.indicator_id = %(pk_1)s]
+[parameters: {'pk_1': 'kr.cpi.headline.m'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-09-07 18:43:48,629 - INFO - __main__ - '/home/asd1702/fin_sight_server/data/catalog_core15.json'에서 지표 메타데이터를 로드합니다.
+2025-09-07 18:43:48,667 - CRITICAL - __main__ - DB 구축 중 예상치 못한 오류 발생: (psycopg2.errors.UndefinedTable) relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+[SQL: SELECT statistics.indicators.indicator_id AS statistics_indicators_indicator_id, statistics.indicators.name AS statistics_indicators_name, statistics.indicators.frequency AS statistics_indicators_frequency, statistics.indicators.unit AS statistics_indicators_unit, statistics.indicators.source AS statistics_indicators_source, statistics.indicators.notes AS statistics_indicators_notes, statistics.indicators.stat_code AS statistics_indicators_stat_code, statistics.indicators.item_code1 AS statistics_indicators_item_code1, statistics.indicators.item_code2 AS statistics_indicators_item_code2, statistics.indicators.item_code3 AS statistics_indicators_item_code3, statistics.indicators.item_code4 AS statistics_indicators_item_code4 
+FROM statistics.indicators 
+WHERE statistics.indicators.indicator_id = %(pk_1)s]
+[parameters: {'pk_1': 'kr.cpi.headline.m'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UndefinedTable: relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/scripts/seed_statistics.py", line 52, in seed_statistics_data
+    db.merge(indicator) # Primary Key 기준으로 없으면 INSERT, 있으면 UPDATE
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3959, in merge
+    return self._merge(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 4037, in _merge
+    merged = self.get(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3694, in get
+    return self._get_impl(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3873, in _get_impl
+    return db_load_fn(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/loading.py", line 695, in load_on_pk_identity
+    session.execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+[SQL: SELECT statistics.indicators.indicator_id AS statistics_indicators_indicator_id, statistics.indicators.name AS statistics_indicators_name, statistics.indicators.frequency AS statistics_indicators_frequency, statistics.indicators.unit AS statistics_indicators_unit, statistics.indicators.source AS statistics_indicators_source, statistics.indicators.notes AS statistics_indicators_notes, statistics.indicators.stat_code AS statistics_indicators_stat_code, statistics.indicators.item_code1 AS statistics_indicators_item_code1, statistics.indicators.item_code2 AS statistics_indicators_item_code2, statistics.indicators.item_code3 AS statistics_indicators_item_code3, statistics.indicators.item_code4 AS statistics_indicators_item_code4 
+FROM statistics.indicators 
+WHERE statistics.indicators.indicator_id = %(pk_1)s]
+[parameters: {'pk_1': 'kr.cpi.headline.m'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-09-08 15:04:59,820 - INFO - __main__ - '/home/asd1702/fin_sight_server/data/catalog_core15.json'에서 지표 메타데이터를 로드합니다.
+2025-09-08 15:04:59,862 - CRITICAL - __main__ - DB 구축 중 예상치 못한 오류 발생: (psycopg2.errors.UndefinedTable) relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+[SQL: SELECT statistics.indicators.indicator_id AS statistics_indicators_indicator_id, statistics.indicators.name AS statistics_indicators_name, statistics.indicators.frequency AS statistics_indicators_frequency, statistics.indicators.unit AS statistics_indicators_unit, statistics.indicators.source AS statistics_indicators_source, statistics.indicators.notes AS statistics_indicators_notes, statistics.indicators.stat_code AS statistics_indicators_stat_code, statistics.indicators.item_code1 AS statistics_indicators_item_code1, statistics.indicators.item_code2 AS statistics_indicators_item_code2, statistics.indicators.item_code3 AS statistics_indicators_item_code3, statistics.indicators.item_code4 AS statistics_indicators_item_code4 
+FROM statistics.indicators 
+WHERE statistics.indicators.indicator_id = %(pk_1)s]
+[parameters: {'pk_1': 'kr.cpi.headline.m'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UndefinedTable: relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/scripts/seed_statistics.py", line 52, in seed_statistics_data
+    db.merge(indicator) # Primary Key 기준으로 없으면 INSERT, 있으면 UPDATE
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3959, in merge
+    return self._merge(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 4037, in _merge
+    merged = self.get(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3694, in get
+    return self._get_impl(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3873, in _get_impl
+    return db_load_fn(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/loading.py", line 695, in load_on_pk_identity
+    session.execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "statistics.indicators" does not exist
+LINE 2: FROM statistics.indicators 
+             ^
+
+[SQL: SELECT statistics.indicators.indicator_id AS statistics_indicators_indicator_id, statistics.indicators.name AS statistics_indicators_name, statistics.indicators.frequency AS statistics_indicators_frequency, statistics.indicators.unit AS statistics_indicators_unit, statistics.indicators.source AS statistics_indicators_source, statistics.indicators.notes AS statistics_indicators_notes, statistics.indicators.stat_code AS statistics_indicators_stat_code, statistics.indicators.item_code1 AS statistics_indicators_item_code1, statistics.indicators.item_code2 AS statistics_indicators_item_code2, statistics.indicators.item_code3 AS statistics_indicators_item_code3, statistics.indicators.item_code4 AS statistics_indicators_item_code4 
+FROM statistics.indicators 
+WHERE statistics.indicators.indicator_id = %(pk_1)s]
+[parameters: {'pk_1': 'kr.cpi.headline.m'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-09-08 23:58:06,473 - INFO - __main__ - '/home/asd1702/fin_sight_server/data/catalog_core15.json'에서 지표 메타데이터를 로드합니다.
+2025-09-08 23:58:06,533 - CRITICAL - __main__ - DB 구축 중 예상치 못한 오류 발생: (psycopg2.errors.NotNullViolation) null value in column "name" of relation "indicators" violates not-null constraint
+DETAIL:  Failing row contains (kr.indprod.m, null, null, null, ECOS, observations.jsonl에서 발견되지 않음, null, null, null, null, null).
+
+[SQL: INSERT INTO statistics.indicators (indicator_id, name, frequency, unit, source, notes, stat_code, item_code1, item_code2, item_code3, item_code4) VALUES (%(indicator_id__0)s, %(name__0)s, %(frequency__0)s, %(unit__0)s, %(source__0)s, %(notes__0)s, %( ... 2706 characters truncated ... , %(stat_code__14)s, %(item_code1__14)s, %(item_code2__14)s, %(item_code3__14)s, %(item_code4__14)s)]
+[parameters: {'name__0': '4.2.1. 소비자물가지수', 'frequency__0': 'M', 'source__0': 'ECOS', 'indicator_id__0': 'kr.cpi.headline.m', 'item_code3__0': None, 'stat_code__0': '901Y009', 'item_code2__0': None, 'unit__0': '2020=100', 'item_code1__0': '0', 'item_code4__0': None, 'notes__0': '총지수', 'name__1': '4.2.2. 소비자물가지수(특수분류)', 'frequency__1': 'M', 'source__1': 'ECOS', 'indicator_id__1': 'kr.cpi.core.m', 'item_code3__1': None, 'stat_code__1': '901Y010', 'item_code2__1': None, 'unit__1': '2020=100', 'item_code1__1': 'DB', 'item_code4__1': None, 'notes__1': '식료품 및 에너지 제외 지수', 'name__2': '4.1.1.1. 생산자물가지수(기본분류)', 'frequency__2': 'M', 'source__2': 'ECOS', 'indicator_id__2': 'kr.ppi.m', 'item_code3__2': None, 'stat_code__2': '404Y014', 'item_code2__2': None, 'unit__2': '2020=100', 'item_code1__2': '*AA', 'item_code4__2': None, 'notes__2': '총지수', 'name__3': '2.1.2.1.2. 경제활동별 GDP 및 GNI(계절조정, 실질, 분기)', 'frequency__3': 'Q', 'source__3': 'ECOS', 'indicator_id__3': 'kr.gdp.q', 'item_code3__3': None, 'stat_code__3': '200Y104', 'item_code2__3': None, 'unit__3': '십억원', 'item_code1__3': '1400', 'item_code4__3': None, 'notes__3': '국내총생산(시장가격, GDP)', 'name__4': '1.3.1. 한국은행 기준금리 및 여수신금리', 'frequency__4': 'M', 'source__4': 'ECOS', 'indicator_id__4': 'kr.base.rate.d', 'item_code3__4': None, 'stat_code__4': '722Y001' ... 65 parameters truncated ... 'stat_code__10': '802Y001', 'item_code2__10': None, 'unit__10': '1980.01.04=100 ', 'item_code1__10': '0001000', 'item_code4__10': None, 'notes__10': 'KOSPI지수', 'name__11': None, 'frequency__11': None, 'source__11': 'ECOS', 'indicator_id__11': 'kr.indprod.m', 'item_code3__11': None, 'stat_code__11': None, 'item_code2__11': None, 'unit__11': None, 'item_code1__11': None, 'item_code4__11': None, 'notes__11': 'observations.jsonl에서 발견되지 않음', 'name__12': None, 'frequency__12': None, 'source__12': 'ECOS', 'indicator_id__12': 'kr.retail.m', 'item_code3__12': None, 'stat_code__12': None, 'item_code2__12': None, 'unit__12': None, 'item_code1__12': None, 'item_code4__12': None, 'notes__12': 'observations.jsonl에서 발견되지 않음', 'name__13': None, 'frequency__13': None, 'source__13': 'ECOS', 'indicator_id__13': 'kr.unemp.rate.m', 'item_code3__13': None, 'stat_code__13': None, 'item_code2__13': None, 'unit__13': None, 'item_code1__13': None, 'item_code4__13': None, 'notes__13': 'observations.jsonl에서 발견되지 않음', 'name__14': None, 'frequency__14': None, 'source__14': 'ECOS', 'indicator_id__14': 'kr.employment.change.m', 'item_code3__14': None, 'stat_code__14': None, 'item_code2__14': None, 'unit__14': None, 'item_code1__14': None, 'item_code4__14': None, 'notes__14': 'observations.jsonl에서 발견되지 않음'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2118, in _exec_insertmany_context
+    dialect.do_execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.NotNullViolation: null value in column "name" of relation "indicators" violates not-null constraint
+DETAIL:  Failing row contains (kr.indprod.m, null, null, null, ECOS, observations.jsonl에서 발견되지 않음, null, null, null, null, null).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/scripts/seed_statistics.py", line 53, in seed_statistics_data
+    db.commit()
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 1313, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 1288, in _prepare_impl
+    self.session.flush()
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 4345, in flush
+    self._flush(objects)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 4480, in _flush
+    with util.safe_reraise():
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 4441, in _flush
+    flush_context.execute()
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1844, in _execute_context
+    return self._exec_insertmany_context(dialect, context)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2126, in _exec_insertmany_context
+    self._handle_dbapi_exception(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2118, in _exec_insertmany_context
+    dialect.do_execute(
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.NotNullViolation) null value in column "name" of relation "indicators" violates not-null constraint
+DETAIL:  Failing row contains (kr.indprod.m, null, null, null, ECOS, observations.jsonl에서 발견되지 않음, null, null, null, null, null).
+
+[SQL: INSERT INTO statistics.indicators (indicator_id, name, frequency, unit, source, notes, stat_code, item_code1, item_code2, item_code3, item_code4) VALUES (%(indicator_id__0)s, %(name__0)s, %(frequency__0)s, %(unit__0)s, %(source__0)s, %(notes__0)s, %( ... 2706 characters truncated ... , %(stat_code__14)s, %(item_code1__14)s, %(item_code2__14)s, %(item_code3__14)s, %(item_code4__14)s)]
+[parameters: {'name__0': '4.2.1. 소비자물가지수', 'frequency__0': 'M', 'source__0': 'ECOS', 'indicator_id__0': 'kr.cpi.headline.m', 'item_code3__0': None, 'stat_code__0': '901Y009', 'item_code2__0': None, 'unit__0': '2020=100', 'item_code1__0': '0', 'item_code4__0': None, 'notes__0': '총지수', 'name__1': '4.2.2. 소비자물가지수(특수분류)', 'frequency__1': 'M', 'source__1': 'ECOS', 'indicator_id__1': 'kr.cpi.core.m', 'item_code3__1': None, 'stat_code__1': '901Y010', 'item_code2__1': None, 'unit__1': '2020=100', 'item_code1__1': 'DB', 'item_code4__1': None, 'notes__1': '식료품 및 에너지 제외 지수', 'name__2': '4.1.1.1. 생산자물가지수(기본분류)', 'frequency__2': 'M', 'source__2': 'ECOS', 'indicator_id__2': 'kr.ppi.m', 'item_code3__2': None, 'stat_code__2': '404Y014', 'item_code2__2': None, 'unit__2': '2020=100', 'item_code1__2': '*AA', 'item_code4__2': None, 'notes__2': '총지수', 'name__3': '2.1.2.1.2. 경제활동별 GDP 및 GNI(계절조정, 실질, 분기)', 'frequency__3': 'Q', 'source__3': 'ECOS', 'indicator_id__3': 'kr.gdp.q', 'item_code3__3': None, 'stat_code__3': '200Y104', 'item_code2__3': None, 'unit__3': '십억원', 'item_code1__3': '1400', 'item_code4__3': None, 'notes__3': '국내총생산(시장가격, GDP)', 'name__4': '1.3.1. 한국은행 기준금리 및 여수신금리', 'frequency__4': 'M', 'source__4': 'ECOS', 'indicator_id__4': 'kr.base.rate.d', 'item_code3__4': None, 'stat_code__4': '722Y001' ... 65 parameters truncated ... 'stat_code__10': '802Y001', 'item_code2__10': None, 'unit__10': '1980.01.04=100 ', 'item_code1__10': '0001000', 'item_code4__10': None, 'notes__10': 'KOSPI지수', 'name__11': None, 'frequency__11': None, 'source__11': 'ECOS', 'indicator_id__11': 'kr.indprod.m', 'item_code3__11': None, 'stat_code__11': None, 'item_code2__11': None, 'unit__11': None, 'item_code1__11': None, 'item_code4__11': None, 'notes__11': 'observations.jsonl에서 발견되지 않음', 'name__12': None, 'frequency__12': None, 'source__12': 'ECOS', 'indicator_id__12': 'kr.retail.m', 'item_code3__12': None, 'stat_code__12': None, 'item_code2__12': None, 'unit__12': None, 'item_code1__12': None, 'item_code4__12': None, 'notes__12': 'observations.jsonl에서 발견되지 않음', 'name__13': None, 'frequency__13': None, 'source__13': 'ECOS', 'indicator_id__13': 'kr.unemp.rate.m', 'item_code3__13': None, 'stat_code__13': None, 'item_code2__13': None, 'unit__13': None, 'item_code1__13': None, 'item_code4__13': None, 'notes__13': 'observations.jsonl에서 발견되지 않음', 'name__14': None, 'frequency__14': None, 'source__14': 'ECOS', 'indicator_id__14': 'kr.employment.change.m', 'item_code3__14': None, 'stat_code__14': None, 'item_code2__14': None, 'unit__14': None, 'item_code1__14': None, 'item_code4__14': None, 'notes__14': 'observations.jsonl에서 발견되지 않음'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-09-09 01:52:06,154 - INFO - __main__ - '/home/asd1702/fin_sight_server/data/catalog_core15.json'에서 지표 메타데이터를 로드합니다.
+2025-09-09 01:52:06,260 - WARNING - __main__ - 지표 ID 'kr.indprod.m'의 이름이 없어 건너뜁니다.
+2025-09-09 01:52:06,261 - WARNING - __main__ - 지표 ID 'kr.retail.m'의 이름이 없어 건너뜁니다.
+2025-09-09 01:52:06,261 - WARNING - __main__ - 지표 ID 'kr.unemp.rate.m'의 이름이 없어 건너뜁니다.
+2025-09-09 01:52:06,261 - WARNING - __main__ - 지표 ID 'kr.employment.change.m'의 이름이 없어 건너뜁니다.
+2025-09-09 01:52:06,267 - INFO - __main__ - 지표 메타데이터 저장 완료.
+2025-09-09 01:52:06,267 - INFO - __main__ - '/home/asd1702/fin_sight_server/data/observations_core15.jsonl'에서 시계열 데이터를 로드하여 저장합니다.
+2025-09-09 01:52:06,513 - INFO - __main__ - 모든 시계열 데이터 저장 완료.
+2025-09-09 01:52:06,513 - INFO - __main__ - 통계 DB 구축이 성공적으로 완료되었습니다.
+2025-09-09 17:55:51,436 - INFO - __main__ - 
+--- 1단계: 신규 기사 수집 시작 ---
+2025-09-09 17:55:51,661 - INFO - app.core.collectors - 네이버 API '금리' 키워드로 5개 기사 메타데이터 수신 성공.
+2025-09-09 17:55:51,662 - INFO - app.core.monitoring - 성능 모니터링 - call_naver_api: 실행시간=0.20초, 메모리변화=+0.0%, 현재메모리=60.8%
+2025-09-09 17:55:52,030 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.37초, 메모리변화=+0.0%, 현재메모리=60.8%
+2025-09-09 17:55:52,240 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 1) KRX 금시장 하루 거래량 1톤 넘었다...2014년 시장 개설 이후 '최고'
+2025-09-09 17:55:52,691 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.45초, 메모리변화=+0.0%, 현재메모리=60.8%
+2025-09-09 17:55:52,707 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 2) 달러 약세·금리인하 기대감에 금값 파죽지세…"연말 4000달러 간다"
+2025-09-09 17:55:52,974 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.27초, 메모리변화=+0.0%, 현재메모리=60.8%
+2025-09-09 17:55:52,995 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 3) 예금자보호 1억에 7단계 평가까지…저축은행, 예보료 '이중 압박' 직면
+2025-09-09 17:55:53,361 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.36초, 메모리변화=+0.0%, 현재메모리=60.8%
+2025-09-09 17:55:53,370 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 4) KRX금시장, 사상 최초 ‘일일 거래 1톤’ 돌파
+2025-09-09 17:55:53,729 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.36초, 메모리변화=+0.0%, 현재메모리=60.8%
+2025-09-09 17:55:53,744 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 5) 美 금리 인하 기대·Fed 독립성 우려에…금값, 3600달러 '최고가' - 인더스트리뉴스
+2025-09-09 17:55:53,745 - INFO - __main__ - --- 1단계: 신규 기사 수집 완료 ---
+
+2025-09-09 23:03:27,522 - INFO - __main__ - 
+--- 1단계: 신규 기사 수집 시작 ---
+2025-09-09 23:03:27,750 - INFO - app.core.collectors - 네이버 API '금리' 키워드로 5개 기사 메타데이터 수신 성공.
+2025-09-09 23:03:27,753 - INFO - app.core.monitoring - 성능 모니터링 - call_naver_api: 실행시간=0.21초, 메모리변화=+0.0%, 현재메모리=58.9%
+2025-09-09 23:03:29,380 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=1.63초, 메모리변화=+0.0%, 현재메모리=58.9%
+2025-09-09 23:03:29,485 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 6) 트럼프 대통령 “연준 고장났다…고쳐야 한다”
+2025-09-09 23:03:29,911 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.43초, 메모리변화=+0.0%, 현재메모리=58.9%
+2025-09-09 23:03:29,922 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 7) [AI 투자영상 해설 ①] KB자산운용 "요즘, 투자 뭐해?...9월 증시, 위기인가 기회인가"
+2025-09-09 23:03:30,271 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.35초, 메모리변화=+0.0%, 현재메모리=58.9%
+2025-09-09 23:03:30,279 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 8) 이 대통령 "연 15.9% 서민 대출 금리 잔인...근본 해법 필요"
+2025-09-09 23:03:30,503 - INFO - app.core.collectors - 기사 본문 길이 부족으로 건너뜀: 85자 (최소 200자 필요) - https://www.ytn.co.kr/_ln/0102_202509092252509918
+2025-09-09 23:03:30,504 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.22초, 메모리변화=+0.0%, 현재메모리=58.9%
+2025-09-09 23:03:30,507 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://www.ytn.co.kr/_ln/0102_202509092252509918
+2025-09-09 23:03:30,788 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.28초, 메모리변화=+0.0%, 현재메모리=58.9%
+2025-09-09 23:03:30,795 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 9) [데스크의 눈] 재정준칙 논의는 언제 ?
+2025-09-09 23:03:30,796 - INFO - __main__ - --- 1단계: 신규 기사 수집 완료 ---
+
+2025-09-09 23:03:30,803 - INFO - __main__ - --- 2단계: 총 9개의 기사 처리 시작 ---
+2025-09-09 23:03:30,811 - INFO - app.core.services - 기사 ID 1의 상태를 PROCESSING(으)로 업데이트.
+2025-09-09 23:03:40,970 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-09 23:03:40,997 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-09 23:03:40,998 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=10.18초, 메모리변화=+0.2%, 현재메모리=59.1%
+2025-09-09 23:03:41,005 - INFO - __main__ - 기사 ID 1: LLM이 관련 지표 ['kr.govbond.10y.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-09 23:03:41,030 - ERROR - app.core.services - 기사 ID 1의 분석 결과 저장 중 예상치 못한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:03:41,034 - CRITICAL - __main__ - 
+기사 ID 1 처리 중 예상치 못한 심각한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/pipeline.py", line 83, in run_article_processing_pipeline
+    services.save_enriched_data_and_cleanup(db, article, analysis_result, final_stats_data)
+  File "/home/asd1702/fin_sight_server/app/core/services.py", line 207, in save_enriched_data_and_cleanup
+    new_enriched = EnrichedArticle(
+  File "<string>", line 4, in __init__
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
+    with util.safe_reraise():
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/decl_base.py", line 2179, in _declarative_constructor
+    raise TypeError(
+TypeError: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:03:41,059 - INFO - app.core.services - 기사 ID 1의 상태를 FAILED(으)로 업데이트.
+2025-09-09 23:03:41,070 - INFO - app.core.services - 기사 ID 2의 상태를 PROCESSING(으)로 업데이트.
+2025-09-09 23:03:50,609 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-09 23:03:50,626 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-09 23:03:50,627 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=9.55초, 메모리변화=+0.0%, 현재메모리=59.1%
+2025-09-09 23:03:50,627 - INFO - __main__ - 기사 ID 2: LLM이 관련 지표 ['kr.base.rate.d', 'kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-09 23:03:50,657 - ERROR - app.core.services - 기사 ID 2의 분석 결과 저장 중 예상치 못한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:03:50,660 - CRITICAL - __main__ - 
+기사 ID 2 처리 중 예상치 못한 심각한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/pipeline.py", line 83, in run_article_processing_pipeline
+    services.save_enriched_data_and_cleanup(db, article, analysis_result, final_stats_data)
+  File "/home/asd1702/fin_sight_server/app/core/services.py", line 207, in save_enriched_data_and_cleanup
+    new_enriched = EnrichedArticle(
+  File "<string>", line 4, in __init__
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
+    with util.safe_reraise():
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/decl_base.py", line 2179, in _declarative_constructor
+    raise TypeError(
+TypeError: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:03:50,690 - INFO - app.core.services - 기사 ID 2의 상태를 FAILED(으)로 업데이트.
+2025-09-09 23:03:50,699 - INFO - app.core.services - 기사 ID 3의 상태를 PROCESSING(으)로 업데이트.
+2025-09-09 23:04:01,256 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-09 23:04:01,258 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-09 23:04:01,259 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=10.56초, 메모리변화=+0.0%, 현재메모리=59.1%
+2025-09-09 23:04:01,259 - INFO - __main__ - 기사 ID 3: LLM이 관련 지표 ['kr.base.rate.d', 'kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-09 23:04:01,269 - ERROR - app.core.services - 기사 ID 3의 분석 결과 저장 중 예상치 못한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:04:01,276 - CRITICAL - __main__ - 
+기사 ID 3 처리 중 예상치 못한 심각한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/pipeline.py", line 83, in run_article_processing_pipeline
+    services.save_enriched_data_and_cleanup(db, article, analysis_result, final_stats_data)
+  File "/home/asd1702/fin_sight_server/app/core/services.py", line 207, in save_enriched_data_and_cleanup
+    new_enriched = EnrichedArticle(
+  File "<string>", line 4, in __init__
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
+    with util.safe_reraise():
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/decl_base.py", line 2179, in _declarative_constructor
+    raise TypeError(
+TypeError: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:04:01,289 - INFO - app.core.services - 기사 ID 3의 상태를 FAILED(으)로 업데이트.
+2025-09-09 23:04:01,307 - INFO - app.core.services - 기사 ID 4의 상태를 PROCESSING(으)로 업데이트.
+2025-09-09 23:04:09,552 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-09 23:04:09,554 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-09 23:04:09,555 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=8.25초, 메모리변화=+0.0%, 현재메모리=59.1%
+2025-09-09 23:04:09,555 - INFO - __main__ - 기사 ID 4: LLM이 관련 지표 ['kr.base.rate.d', 'kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-09 23:04:09,564 - ERROR - app.core.services - 기사 ID 4의 분석 결과 저장 중 예상치 못한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:04:09,569 - CRITICAL - __main__ - 
+기사 ID 4 처리 중 예상치 못한 심각한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/pipeline.py", line 83, in run_article_processing_pipeline
+    services.save_enriched_data_and_cleanup(db, article, analysis_result, final_stats_data)
+  File "/home/asd1702/fin_sight_server/app/core/services.py", line 207, in save_enriched_data_and_cleanup
+    new_enriched = EnrichedArticle(
+  File "<string>", line 4, in __init__
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
+    with util.safe_reraise():
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/decl_base.py", line 2179, in _declarative_constructor
+    raise TypeError(
+TypeError: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:04:09,594 - INFO - app.core.services - 기사 ID 4의 상태를 FAILED(으)로 업데이트.
+2025-09-09 23:04:09,602 - INFO - app.core.services - 기사 ID 5의 상태를 PROCESSING(으)로 업데이트.
+2025-09-09 23:04:18,065 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-09 23:04:18,069 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-09 23:04:18,070 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=8.47초, 메모리변화=+0.1%, 현재메모리=59.2%
+2025-09-09 23:04:18,070 - INFO - __main__ - 기사 ID 5: LLM이 관련 지표 ['kr.base.rate.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-09 23:04:18,075 - ERROR - app.core.services - 기사 ID 5의 분석 결과 저장 중 예상치 못한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:04:18,079 - CRITICAL - __main__ - 
+기사 ID 5 처리 중 예상치 못한 심각한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/pipeline.py", line 83, in run_article_processing_pipeline
+    services.save_enriched_data_and_cleanup(db, article, analysis_result, final_stats_data)
+  File "/home/asd1702/fin_sight_server/app/core/services.py", line 207, in save_enriched_data_and_cleanup
+    new_enriched = EnrichedArticle(
+  File "<string>", line 4, in __init__
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
+    with util.safe_reraise():
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/decl_base.py", line 2179, in _declarative_constructor
+    raise TypeError(
+TypeError: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:04:18,103 - INFO - app.core.services - 기사 ID 5의 상태를 FAILED(으)로 업데이트.
+2025-09-09 23:04:18,111 - INFO - app.core.services - 기사 ID 6의 상태를 PROCESSING(으)로 업데이트.
+2025-09-09 23:04:26,854 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-09 23:04:26,856 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-09 23:04:26,857 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=8.74초, 메모리변화=+0.1%, 현재메모리=59.3%
+2025-09-09 23:04:26,857 - ERROR - app.core.services - 기사 ID 6의 분석 결과 저장 중 예상치 못한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:04:26,860 - CRITICAL - __main__ - 
+기사 ID 6 처리 중 예상치 못한 심각한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/pipeline.py", line 83, in run_article_processing_pipeline
+    services.save_enriched_data_and_cleanup(db, article, analysis_result, final_stats_data)
+  File "/home/asd1702/fin_sight_server/app/core/services.py", line 207, in save_enriched_data_and_cleanup
+    new_enriched = EnrichedArticle(
+  File "<string>", line 4, in __init__
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
+    with util.safe_reraise():
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/decl_base.py", line 2179, in _declarative_constructor
+    raise TypeError(
+TypeError: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:04:26,871 - INFO - app.core.services - 기사 ID 6의 상태를 FAILED(으)로 업데이트.
+2025-09-09 23:04:26,887 - INFO - app.core.services - 기사 ID 7의 상태를 PROCESSING(으)로 업데이트.
+2025-09-09 23:04:38,667 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-09 23:04:38,694 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-09 23:04:38,695 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=11.81초, 메모리변화=+0.0%, 현재메모리=59.3%
+2025-09-09 23:04:38,695 - INFO - __main__ - 기사 ID 7: LLM이 관련 지표 ['kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-09 23:04:38,702 - ERROR - app.core.services - 기사 ID 7의 분석 결과 저장 중 예상치 못한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:04:38,705 - CRITICAL - __main__ - 
+기사 ID 7 처리 중 예상치 못한 심각한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/pipeline.py", line 83, in run_article_processing_pipeline
+    services.save_enriched_data_and_cleanup(db, article, analysis_result, final_stats_data)
+  File "/home/asd1702/fin_sight_server/app/core/services.py", line 207, in save_enriched_data_and_cleanup
+    new_enriched = EnrichedArticle(
+  File "<string>", line 4, in __init__
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
+    with util.safe_reraise():
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/decl_base.py", line 2179, in _declarative_constructor
+    raise TypeError(
+TypeError: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:04:38,722 - INFO - app.core.services - 기사 ID 7의 상태를 FAILED(으)로 업데이트.
+2025-09-09 23:04:38,729 - INFO - app.core.services - 기사 ID 8의 상태를 PROCESSING(으)로 업데이트.
+2025-09-09 23:04:48,431 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-09 23:04:48,433 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-09 23:04:48,434 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=9.70초, 메모리변화=+0.1%, 현재메모리=59.4%
+2025-09-09 23:04:48,434 - INFO - __main__ - 기사 ID 8: LLM이 관련 지표 ['kr.base.rate.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-09 23:04:48,439 - ERROR - app.core.services - 기사 ID 8의 분석 결과 저장 중 예상치 못한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:04:48,442 - CRITICAL - __main__ - 
+기사 ID 8 처리 중 예상치 못한 심각한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/pipeline.py", line 83, in run_article_processing_pipeline
+    services.save_enriched_data_and_cleanup(db, article, analysis_result, final_stats_data)
+  File "/home/asd1702/fin_sight_server/app/core/services.py", line 207, in save_enriched_data_and_cleanup
+    new_enriched = EnrichedArticle(
+  File "<string>", line 4, in __init__
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
+    with util.safe_reraise():
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/decl_base.py", line 2179, in _declarative_constructor
+    raise TypeError(
+TypeError: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:04:48,454 - INFO - app.core.services - 기사 ID 8의 상태를 FAILED(으)로 업데이트.
+2025-09-09 23:04:48,460 - INFO - app.core.services - 기사 ID 9의 상태를 PROCESSING(으)로 업데이트.
+2025-09-09 23:04:59,400 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-09 23:04:59,415 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-09 23:04:59,416 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=10.95초, 메모리변화=+0.0%, 현재메모리=59.4%
+2025-09-09 23:04:59,416 - INFO - __main__ - 기사 ID 9: LLM이 관련 지표 ['kr.gdp.q', 'kr.base.rate.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-09 23:04:59,424 - ERROR - app.core.services - 기사 ID 9의 분석 결과 저장 중 예상치 못한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:04:59,428 - CRITICAL - __main__ - 
+기사 ID 9 처리 중 예상치 못한 심각한 오류 발생: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/pipeline.py", line 83, in run_article_processing_pipeline
+    services.save_enriched_data_and_cleanup(db, article, analysis_result, final_stats_data)
+  File "/home/asd1702/fin_sight_server/app/core/services.py", line 207, in save_enriched_data_and_cleanup
+    new_enriched = EnrichedArticle(
+  File "<string>", line 4, in __init__
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
+    with util.safe_reraise():
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/home/asd1702/fin_sight_server/.venv/lib/python3.10/site-packages/sqlalchemy/orm/decl_base.py", line 2179, in _declarative_constructor
+    raise TypeError(
+TypeError: 'statistics_data' is an invalid keyword argument for EnrichedArticle
+2025-09-09 23:04:59,452 - INFO - app.core.services - 기사 ID 9의 상태를 FAILED(으)로 업데이트.
+2025-09-09 23:04:59,454 - INFO - __main__ - --- 2단계: 기사 처리 완료 ---
+2025-09-09 23:29:43,674 - INFO - __main__ - 
+--- 1단계: 신규 기사 수집 시작 ---
+2025-09-09 23:29:43,839 - INFO - app.core.collectors - 네이버 API '금리' 키워드로 5개 기사 메타데이터 수신 성공.
+2025-09-09 23:29:43,841 - INFO - app.core.monitoring - 성능 모니터링 - call_naver_api: 실행시간=0.16초, 메모리변화=+0.0%, 현재메모리=60.7%
+2025-09-09 23:29:44,212 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.37초, 메모리변화=+0.1%, 현재메모리=60.8%
+2025-09-09 23:29:44,268 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 10) 美 신규일자리 연간 91만1천명 하향 수정 발표
+2025-09-09 23:29:44,500 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.23초, 메모리변화=+0.0%, 현재메모리=60.8%
+2025-09-09 23:29:44,508 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 11) 美 고용통계 대폭 하향…트럼프 금리인하 압박 탄력
+2025-09-09 23:29:45,292 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.78초, 메모리변화=+0.0%, 현재메모리=60.8%
+2025-09-09 23:29:45,299 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 12) 미 노동부, 고용 통계 91만1천명 하향 수정…역대 최대 규모
+2025-09-09 23:29:45,430 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.13초, 메모리변화=+0.0%, 현재메모리=60.8%
+2025-09-09 23:29:45,438 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 13) 정청래 “국힘, 내란 세력과 단절 못하면 정당해산 심판 대상” [정치오늘]
+2025-09-09 23:29:46,228 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.79초, 메모리변화=+0.0%, 현재메모리=60.8%
+2025-09-09 23:29:46,235 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 14) BTC ETH XRP SOL 동반 상승... 비트코인 1억5천 돌파
+2025-09-09 23:29:46,236 - INFO - __main__ - --- 1단계: 신규 기사 수집 완료 ---
+
+2025-09-09 23:29:46,238 - INFO - __main__ - --- 2단계: 총 5개의 기사 처리 시작 ---
+2025-09-09 23:29:46,243 - INFO - app.core.services - 기사 ID 10의 상태를 PROCESSING(으)로 업데이트.
+2025-09-09 23:29:55,519 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-09 23:29:55,530 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-09 23:29:55,531 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=9.29초, 메모리변화=+0.2%, 현재메모리=61.0%
+2025-09-09 23:29:55,543 - INFO - app.core.services - 기사 ID 10의 분석 결과 및 통계 데이터 저장 완료
+2025-09-09 23:29:55,543 - INFO - __main__ - 기사 ID 10 처리 성공.
+2025-09-09 23:29:55,547 - INFO - app.core.services - 기사 ID 11의 상태를 PROCESSING(으)로 업데이트.
+2025-09-09 23:30:04,289 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-09 23:30:04,302 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-09 23:30:04,302 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=8.75초, 메모리변화=+0.0%, 현재메모리=61.0%
+2025-09-09 23:30:04,312 - INFO - app.core.services - 기사 ID 11의 분석 결과 및 통계 데이터 저장 완료
+2025-09-09 23:30:04,312 - INFO - __main__ - 기사 ID 11 처리 성공.
+2025-09-09 23:30:04,316 - INFO - app.core.services - 기사 ID 12의 상태를 PROCESSING(으)로 업데이트.
+2025-09-09 23:30:17,020 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-09 23:30:17,032 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-09 23:30:17,032 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=12.72초, 메모리변화=+0.0%, 현재메모리=61.0%
+2025-09-09 23:30:17,049 - INFO - app.core.services - 기사 ID 12의 분석 결과 및 통계 데이터 저장 완료
+2025-09-09 23:30:17,050 - INFO - __main__ - 기사 ID 12 처리 성공.
+2025-09-09 23:30:17,053 - INFO - app.core.services - 기사 ID 13의 상태를 PROCESSING(으)로 업데이트.
+2025-09-09 23:30:28,190 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-09 23:30:28,192 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-09 23:30:28,193 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=11.14초, 메모리변화=+0.0%, 현재메모리=61.0%
+2025-09-09 23:30:28,200 - INFO - app.core.services - 기사 ID 13의 분석 결과 및 통계 데이터 저장 완료
+2025-09-09 23:30:28,201 - INFO - __main__ - 기사 ID 13 처리 성공.
+2025-09-09 23:30:28,205 - INFO - app.core.services - 기사 ID 14의 상태를 PROCESSING(으)로 업데이트.
+2025-09-09 23:30:45,139 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-09 23:30:45,152 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-09 23:30:45,152 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=16.95초, 메모리변화=+0.0%, 현재메모리=61.0%
+2025-09-09 23:30:45,152 - INFO - __main__ - 기사 ID 14: LLM이 관련 지표 ['kr.base.rate.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-09 23:30:45,167 - INFO - app.core.services - 기사 ID 14의 분석 결과 및 통계 데이터 저장 완료
+2025-09-09 23:30:45,167 - INFO - __main__ - 기사 ID 14 처리 성공.
+2025-09-09 23:30:45,167 - INFO - __main__ - --- 2단계: 기사 처리 완료 ---
+2025-09-10 00:57:05,893 - INFO - __main__ - 
+--- 1단계: 신규 기사 수집 시작 ---
+2025-09-10 00:57:06,149 - INFO - app.core.collectors - 네이버 API '금리' 키워드로 5개 기사 메타데이터 수신 성공.
+2025-09-10 00:57:06,152 - INFO - app.core.monitoring - 성능 모니터링 - call_naver_api: 실행시간=0.23초, 메모리변화=+0.0%, 현재메모리=59.6%
+2025-09-10 00:57:06,496 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.34초, 메모리변화=+0.1%, 현재메모리=59.7%
+2025-09-10 00:57:06,620 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 15) [마켓인사이드] 미국 고용시장 급냉, 금리인하 준비 연준 비둘기파엔 호재
+2025-09-10 00:57:06,899 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.28초, 메모리변화=+0.0%, 현재메모리=59.7%
+2025-09-10 00:57:06,922 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 16) 추석 성수품 최대 50% 할인…소상공인 43조 지원
+2025-09-10 00:57:07,298 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.37초, 메모리변화=+0.0%, 현재메모리=59.7%
+2025-09-10 00:57:07,310 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 17) 대주주 기준 완화 기대감에… 코스피 3260.05 연고점 경신
+2025-09-10 00:57:07,929 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.62초, 메모리변화=+0.0%, 현재메모리=59.7%
+2025-09-10 00:57:07,953 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 18) 이 대통령, 노조원 자녀 ‘고용세습’ 작심 비판…“불공정 대명사, 다른 사람들 억울하지 않겠나”
+2025-09-10 00:57:08,421 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.47초, 메모리변화=+0.0%, 현재메모리=59.7%
+2025-09-10 00:57:08,445 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 19) [중앙시평] 베이징의 북·중·러, 경제는 안녕한가
+2025-09-10 00:57:08,446 - INFO - __main__ - --- 1단계: 신규 기사 수집 완료 ---
+
+2025-09-10 00:57:08,450 - INFO - __main__ - --- 2단계: 총 14개의 기사 처리 시작 ---
+2025-09-10 00:57:08,464 - INFO - app.core.services - 기사 ID 1의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 00:57:19,353 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 00:57:19,378 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 00:57:19,379 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=10.91초, 메모리변화=+0.2%, 현재메모리=59.9%
+2025-09-10 00:57:19,380 - INFO - __main__ - 기사 ID 1: LLM이 관련 지표 ['kr.govbond.3y.d', 'kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 00:57:19,414 - INFO - app.core.services - 기사 ID 1의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 00:57:19,414 - INFO - __main__ - 기사 ID 1 처리 성공.
+2025-09-10 00:57:19,422 - INFO - app.core.services - 기사 ID 4의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 00:57:29,141 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 00:57:29,144 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 00:57:29,145 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=9.72초, 메모리변화=+0.0%, 현재메모리=59.9%
+2025-09-10 00:57:29,145 - INFO - __main__ - 기사 ID 4: LLM이 관련 지표 ['kr.base.rate.d', 'kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 00:57:29,172 - INFO - app.core.services - 기사 ID 4의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 00:57:29,172 - INFO - __main__ - 기사 ID 4 처리 성공.
+2025-09-10 00:57:29,183 - INFO - app.core.services - 기사 ID 2의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 00:57:38,091 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 00:57:38,093 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 00:57:38,094 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=8.91초, 메모리변화=+0.0%, 현재메모리=59.9%
+2025-09-10 00:57:38,094 - INFO - __main__ - 기사 ID 2: LLM이 관련 지표 ['kr.base.rate.d', 'kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 00:57:38,136 - INFO - app.core.services - 기사 ID 2의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 00:57:38,137 - INFO - __main__ - 기사 ID 2 처리 성공.
+2025-09-10 00:57:38,145 - INFO - app.core.services - 기사 ID 7의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 00:57:46,692 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 00:57:46,695 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 00:57:46,696 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=8.55초, 메모리변화=+0.0%, 현재메모리=59.9%
+2025-09-10 00:57:46,696 - INFO - __main__ - 기사 ID 7: LLM이 관련 지표 ['kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 00:57:46,743 - INFO - app.core.services - 기사 ID 7의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 00:57:46,743 - INFO - __main__ - 기사 ID 7 처리 성공.
+2025-09-10 00:57:46,750 - INFO - app.core.services - 기사 ID 3의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 00:57:57,752 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 00:57:57,755 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 00:57:57,756 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=11.00초, 메모리변화=+0.0%, 현재메모리=59.9%
+2025-09-10 00:57:57,756 - INFO - __main__ - 기사 ID 3: LLM이 관련 지표 ['kr.base.rate.d', 'kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 00:57:57,802 - INFO - app.core.services - 기사 ID 3의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 00:57:57,803 - INFO - __main__ - 기사 ID 3 처리 성공.
+2025-09-10 00:57:57,809 - INFO - app.core.services - 기사 ID 5의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 00:58:06,967 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 00:58:06,969 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 00:58:06,970 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=9.16초, 메모리변화=-0.1%, 현재메모리=59.8%
+2025-09-10 00:58:06,970 - INFO - __main__ - 기사 ID 5: LLM이 관련 지표 ['kr.base.rate.d', 'kr.cpi.headline.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 00:58:07,022 - INFO - app.core.services - 기사 ID 5의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 00:58:07,022 - INFO - __main__ - 기사 ID 5 처리 성공.
+2025-09-10 00:58:07,030 - INFO - app.core.services - 기사 ID 6의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 00:58:13,725 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 00:58:13,728 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 00:58:13,728 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=6.70초, 메모리변화=+0.1%, 현재메모리=59.9%
+2025-09-10 00:58:13,743 - INFO - app.core.services - 기사 ID 6의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 00:58:13,743 - INFO - __main__ - 기사 ID 6 처리 성공.
+2025-09-10 00:58:13,764 - INFO - app.core.services - 기사 ID 8의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 00:58:21,406 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 00:58:21,408 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 00:58:21,409 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=7.64초, 메모리변화=+0.0%, 현재메모리=59.9%
+2025-09-10 00:58:21,409 - INFO - __main__ - 기사 ID 8: LLM이 관련 지표 ['kr.base.rate.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 00:58:21,438 - INFO - app.core.services - 기사 ID 8의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 00:58:21,439 - INFO - __main__ - 기사 ID 8 처리 성공.
+2025-09-10 00:58:21,452 - INFO - app.core.services - 기사 ID 9의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 00:58:32,261 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 00:58:32,263 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 00:58:32,264 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=10.81초, 메모리변화=+0.1%, 현재메모리=60.0%
+2025-09-10 00:58:32,264 - INFO - __main__ - 기사 ID 9: LLM이 관련 지표 ['kr.gdp.q', 'kr.base.rate.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 00:58:32,311 - INFO - app.core.services - 기사 ID 9의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 00:58:32,311 - INFO - __main__ - 기사 ID 9 처리 성공.
+2025-09-10 00:58:32,320 - INFO - app.core.services - 기사 ID 15의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 00:58:40,349 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 00:58:40,351 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 00:58:40,351 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=8.03초, 메모리변화=-0.1%, 현재메모리=59.9%
+2025-09-10 00:58:40,360 - INFO - app.core.services - 기사 ID 15의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 00:58:40,360 - INFO - __main__ - 기사 ID 15 처리 성공.
+2025-09-10 00:58:40,372 - INFO - app.core.services - 기사 ID 16의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 00:58:48,440 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 00:58:48,443 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 00:58:48,443 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=8.07초, 메모리변화=+0.0%, 현재메모리=59.9%
+2025-09-10 00:58:48,444 - INFO - __main__ - 기사 ID 16: LLM이 관련 지표 ['kr.cpi.headline.m', 'kr.gdp.q']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 00:58:48,475 - INFO - app.core.services - 기사 ID 16의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 00:58:48,475 - INFO - __main__ - 기사 ID 16 처리 성공.
+2025-09-10 00:58:48,482 - INFO - app.core.services - 기사 ID 17의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 00:58:57,655 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 00:58:57,657 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 00:58:57,658 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=9.17초, 메모리변화=+0.0%, 현재메모리=59.9%
+2025-09-10 00:58:57,658 - INFO - __main__ - 기사 ID 17: LLM이 관련 지표 ['kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 00:58:57,693 - INFO - app.core.services - 기사 ID 17의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 00:58:57,694 - INFO - __main__ - 기사 ID 17 처리 성공.
+2025-09-10 00:58:57,703 - INFO - app.core.services - 기사 ID 18의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 00:59:09,022 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 00:59:09,024 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 00:59:09,025 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=11.32초, 메모리변화=+0.0%, 현재메모리=59.9%
+2025-09-10 00:59:09,025 - INFO - __main__ - 기사 ID 18: LLM이 관련 지표 ['kr.base.rate.d', 'kr.cpi.headline.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 00:59:09,059 - INFO - app.core.services - 기사 ID 18의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 00:59:09,059 - INFO - __main__ - 기사 ID 18 처리 성공.
+2025-09-10 00:59:09,066 - INFO - app.core.services - 기사 ID 19의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 00:59:22,640 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 00:59:22,642 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 00:59:22,643 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=13.57초, 메모리변화=+0.0%, 현재메모리=59.9%
+2025-09-10 00:59:22,643 - INFO - __main__ - 기사 ID 19: LLM이 관련 지표 ['kr.gdp.q', 'kr.base.rate.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 00:59:22,688 - INFO - app.core.services - 기사 ID 19의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 00:59:22,689 - INFO - __main__ - 기사 ID 19 처리 성공.
+2025-09-10 00:59:22,690 - INFO - __main__ - --- 2단계: 기사 처리 완료 ---
+2025-09-10 01:38:51,463 - INFO - __main__ - 
+--- 1단계: 신규 기사 수집 시작 ---
+2025-09-10 01:38:51,728 - INFO - app.core.collectors - 네이버 API '주식' 키워드로 5개 기사 메타데이터 수신 성공.
+2025-09-10 01:38:51,730 - INFO - app.core.monitoring - 성능 모니터링 - call_naver_api: 실행시간=0.26초, 메모리변화=+0.0%, 현재메모리=64.7%
+2025-09-10 01:38:52,441 - INFO - app.core.collectors - 기사 크롤링 완료: 6개 이미지 추출 - https://www.pinpointnews.co.kr/news/articleView.html?idxno=375225
+2025-09-10 01:38:52,442 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.71초, 메모리변화=+0.0%, 현재메모리=64.7%
+2025-09-10 01:38:52,522 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 20) 강원도 행정타운 '현물 출자' 재상정…시민단체 "파렴치한 빚잔치, 즉각 중단하라"
+2025-09-10 01:38:52,847 - INFO - app.core.collectors - 기사 크롤링 완료: 5개 이미지 추출 - https://www.apnews.kr/news/articleView.html?idxno=3039668
+2025-09-10 01:38:52,849 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.33초, 메모리변화=+0.1%, 현재메모리=64.8%
+2025-09-10 01:38:52,871 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 21) 한투증권, '한미핵심성장포커스펀드' 1194억원 설정 완료
+2025-09-10 01:38:53,148 - INFO - app.core.collectors - 기사 크롤링 완료: 5개 이미지 추출 - https://www.apnews.kr/news/articleView.html?idxno=3039691
+2025-09-10 01:38:53,149 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.28초, 메모리변화=+0.0%, 현재메모리=64.8%
+2025-09-10 01:38:53,178 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 22) KB증권, 중개형 ISA 보유 고객 대상 '이전·입금' 이벤트 실시
+2025-09-10 01:38:53,520 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.34초, 메모리변화=+0.0%, 현재메모리=64.8%
+2025-09-10 01:38:53,520 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://www.kmib.co.kr/article/view.asp?arcid=1757405345&code=11141400&cp=nv
+2025-09-10 01:38:53,880 - INFO - app.core.collectors - 기사 크롤링 완료: 6개 이미지 추출 - https://www.kmib.co.kr/article/view.asp?arcid=1757409022&code=11151100&cp=nv
+2025-09-10 01:38:53,881 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.36초, 메모리변화=+0.0%, 현재메모리=64.8%
+2025-09-10 01:38:53,884 - INFO - __main__ - --- 1단계: 신규 기사 수집 완료 ---
+
+2025-09-10 01:38:53,888 - INFO - __main__ - --- 2단계: 총 3개의 기사 처리 시작 ---
+2025-09-10 01:38:53,905 - INFO - app.core.services - 기사 ID 22의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 01:39:03,257 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 01:39:03,279 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 01:39:03,280 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=9.37초, 메모리변화=+0.1%, 현재메모리=64.9%
+2025-09-10 01:39:03,280 - INFO - __main__ - 기사 ID 22: LLM이 관련 지표 ['kr.base.rate.d', 'kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 01:39:03,318 - INFO - app.core.services - 기사 ID 22의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 01:39:03,319 - INFO - __main__ - 기사 ID 22 처리 성공.
+2025-09-10 01:39:03,327 - INFO - app.core.services - 기사 ID 20의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 01:39:12,131 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 01:39:12,141 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 01:39:12,142 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=8.81초, 메모리변화=+0.0%, 현재메모리=64.9%
+2025-09-10 01:39:12,143 - INFO - __main__ - 기사 ID 20: LLM이 관련 지표 ['kr.govbond.3y.d', 'kr.base.rate.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 01:39:12,185 - INFO - app.core.services - 기사 ID 20의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 01:39:12,186 - INFO - __main__ - 기사 ID 20 처리 성공.
+2025-09-10 01:39:12,195 - INFO - app.core.services - 기사 ID 21의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 01:39:21,395 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 01:39:21,398 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 01:39:21,398 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=9.20초, 메모리변화=+0.0%, 현재메모리=64.9%
+2025-09-10 01:39:21,398 - INFO - __main__ - 기사 ID 21: LLM이 관련 지표 ['kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 01:39:21,420 - INFO - app.core.services - 기사 ID 21의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 01:39:21,422 - INFO - __main__ - 기사 ID 21 처리 성공.
+2025-09-10 01:39:21,424 - INFO - __main__ - --- 2단계: 기사 처리 완료 ---
+2025-09-10 01:43:11,259 - INFO - __main__ - 
+--- 1단계: 신규 기사 수집 시작 ---
+2025-09-10 01:43:11,473 - INFO - app.core.collectors - 네이버 API '주식' 키워드로 5개 기사 메타데이터 수신 성공.
+2025-09-10 01:43:11,477 - INFO - app.core.monitoring - 성능 모니터링 - call_naver_api: 실행시간=0.21초, 메모리변화=+0.0%, 현재메모리=64.2%
+2025-09-10 01:43:12,684 - INFO - app.core.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://www.danbinews.com/news/articleView.html?idxno=31311
+2025-09-10 01:43:12,685 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=1.21초, 메모리변화=+0.1%, 현재메모리=64.3%
+2025-09-10 01:43:12,749 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 23) 주가순자산비율(PBR) - 단비뉴스
+2025-09-10 01:43:13,058 - INFO - app.core.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://www.danbinews.com/news/articleView.html?idxno=31374
+2025-09-10 01:43:13,059 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.31초, 메모리변화=+0.0%, 현재메모리=64.3%
+2025-09-10 01:43:13,071 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 24) 민생경제협의체 - 단비뉴스
+2025-09-10 01:43:13,969 - INFO - app.core.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://www.pinpointnews.co.kr/news/articleView.html?idxno=375225
+2025-09-10 01:43:13,970 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.90초, 메모리변화=+0.1%, 현재메모리=64.4%
+2025-09-10 01:43:14,573 - INFO - app.core.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://www.apnews.kr/news/articleView.html?idxno=3039668
+2025-09-10 01:43:14,574 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.60초, 메모리변화=+0.0%, 현재메모리=64.4%
+2025-09-10 01:43:15,094 - INFO - app.core.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://www.apnews.kr/news/articleView.html?idxno=3039691
+2025-09-10 01:43:15,096 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.52초, 메모리변화=+0.0%, 현재메모리=64.4%
+2025-09-10 01:43:15,099 - INFO - __main__ - --- 1단계: 신규 기사 수집 완료 ---
+
+2025-09-10 01:43:15,102 - INFO - __main__ - --- 2단계: 총 2개의 기사 처리 시작 ---
+2025-09-10 01:43:15,134 - INFO - app.core.services - 기사 ID 24의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 01:43:22,449 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 01:43:22,493 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 01:43:22,494 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=7.35초, 메모리변화=+0.3%, 현재메모리=64.7%
+2025-09-10 01:43:22,505 - INFO - __main__ - 기사 ID 24: LLM이 관련 지표 ['kr.gdp.q', 'kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 01:43:22,532 - INFO - app.core.services - 기사 ID 24의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 01:43:22,532 - INFO - __main__ - 기사 ID 24 처리 성공.
+2025-09-10 01:43:22,547 - INFO - app.core.services - 기사 ID 23의 상태를 PROCESSING(으)로 업데이트.
+2025-09-10 01:43:29,932 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-10 01:43:29,934 - INFO - app.core.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-09-10 01:43:29,935 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=7.39초, 메모리변화=+0.0%, 현재메모리=64.7%
+2025-09-10 01:43:29,935 - INFO - __main__ - 기사 ID 23: LLM이 관련 지표 ['kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-09-10 01:43:29,978 - INFO - app.core.services - 기사 ID 23의 분석 결과 및 통계 데이터 저장 완료
+2025-09-10 01:43:29,978 - INFO - __main__ - 기사 ID 23 처리 성공.
+2025-09-10 01:43:29,979 - INFO - __main__ - --- 2단계: 기사 처리 완료 ---
