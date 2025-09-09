@@ -58,7 +58,10 @@ def get_article_detail(article_id: int, db: Session = Depends(get_db)):
         "category": article.category,
         "published_at": article.published_at,
         "url": article.url,
-        "background": json.loads(enriched_data.background) if enriched_data and enriched_data.background else None,
-        "keywords": json.loads(enriched_data.keywords) if enriched_data and enriched_data.keywords else []
+        "background": enriched_data.background if enriched_data and enriched_data.background else None,
+        "keywords": enriched_data.keywords if enriched_data and enriched_data.keywords else [],
+        "related_statistics": enriched_data.related_statistics if enriched_data and enriched_data.related_statistics else [],
+        "statistics_data": enriched_data.statistics_data if enriched_data and enriched_data.statistics_data else [],
+        "images": article.content.images if article.content and article.content.images else []
     }
     return response_data

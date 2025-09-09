@@ -4,3 +4,8 @@
 node_modules/
 __pycache__/
 .DS_Store
+
+# Python 패키지 메타데이터
+*.egg-info/
+build/
+dist/

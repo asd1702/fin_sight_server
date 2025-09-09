@@ -21,31 +21,31 @@ class Article(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     content = relationship("ArticleContent", uselist=False, back_populates="article", cascade="all, delete-orphan")
-    sentences = relationship("ArticleSentence", back_populates="article", cascade="all, delete-orphan")
     enriched = relationship("EnrichedArticle", uselist=False, back_populates="article", cascade="all, delete-orphan")
-    terms = relationship("ArticleTermMapping", back_populates="article", cascade="all, delete-orphan")
+
+    __table_args__ = {'schema': 'articles'}
 
 class ArticleContent(Base):
     __tablename__ = "article_contents"
     id = Column(BigInteger, primary_key=True)
-    article_id = Column(BigInteger, ForeignKey("articles.id"), unique=True, nullable=False)
+    article_id = Column(BigInteger, ForeignKey("articles.articles.id"), unique=True, nullable=False)
     content = Column(Text, nullable=False)
+    images = Column(JSONB, nullable=True)  # 이미지 URL 목록 저장
     article = relationship("Article", back_populates="content")
 
-class ArticleSentence(Base):
-    __tablename__ = "article_sentences"
-    id = Column(BigInteger, primary_key=True)
-    article_id = Column(BigInteger, ForeignKey("articles.id"), index=True, nullable=False)
-    idx = Column(Integer, nullable=False)
-    sentence = Column(Text, nullable=False)
-    embedding = Column(Vector(1536))
-    article = relationship("Article", back_populates="sentences")
+    __table_args__ = {'schema': 'articles'}
 
 class EnrichedArticle(Base):
     __tablename__ = "enriched_articles"
     id = Column(BigInteger, primary_key=True)
-    article_id = Column(BigInteger, ForeignKey("articles.id"), unique=True, nullable=False)
+    article_id = Column(BigInteger, ForeignKey("articles.articles.id"), unique=True, nullable=False)
     background = Column(JSONB)
     keywords = Column(JSONB)
     category = Column(String(50), nullable=False)
+    
+    related_statistics = Column(JSONB, nullable=True)
+    statistics_data = Column(JSONB, nullable=True)
+
     article = relationship("Article", back_populates="enriched")
+
+    __table_args__ = {'schema': 'articles'}

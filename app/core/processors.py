@@ -1,127 +1,135 @@
 import json
-import time
-from ..core.config import settings
+from .config import settings
 from openai import OpenAI, RateLimitError, APIConnectionError, APIStatusError
-import numpy as np
+from sqlalchemy.orm import Session
 
+from ..models.statistic_model.statistic import Indicator
 from logs.logging_config import get_logger
 from .monitoring import monitor_performance
 
 logger = get_logger(__name__)
 
+# OpenAI 클라이언트 초기화
 OPENAI_API_KEY = settings.OPENAI_API_KEY
 if not OPENAI_API_KEY:
     raise ValueError("'.env' 파일에 OPENAI_API_KEY가 설정되지 않았습니다.")
 openai_client = OpenAI(api_key=OPENAI_API_KEY, max_retries=2, timeout=20.0)
 
 
-@monitor_performance(include_memory=True)
-def get_embeddings_in_batch(texts: list[str], model="text-embedding-3-small", rate_limit_retries: int = 1) -> list[list[float]] | None:
+SYSTEM_PROMPT_TEMPLATE = """
+You are an expert financial news analyst and explainer specializing in the South Korean economy. Your task is to analyze a given news article and provide the results strictly in JSON format.
+
+I rely on the quality of your analysis to sell it for my mother's hospital bills. I need an analysis so insightful and clear that readers will feel, "Wow, this is incredibly easy to understand!" Please maintain a friendly and gentle tone throughout, as if a kind mentor is explaining concepts to a junior colleague.
+
+---
+
+**Requirements:**
+
+1.  **Strictly JSON Output:** You MUST respond ONLY in JSON format. Do not include any other text, greetings, or explanations outside of the JSON structure.
+2.  **Language:** All textual content within the JSON (labels, content, descriptions, reasons) MUST be in **Korean**.
+3.  **`background_knowledge`**:
+    * Provide **exactly two** items of background knowledge that help a reader understand the context of the article.
+    * Each item must have a `label` (a short, catchy title) and `content` (3-4 naturally flowing sentences forming a single paragraph).
+    * **Do NOT summarize the article itself.** Explain the foundational concepts or prior events necessary to grasp the article's significance.
+4.  **`keywords`**:
+    * Extract **up to four** key terms from the article.
+    * Each keyword must have a `term` and a `description` (a friendly, 1-2 sentence explanation).
+5.  **`category`**:
+    * Classify the article into one of the following categories: "금융" (Finance), "증권" (Securities), "글로벌 경제" (Global Economy), or "생활 경제" (Consumer Economy).
+6.  **`related_statistics`**: (CRITICAL)
+    * First, carefully review the **"Available South Korean Economic Indicators"** list provided below.
+    * From this list, select **up to two** indicators that are most directly relevant to the core topic of the article.
+    * **IMPORTANT:** If the article is about foreign economies (e.g., the US FOMC, the Chinese economy), it is NOT relevant to our South Korean database. In this case, you MUST return an **empty list `[]`**.
+    * For each selected indicator, you must return its `indicator_id` from the list and a `reason` (in Korean) explaining why it is relevant to the article.
+
+---
+
+**Available South Korean Economic Indicators:**
+
+{indicators_json_string}
+
+---
+
+**Final Output JSON Structure:**
+```json
+{{
+  "background_knowledge": [
+    {{"label": "...", "content": "..."}},
+    {{"label": "...", "content": "..."}}
+  ],
+  "keywords": [
+    {{"term": "...", "description": "..."}}
+  ],
+  "category": "...",
+  "related_statistics": [
+    {{"indicator_id": "...", "reason": "..."}}
+  ]
+}}
+```
+
+**Article:**
+"""
+
+def get_available_indicators_for_llm(db: Session) -> list[dict]:
     """
-    여러 개의 텍스트를 배치로 처리하여 임베딩 벡터 리스트를 반환합니다.
+    LLM에게 컨텍스트로 제공할, DB에 저장된 유효한 지표 목록을 조회합니다.
+    name이 없는 데이터는 제외합니다.
     """
-    # API 입력 형식에 맞게 줄바꿈 문자를 공백으로 바꿉니다.
-    texts = [text.replace("\n", " ") for text in texts]
-    
-    for attempt in range(rate_limit_retries + 1):
-        try:
-            response = openai_client.embeddings.create(input=texts, model=model)
-            logger.debug(f"{len(texts)}개의 문장에 대한 임베딩 생성 완료")
-            # 각 텍스트에 대한 임베딩 결과를 순서대로 리스트에 담아 반환
-            return [data.embedding for data in response.data]
-        except RateLimitError:
-            if attempt < rate_limit_retries:
-                wait_time = (attempt + 1) * 60
-                logger.warning("OpenAI 임베딩 API 속도 제한 발생. {wait_time}초 후 재시도합니다.")
-                time.sleep(wait_time)
-            else:
-                logger.error("RateLimitError: 재시도 횟수 초과로 임베딩을 포기합니다.")
-                return None
-        except (APIConnectionError, APIStatusError) as e:
-            logger.error(f"OpenAI 임베딩 API 연결 에러 발생: {e.__class__.__name__} - {e}")
-            return None
-        except Exception as e:
-            logger.critical(f"OpenAI 임베딩 API 호출 중 예상치 못한 에러 발생: {e}", exc_info=True)
-            return None
+    indicators = db.query(Indicator).filter(Indicator.name.isnot(None)).all()
+    return [
+        {
+            "indicator_id": ind.indicator_id,
+            "name": ind.name,
+            "notes": ind.notes
+        }
+        for ind in indicators
+    ]
 
 @monitor_performance(include_memory=True)
-def extract_core_sentences(sentence_objects: list, num_sentences: int = 10) -> list[str]:
+def analyze_article_with_llm(db: Session, content: str, model="gpt-4o-mini") -> dict | None:
     """
-    센트로이드(평균) 벡터를 활용하여 기사의 핵심 문장을 추출합니다.
-    
+    기사 원문을 LLM에 보내 배경지식, 키워드, 관련 통계 지표 ID 등을 분석하고 추출합니다.
+
     Args:
-        sentence_objects: ArticleSentence ORM 객체들의 리스트. 각 객체는 .embedding 속성을 가져야 합니다.
-        num_sentences: 추출할 핵심 문장의 개수.
+        db (Session): 데이터베이스 세션.
+        content (str): 분석할 기사 원문 전체.
+        model (str, optional): 사용할 OpenAI 모델. Defaults to "gpt-4o-mini".
 
     Returns:
-        핵심 문장 텍스트들의 리스트.
+        dict | None: 분석 결과가 담긴 딕셔너리 또는 실패 시 None.
     """
-    if not sentence_objects:
-        logger.debug("핵심 문장을 추출할 문장 객체가 없습니다")
-        return []
+    # 1. DB에서 LLM에게 제공할 지표 목록을 가져옵니다.
+    available_indicators = get_available_indicators_for_llm(db)
+    if not available_indicators:
+        logger.warning("DB에서 조회된 경제 지표가 없어 LLM 분석을 건너뜁니다.")
+        return None
     
-    try:
-        # 모든 문장 임베딩을 numpy 배열로 변환합니다.
-        all_embeddings = np.array([s.embedding for s in sentence_objects])
-    
-        # 센트로이드(평균 벡터)를 계산합니다. 이것이 기사 전체의 주제를 나타냅니다.
-        centroid_vector = np.mean(all_embeddings, axis=0)
-    
-        # 각 문장 벡터와 센트로이드 벡터 간의 코사인 유사도를 계산합니다.
-        # A·B / (|A| * |B|)
-        similarities = [
-            np.dot(emb, centroid_vector) / (np.linalg.norm(emb) * np.linalg.norm(centroid_vector))
-            for emb in all_embeddings
-        ]
-    
-        # 유사도 점수와 문장 객체를 묶어서 정렬합니다.
-        sorted_sentences = sorted(zip(similarities, sentence_objects), key=lambda x: x[0], reverse=True)
-    
-        # 가장 유사도가 높은 상위 N개의 문장 텍스트만 반환합니다.
-        return [s.sentence for _, s in sorted_sentences[:num_sentences]]
-    except Exception as e:
-        logger.error(f"핵심 문장 추출 중 에러 발생: {e}", exc_info=True)
-        return []
+    indicators_json_string = json.dumps(available_indicators, ensure_ascii=False, indent=2)
 
-@monitor_performance(include_memory=True)
-def get_enrichment_from_llm(core_sentences: list[str], top_terms: list[str], model="gpt-4o-mini") -> dict | None:
-    """
-    LLM을 호출하여 배경지식과 카테고리를 추출합니다.
-    """
-    system_prompt = f"""
-    당신은 금융 뉴스 분석 전문가입니다. 다음 '핵심 용어'들을 반드시 참고하여, 주어진 '핵심 문장들'의 내용을 분석해주세요.
+    # 2. 프롬프트 템플릿에 지표 목록을 삽입하여 최종 프롬프트를 완성합니다.
+    final_system_prompt = SYSTEM_PROMPT_TEMPLATE.format(
+        indicators_json_string=indicators_json_string
+    )
 
-    [참고할 핵심 용어]
-    {', '.join(top_terms)}
-
-    [분석 작업]
-    1. 'background': '핵심 문장들'의 배경지식을 설명합니다.
-    2. 'category': 기사를 '금융', '증권', '글로벌 경제', '생활 경제' 네 가지 중 가장 적합한 하나로 분류합니다.
-
-    반드시 아래의 JSON 형식으로만 응답해주세요. 키워드는 응답에 포함하지 마세요.
-    {{
-      "background": "...",
-      "category": "..."
-    }}
-    """
-    
-    user_content = "[분석할 핵심 문장들]\n" + "\n".join(core_sentences)
-
+    # 3. 완성된 프롬프트로 LLM API를 호출합니다.
+    result_str = ""  # 에러 로깅을 위해 변수를 미리 선언
     try:
         response = openai_client.chat.completions.create(
             model=model,
             messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_content}
+                {"role": "system", "content": final_system_prompt},
+                {"role": "user", "content": content}
             ],
             response_format={"type": "json_object"},
-            temperature=0,
+            temperature=0.2,
         )
-        result = json.loads(response.choices[0].message.content)
-        logger.debug("LLM 분석 데이터 수신 완료")
+        result_str = response.choices[0].message.content
+        result = json.loads(result_str)
+        logger.info("LLM 분석 데이터 수신 및 파싱 성공")
         return result
-    except json.JSONDecodeError:
-        logger.error("LLM 응답이 유효한 JSON 형식이 아닙니다.")
+        
+    except json.JSONDecodeError as e:
+        logger.error(f"LLM 응답이 유효한 JSON 형식이 아닙니다: {e}\nRaw response: {result_str}")
         return None
     except (APIConnectionError, APIStatusError) as e:
         logger.error(f"OpenAI 챗 API 연결 에러 발생: {e.__class__.__name__} - {e}")

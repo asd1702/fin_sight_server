@@ -12,7 +12,8 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str
     NAVER_CLIENT_ID: str
     NAVER_CLIENT_SECRET: str
-    
+    ECOS_API_KEY: str
+
     # --- 데이터베이스 연결 설정 ---
     DB_HOST: str
     DB_PORT: int
