@@ -26,18 +26,18 @@ def get_today_news(db: Session = Depends(get_db), skip: int = 0, limit: int = 20
     return articles
 
 @router.get("/category/{category}", response_model=List[ArticleSimpleSchema])
-def get_news_by_category(category_name: str, db: Session = Depends(get_db), skip: int = 0, limit: int = 20):
+def get_news_by_category(category: str, db: Session = Depends(get_db), skip: int = 0, limit: int = 20):
     """
     카테고리별 뉴스 목록 반환
     """
     articles = db.query(Article)\
-                .filter(Article.status == ArticleStatus.PROCESSED, Article.category == category_name)\
+                .filter(Article.status == ArticleStatus.PROCESSED, Article.category == category)\
                 .order_by(Article.published_at.desc())\
                 .offset(skip)\
                 .limit(limit)\
                 .all()
     if not articles:
-        raise HTTPException(status_code=404, detail=f"'{category_name}' 카테고리의 기사를 찾을 수 없습니다.")
+        raise HTTPException(status_code=404, detail=f"'{category}' 카테고리의 기사를 찾을 수 없습니다.")
     return articles
 
 @router.get("/{article_id}", response_model=ArticleDetailSchema)
@@ -51,17 +51,17 @@ def get_article_detail(article_id: int, db: Session = Depends(get_db)):
     
     enriched_data = db.query(EnrichedArticle).filter(EnrichedArticle.article_id == article_id).first()
 
-    response_data = {
-        "id": article.id,
-        "title": article.title,
-        "description": article.description,
-        "category": article.category,
-        "published_at": article.published_at,
-        "url": article.url,
-        "background": enriched_data.background if enriched_data and enriched_data.background else None,
-        "keywords": enriched_data.keywords if enriched_data and enriched_data.keywords else [],
-        "related_statistics": enriched_data.related_statistics if enriched_data and enriched_data.related_statistics else [],
-        "statistics_data": enriched_data.statistics_data if enriched_data and enriched_data.statistics_data else [],
-        "images": article.content.images if article.content and article.content.images else []
-    }
-    return response_data
+    # ArticleDetailSchema에 맞는 데이터 구성
+    return ArticleDetailSchema(
+        id=article.id,
+        title=article.title,
+        description=article.description,
+        category=article.category,
+        published_at=article.published_at,
+        url=article.url,
+        background=enriched_data.background if enriched_data and enriched_data.background else None,
+        keywords=enriched_data.keywords if enriched_data and enriched_data.keywords else [],
+        related_statistics=enriched_data.related_statistics if enriched_data and enriched_data.related_statistics else [],
+        statistics_data=enriched_data.statistics_data if enriched_data and enriched_data.statistics_data else [],
+        images=article.content.images if article.content and article.content.images else []
+    )

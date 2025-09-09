@@ -39,7 +39,7 @@ class ArticleDetailSchema(ArticleSimpleSchema):
     model_config = ConfigDict(from_attributes=True)
     
     url: str
-    background: Optional[dict] = None  # JSONB 필드이므로 dict 타입으로 변경
+    background: Optional[list] = []  # JSONB 필드, list 타입으로 수정
     keywords: Optional[list] = []  # JSONB 필드이므로 list 타입으로 변경
     related_statistics: Optional[list] = []  # 새로 추가된 필드
     statistics_data: Optional[list] = []  # 새로 추가된 필드
