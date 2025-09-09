@@ -1,11 +1,61 @@
+# 환경 파일들
 .env
 .env.dev
 .env.prod
-node_modules/
-__pycache__/
-.DS_Store
 
-# Python 패키지 메타데이터
-*.egg-info/
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
 build/
+develop-eggs/
 dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 가상환경
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+node_modules/
+
+# 로그 파일
+*.log
+logs/*.log
+
+# 데이터베이스
+*.db
+*.sqlite
+
+# 백업 파일
+*.bak
+*.backup
+back_up/
