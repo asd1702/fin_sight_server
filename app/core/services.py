@@ -160,14 +160,14 @@ def get_contextual_statistics_for_article(
 
         # 2. 지표의 주기에 따라 조회할 시작 날짜를 동적으로 계산
         frequency = meta.frequency
-        if frequency == 'D':  # 일별 데이터 (예: KOSPI) -> 최근 3개월
-            start_date = end_date - relativedelta(months=3)
-        elif frequency == 'M': # 월별 데이터 (예: CPI) -> 최근 2년 (24개월)
-            start_date = end_date - relativedelta(months=24)
-        elif frequency == 'Q': # 분기별 데이터 (예: GDP) -> 최근 5년
-            start_date = end_date - relativedelta(years=5)
-        else: # 주기가 없거나 예상 못한 경우 -> 기본값 1년
-            start_date = end_date - relativedelta(years=1)
+        if frequency == 'D':  # 일별 데이터 (예: KOSPI) -> 최근 2주 (14일)
+            start_date = end_date - relativedelta(days=14)
+        elif frequency == 'M': # 월별 데이터 (예: CPI) -> 최근 1년 (12개월)
+            start_date = end_date - relativedelta(months=12)
+        elif frequency == 'Q': # 분기별 데이터 (예: GDP) -> 최근 3년 (12분기)
+            start_date = end_date - relativedelta(years=3)
+        else: # 주기가 없거나 예상 못한 경우 -> 기본값 6개월
+            start_date = end_date - relativedelta(months=6)
             logger.info(f"지표 ID '{indicator_id}'의 주기가 '{frequency}'이므로 기본 기간(1년)을 적용합니다.")
 
         # 3. 계산된 기간으로 시계열 데이터(Observation) 조회
