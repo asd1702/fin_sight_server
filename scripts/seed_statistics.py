@@ -35,6 +35,9 @@ def seed_statistics_data():
         with open(INDICATORS_FILE, 'r', encoding='utf-8') as f:
             indicators_meta = json.load(f)
 
+        # 허용되는 indicator_id 집합(관측치 필터링에 사용)
+        allowed_indicator_ids = set()
+
         for meta in tqdm(indicators_meta, desc="지표 메타데이터 저장 중"):
             
             if not meta.get("name"):
@@ -55,6 +58,7 @@ def seed_statistics_data():
                 item_code4=meta.get("item_code4")
             )
             db.merge(indicator) # Primary Key 기준으로 없으면 INSERT, 있으면 UPDATE
+            allowed_indicator_ids.add(meta["indicator_id"])  # 카탈로그에 존재하는 지표만 허용
         db.commit()
         logger.info("지표 메타데이터 저장 완료.")
 
@@ -62,13 +66,21 @@ def seed_statistics_data():
         logger.info(f"'{OBSERVATIONS_FILE}'에서 시계열 데이터를 로드하여 저장합니다.")
         
         observations_batch = []
+        skipped_count = 0
+        skipped_ids = {}
         with open(OBSERVATIONS_FILE, 'r', encoding='utf-8') as f:
             for line in tqdm(f, desc="시계열 데이터 처리 중"):
                 data = json.loads(line)
+                obs_indicator_id = data.get("indicator_id")
+                if obs_indicator_id not in allowed_indicator_ids:
+                    # 카탈로그에 없는 indicator_id는 FK 위반이므로 스킵
+                    skipped_count += 1
+                    skipped_ids[obs_indicator_id] = skipped_ids.get(obs_indicator_id, 0) + 1
+                    continue
                 
                 # SQLAlchemy 모델에 맞는 딕셔너리만 추출
                 observation_dict = {
-                    "indicator_id": data["indicator_id"],
+                    "indicator_id": obs_indicator_id,
                     "date": data["date"],
                     "value": data["value"]
                 }
@@ -88,6 +100,13 @@ def seed_statistics_data():
                 db.execute(stmt)
 
         db.commit()
+        if skipped_count:
+            logger.warning(
+                f"카탈로그에 없는 지표 관측치 {skipped_count}건을 스킵했습니다. (유형 수: {len(skipped_ids)})"
+            )
+            # 상위 몇 개만 샘플로 기록
+            sample = list(skipped_ids.items())[:10]
+            logger.warning(f"예: {sample}")
         logger.info("모든 시계열 데이터 저장 완료.")
         logger.info("통계 DB 구축이 성공적으로 완료되었습니다.")
 

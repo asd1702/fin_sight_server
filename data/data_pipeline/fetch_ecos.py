@@ -25,7 +25,6 @@ assert API_KEY, "ECOS_API_KEY가 .env.dev에 필요합니다."
 # http://ecos.bok.or.kr/api/StatisticSearch/{API_KEY}/json/kr/{startRow}/{endRow}/{STAT_CODE}/{CYCLE}/{START}/{END}/{ITEM_CODE1}/{ITEM_CODE2}/{ITEM_CODE3}
 ECOS_ENDPOINT = "http://ecos.bok.or.kr/api/StatisticSearch/{api}/json/kr/{start}/{end}/{stat}/{cycle}/{sdate}/{edate}"
 
-# 수집 기간(예시): 최근 10년
 START_YEAR = 2020
 TODAY = datetime.today()
 

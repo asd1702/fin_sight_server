@@ -45,12 +45,15 @@ def create_article(db: Session, title: str, url: str, description: str, publishe
         except (ValueError, TypeError):
             raise ValidationError(f"날짜 형식이 올바르지 않습니다: {published_at}")
     
+        main_image_url = images[0] if images else None
+
         new_article = Article(
             title=title.strip(),
             url=url.strip(),
             description=BeautifulSoup(description, "html.parser").get_text(strip=True),
             published_at=parsed_date,
-            status=ArticleStatus.PENDING
+            status=ArticleStatus.PENDING,
+            image_url=main_image_url
         )
         new_article.content = ArticleContent(
             content=content.strip(),
@@ -107,20 +110,23 @@ def save_enriched_data_and_cleanup(db: Session, article: Article, analysis_resul
         background_data = analysis_result.get("background_knowledge")
         keywords_data = analysis_result.get("keywords")
         category_data = analysis_result.get("category", "기타")
+        hashtags = analysis_result.get("hashtags")  # list[str] | None
 
         # enriched_articles 테이블에 저장
         new_enriched = EnrichedArticle(
             article_id=article.id,
             background=background_data,
             keywords=keywords_data,
-            category=category_data
+            category=category_data,
+            hashtags=hashtags,
         )
         db.add(new_enriched)
 
         # articles 테이블의 상태와 카테고리 업데이트
         article.category = category_data
+        article.hashtags = hashtags
         article.status = ArticleStatus.PROCESSED
-    
+
         db.commit()
         logger.info(f"기사 ID {article.id}의 분석 결과 저장 및 정리 완료")
     
@@ -211,6 +217,7 @@ def save_enriched_data_and_cleanup(
         keywords_data = analysis_result.get("keywords")
         category_data = analysis_result.get("category", "기타")
         related_stats_meta = analysis_result.get("related_statistics")
+        hashtags = analysis_result.get("hashtags")  # list[str] or None
 
         # enriched_articles 테이블에 저장할 객체 생성
         # (수정) statistics_data 필드 추가
@@ -220,12 +227,14 @@ def save_enriched_data_and_cleanup(
             keywords=keywords_data,
             category=category_data,
             related_statistics=related_stats_meta,
-            statistics_data=statistics_data  # 새로 가공된 시계열 데이터 저장
+            statistics_data=statistics_data,  # 새로 가공된 시계열 데이터 저장
+            hashtags=hashtags,
         )
         db.add(new_enriched)
 
         # articles 테이블의 상태와 카테고리 업데이트
         article.category = category_data
+        article.hashtags = hashtags
         article.status = ArticleStatus.PROCESSED
     
         db.commit()

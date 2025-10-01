@@ -4,11 +4,11 @@ from newspaper.configuration import Configuration
 from pydantic import ValidationError
 from PIL import Image
 from io import BytesIO
-from ..core.config import settings
+from ..config import settings
 
 from logs.logging_config import get_logger
 from app.schemas.external import NaverNewsItemSchema
-from .monitoring import monitor_performance
+from ..monitoring import monitor_performance
 
 logger = get_logger(__name__)
 

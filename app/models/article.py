@@ -13,12 +13,15 @@ class Article(Base):
     title = Column(Text, nullable=False)
     url = Column(String(1024), unique=True, index=True, nullable=False)
     description = Column(Text, nullable=True)
+    image_url = Column(String(1024), nullable=True)
 
     published_at = Column(DateTime(timezone=True))
     category = Column(String(50), nullable=True, index=True)
     status = Column(Enum(ArticleStatus), nullable=False, default=ArticleStatus.PENDING)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+    hashtags = Column(JSONB, nullable=True)
     
     content = relationship("ArticleContent", uselist=False, back_populates="article", cascade="all, delete-orphan")
     enriched = relationship("EnrichedArticle", uselist=False, back_populates="article", cascade="all, delete-orphan")
@@ -45,6 +48,7 @@ class EnrichedArticle(Base):
     
     related_statistics = Column(JSONB, nullable=True)
     statistics_data = Column(JSONB, nullable=True)
+    hashtags = Column(JSONB, nullable=True)
 
     article = relationship("Article", back_populates="enriched")
 

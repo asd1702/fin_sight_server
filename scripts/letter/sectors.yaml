@@ -1,0 +1,32 @@
+macro:
+  us_economy:
+    queries:
+      - Federal Reserve
+      - US inflation
+      - US GDP
+      - Treasury yields
+      - labor market
+    prompt_key: us_economy
+    size: 12
+
+market:
+  us_market:
+    queries:
+      - S&P 500
+      - Nasdaq
+      - Dow Jones
+      - earnings season
+      - market breadth
+    prompt_key: us_market
+    size: 12
+
+tech:
+  ai_industry:
+    queries:
+      - AI semiconductor
+      - data center capex
+      - chip supply chain
+      - GPU demand
+      - technology regulation
+    prompt_key: tech_industry
+    size: 12

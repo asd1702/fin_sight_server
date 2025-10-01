@@ -13,6 +13,8 @@ dependencies = [
     "alembic",
     "psycopg2-binary",
     "python-dotenv",
+    "pydantic",
+    "pydantic-settings",
     "openai",
     "requests",
     "newspaper3k",

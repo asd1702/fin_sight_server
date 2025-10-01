@@ -1,7 +1,8 @@
 from fastapi import FastAPI, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from prometheus_fastapi_instrumentator import Instrumentator
-from app.api import articles, health
+from app.api import articles, health, letters
 from app.core.monitoring import log_system_metrics
 import asyncio
 
@@ -9,6 +10,15 @@ app = FastAPI(
     title="FinSight API Server",
     description="금융 뉴스 수집 및 분석 시스템",
     version="1.0.0"
+)
+
+# CORS 설정 추가 (프론트엔드와 통신을 위해)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://localhost:3001"],  # React 개발 서버
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 instrumentator = Instrumentator()
@@ -31,6 +41,7 @@ async def startup_event():
 
 app.include_router(articles.router)
 app.include_router(health.router)
+app.include_router(letters.router)
 
 # 정적 파일 서빙 (HTML 뷰어용)
 app.mount("/static", StaticFiles(directory="."), name="static")

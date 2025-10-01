@@ -1,3 +1,9 @@
+import sys
+import os
+
+from fin_sight_server.app.core.news_guide import collectors, processors
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from dotenv import load_dotenv
 from tqdm import tqdm
 import requests
@@ -5,7 +11,7 @@ from openai import OpenAIError
 
 from app.database import SessionLocal
 from app.models import ArticleStatus
-from app.core import collectors, processors, services
+from app.core import services
 from logs.logging_config import get_logger
 
 load_dotenv()
@@ -20,7 +26,7 @@ def run_article_processing_pipeline():
         # --- 1단계: 신규 기사 수집 및 원문 저장 (기존과 동일) ---
         logger.info("\n--- 1단계: 신규 기사 수집 시작 ---")
         #search_keywords = ["금리", "주식", "부동산", "채권", "물가", "환율", "경제성장률", "수출"]
-        search_keywords = ["주식"] # 테스트용
+        search_keywords = ["주식, 금리"] # 테스트용
 
         for keyword in tqdm(search_keywords, desc="키워드별 기사 수집"):
             try:

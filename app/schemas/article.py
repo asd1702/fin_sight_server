@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, HttpUrl
 from datetime import datetime
 from typing import List, Optional, Dict, Any
 
@@ -18,6 +18,8 @@ class ArticleSimpleSchema(BaseModel):
     description: Optional[str] = None
     category: Optional[str] = None
     published_at: datetime
+    image_url: Optional[HttpUrl] = None  # 썸네일 이미지 URL 추가
+    hashtags: Optional[list] = []  # 목록에서도 해시태그 노출 (Top-K 권장)
 
 # --- 통계 지표 응답 형식을 위한 스키마 ---
 class StatisticIndicatorSchema(BaseModel):
@@ -41,6 +43,7 @@ class ArticleDetailSchema(ArticleSimpleSchema):
     url: str
     background: Optional[list] = []  # JSONB 필드, list 타입으로 수정
     keywords: Optional[list] = []  # JSONB 필드이므로 list 타입으로 변경
+    hashtags: Optional[list] = []  # 해시태그 목록
     related_statistics: Optional[list] = []  # 새로 추가된 필드
     statistics_data: Optional[list] = []  # 새로 추가된 필드
     images: Optional[list] = []  # 이미지 URL 목록

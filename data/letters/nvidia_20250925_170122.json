@@ -1,0 +1,81 @@
+{
+  "company": "NVIDIA",
+  "summary": "NVIDIA는 OpenAI에 대한 1,000억 달러 규모의 투자를 발표하며, 대부분의 자금이 자사의 GPU 임대에 사용될 예정이다. 이 협정은 AI 데이터 센터 구축을 위한 것으로, 첫 번째 데이터 센터는 2026년 하반기에 가동될 예정이다. 그러나 이 거래는 AI 붐의 지속 가능성에 대한 우려를 불러일으키고 있다. NVIDIA의 시가총액은 4.3조 달러에 달하며, OpenAI는 5,000억 달러의 기업 가치를 목표로 하고 있다.",
+  "sections": [
+    {
+      "title": "기업 소개",
+      "body": "NVIDIA는 그래픽 처리 장치(GPU) 및 인공지능(AI) 기술을 선도하는 글로벌 기업으로, 다양한 산업에 걸쳐 혁신적인 솔루션을 제공하고 있습니다. 특히, AI와 머신러닝 분야에서의 강력한 입지를 바탕으로, 데이터 센터 및 자율주행차 등 여러 분야에서 활발히 사업을 확장하고 있습니다.",
+      "needs_visual": false,
+      "visual_hint": null,
+      "bullets": []
+    },
+    {
+      "title": "최신 동향 요약",
+      "body": [
+        "NVIDIA는 OpenAI에 1,000억 달러 규모의 투자를 발표하며, 대부분의 자금이 자사의 GPU 임대에 사용될 예정이다.",
+        "첫 번째 AI 데이터 센터는 2026년 하반기에 가동될 예정이며, 데이터 센터 구축 비용은 불확실하다.",
+        "OpenAI는 NVIDIA의 GPU를 임대 방식으로 사용하여 비용을 분산할 계획이다.",
+        "NVIDIA의 CEO인 젠슨 황은 이번 거래를 '거대한 규모'라고 표현했다.",
+        "AI 붐의 지속 가능성에 대한 우려가 제기되고 있으며, 투자자들은 이 거래의 순환적 성격에 대해 의문을 제기하고 있다."
+      ],
+      "needs_visual": false,
+      "visual_hint": null,
+      "bullets": []
+    },
+    {
+      "title": "시가총액 및 실적(개요)",
+      "body": "NVIDIA의 시가총액은 현재 4.3조 달러에 달하며, 이는 AI 및 GPU 판매에 크게 의존하고 있습니다. OpenAI와의 거래는 NVIDIA의 실적에 긍정적인 영향을 미칠 것으로 예상되지만, 구체적인 매출 수치는 아직 공개되지 않았습니다. 향후 AI 데이터 센터의 구축이 완료되면, NVIDIA의 매출 성장은 더욱 가속화될 것으로 보입니다.",
+      "needs_visual": true,
+      "visual_hint": "라인 차트",
+      "bullets": []
+    },
+    {
+      "title": "시장/주가 동향",
+      "body": "최근 NVIDIA의 주가는 OpenAI와의 대규모 투자 발표 이후 변동성이 커졌습니다. 그러나 주요 지수는 개별 주식의 상승에도 불구하고 큰 변화를 보이지 않았습니다. AI 관련 주식들이 전반적으로 상승세를 보였지만, 시장 전체는 여전히 불안정한 모습을 보이고 있습니다.",
+      "needs_visual": false,
+      "visual_hint": null,
+      "bullets": []
+    },
+    {
+      "title": "리스크/규제",
+      "body": "NVIDIA와 OpenAI 간의 거래는 AI 붐의 지속 가능성에 대한 우려를 불러일으키고 있습니다. 투자자들은 이 거래가 실제로 가치를 창출하는지에 대한 의문을 제기하고 있으며, 이는 향후 시장에 부정적인 영향을 미칠 수 있습니다. 또한, AI 기술의 발전에 따른 규제 문제도 중요한 리스크 요소로 작용할 수 있습니다.",
+      "needs_visual": false,
+      "visual_hint": null,
+      "bullets": []
+    }
+  ],
+  "citations": [
+    {
+      "title": "Nvidia's investment in OpenAI will be in cash, and most will be used to lease Nvidia chips",
+      "url": "https://www.cnbc.com/2025/09/24/nvidia-openai-investment-in-cash-mostly-used-to-lease-nvidia-chips.html"
+    },
+    {
+      "title": "Upgraded Volvo EX90 Charges Even Faster & Delivers New & Improved Features",
+      "url": "https://cleantechnica.com/2025/09/24/upgraded-volvo-ex90-charges-even-faster-delivers-new-improved-features/"
+    },
+    {
+      "title": "Infineon CEO says 'physical AI' promises most exciting growth opportunities",
+      "url": "https://biztoc.com/x/d0f7239341c15b30"
+    },
+    {
+      "title": "CNBC Daily Open: Rallies of individual stock couldn't push up major indexes",
+      "url": "https://www.cnbc.com/2025/09/25/cnbc-daily-open-rallies-of-individual-stock-couldnt-push-up-major-indexes.html"
+    },
+    {
+      "title": "10 Stocks Crushing Wall Street, AI Stocks Dominate",
+      "url": "https://www.insidermonkey.com/blog/10-stocks-crushing-wall-street-ai-stocks-dominate-1616297/"
+    },
+    {
+      "title": "Renaissance Technologies Portfolio: 10 Biggest Stocks",
+      "url": "https://www.insidermonkey.com/blog/renaissance-technologies-portfolio-10-biggest-stocks-1616111/"
+    },
+    {
+      "title": "Intel and Apple hold investment talks, no deal in sight",
+      "url": "https://biztoc.com/x/2ba77d7140b072e7"
+    },
+    {
+      "title": "On The One Year Anniversary Of China's Stealthy But Stunning Stock Market Rally",
+      "url": "https://www.zerohedge.com/markets/one-year-anniversary-chinas-stealthy-stunning-stock-market-rally"
+    }
+  ]
+}
