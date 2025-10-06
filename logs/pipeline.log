@@ -2453,3 +2453,219 @@ DETAIL:  Key (batch_id, url)=(2, https://www.cnbc.com/2025/09/24/nvidia-openai-i
 2025-09-30 16:26:31,804 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
 2025-09-30 16:26:31,812 - INFO - app.core.news_letter.processors - LLM 칼럼 초안(JSON) 생성 성공 - 시도 1/3 (topic: company, 기사 8개, 예산 22000)
 2025-09-30 16:26:31,813 - WARNING - app.core.monitoring - 성능 모니터링 - build_column_outline_with_llm: 실행시간=33.79초, 메모리변화=+0.1%, 현재메모리=57.9%
+2025-10-01 19:23:04,976 - INFO - __main__ - Loading catalog from data/catalog_core15.json
+2025-10-01 19:23:05,033 - INFO - __main__ - Upserted 6 indicators
+2025-10-01 19:23:05,038 - INFO - __main__ - Bootstrapped 6 indicator_state rows
+2025-10-01 19:23:05,046 - INFO - __main__ - Done.
+2025-10-01 19:31:51,125 - ERROR - __main__ - Ingestion run failed
+Traceback (most recent call last):
+  File "/home/asd1702/fin_sight_server/scripts/ingest_ecos_incremental.py", line 43, in main
+    run_id = run_incremental(session, recheck_days=args.recheck_days, initial_date=initial_date)
+  File "/home/asd1702/fin_sight_server/app/pipelines/ecos/orchestrator.py", line 26, in run_incremental
+    api = EcosApiClient()
+  File "/home/asd1702/fin_sight_server/app/pipelines/ecos/api_client.py", line 48, in __init__
+    raise ValueError("ECOS_API_KEY not set in environment or passed to EcosApiClient")
+ValueError: ECOS_API_KEY not set in environment or passed to EcosApiClient
+2025-10-01 19:34:23,112 - INFO - __main__ - Ingestion run completed: ddd687a0-81ef-43fc-8418-e4d2a8a30f45
+2025-10-01 19:42:32,413 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.cpi.headline.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:42:33,364 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.ppi.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:42:38,506 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.base.rate.d fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:42:40,320 - INFO - app.pipelines.ecos.orchestrator - Indicator fx.usdkrw.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:42:43,630 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.current.account.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:42:59,582 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.kospi.d fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:42:59,598 - INFO - __main__ - Ingestion run completed: 566d367f-f367-4155-8350-c6ae2111a642
+2025-10-01 19:55:42,043 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/901Y009/M/200001/202509/0///
+2025-10-01 19:55:42,049 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 19:55:42,973 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/901Y009/M/200001/202509/0/// HTTP/1.1" 200 None
+2025-10-01 19:55:45,921 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 19:55:45,924 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.cpi.headline.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:55:45,928 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/404Y014/M/200001/202509/*AA///
+2025-10-01 19:55:45,930 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 19:55:46,386 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/404Y014/M/200001/202509/*AA/// HTTP/1.1" 200 None
+2025-10-01 19:55:46,756 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 19:55:46,758 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.ppi.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:55:46,761 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/722Y001/M/200001/202509/0101000///
+2025-10-01 19:55:46,762 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 19:55:47,086 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/722Y001/M/200001/202509/0101000/// HTTP/1.1" 200 None
+2025-10-01 19:55:49,612 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 19:55:49,615 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.base.rate.d fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:55:49,618 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/731Y004/M/200001/202509/0000001/0000100//
+2025-10-01 19:55:49,619 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 19:55:52,572 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/731Y004/M/200001/202509/0000001/0000100// HTTP/1.1" 200 None
+2025-10-01 19:55:54,309 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 19:55:54,311 - INFO - app.pipelines.ecos.orchestrator - Indicator fx.usdkrw.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:55:54,318 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/301Y017/M/200001/202509/SA000///
+2025-10-01 19:55:54,320 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 19:55:54,689 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/301Y017/M/200001/202509/SA000/// HTTP/1.1" 200 None
+2025-10-01 19:55:55,143 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 19:55:55,145 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.current.account.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:55:55,148 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/802Y001/D/20000101/20250930/0001000///
+2025-10-01 19:55:55,150 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 19:55:55,810 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/802Y001/D/20000101/20250930/0001000/// HTTP/1.1" 200 None
+2025-10-01 19:55:57,078 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 19:55:57,081 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.kospi.d fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:55:57,116 - INFO - __main__ - Ingestion run completed: 3c0f3776-9365-4454-a409-7cd9adcafdf6
+2025-10-01 19:59:29,706 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/901Y009/M/200001/202509/0///
+2025-10-01 19:59:29,712 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 19:59:30,410 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/901Y009/M/200001/202509/0/// HTTP/1.1" 200 None
+2025-10-01 19:59:30,593 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 19:59:30,596 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.cpi.headline.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:59:30,599 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/404Y014/M/200001/202509/*AA///
+2025-10-01 19:59:30,601 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 19:59:30,959 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/404Y014/M/200001/202509/*AA/// HTTP/1.1" 200 None
+2025-10-01 19:59:31,161 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 19:59:31,163 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.ppi.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:59:31,166 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/722Y001/M/200001/202509/0101000///
+2025-10-01 19:59:31,167 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 19:59:31,557 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/722Y001/M/200001/202509/0101000/// HTTP/1.1" 200 None
+2025-10-01 19:59:31,912 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 19:59:31,915 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.base.rate.d fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:59:31,918 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/731Y004/M/200001/202509/0000001/0000100//
+2025-10-01 19:59:31,920 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 19:59:32,345 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/731Y004/M/200001/202509/0000001/0000100// HTTP/1.1" 200 None
+2025-10-01 19:59:32,698 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 19:59:32,701 - INFO - app.pipelines.ecos.orchestrator - Indicator fx.usdkrw.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:59:32,704 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/301Y017/M/200001/202509/SA000///
+2025-10-01 19:59:32,705 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 19:59:33,161 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/301Y017/M/200001/202509/SA000/// HTTP/1.1" 200 None
+2025-10-01 19:59:33,420 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 19:59:33,422 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.current.account.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:59:33,426 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/802Y001/D/20000101/20250930/0001000///
+2025-10-01 19:59:33,428 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 19:59:34,523 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/802Y001/D/20000101/20250930/0001000/// HTTP/1.1" 200 None
+2025-10-01 19:59:34,956 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 19:59:34,958 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.kospi.d fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 19:59:34,965 - INFO - __main__ - Ingestion run completed: 3bb4a081-d41d-4af8-a72f-e4b9872c8f4c
+2025-10-01 19:59:59,072 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/901Y009/M/200001/202509/0///
+2025-10-01 19:59:59,076 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 20:00:00,437 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/901Y009/M/200001/202509/0/// HTTP/1.1" 200 None
+2025-10-01 20:00:02,267 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 20:00:02,270 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.cpi.headline.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:00:02,273 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/404Y014/M/200001/202509/*AA///
+2025-10-01 20:00:02,275 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 20:00:02,534 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/404Y014/M/200001/202509/*AA/// HTTP/1.1" 200 None
+2025-10-01 20:00:02,680 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 20:00:02,682 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.ppi.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:00:02,685 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/722Y001/M/200001/202509/0101000///
+2025-10-01 20:00:02,686 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 20:00:02,987 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/722Y001/M/200001/202509/0101000/// HTTP/1.1" 200 None
+2025-10-01 20:00:03,182 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 20:00:03,185 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.base.rate.d fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:00:03,188 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/731Y004/M/200001/202509/0000001/0000100//
+2025-10-01 20:00:03,190 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 20:00:03,557 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/731Y004/M/200001/202509/0000001/0000100// HTTP/1.1" 200 None
+2025-10-01 20:00:03,679 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 20:00:03,681 - INFO - app.pipelines.ecos.orchestrator - Indicator fx.usdkrw.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:00:03,684 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/301Y017/M/200001/202509/SA000///
+2025-10-01 20:00:03,686 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 20:00:04,260 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/301Y017/M/200001/202509/SA000/// HTTP/1.1" 200 None
+2025-10-01 20:00:04,436 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 20:00:04,439 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.current.account.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:00:04,441 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/802Y001/D/20000101/20250930/0001000///
+2025-10-01 20:00:04,442 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 20:00:05,012 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/802Y001/D/20000101/20250930/0001000/// HTTP/1.1" 200 None
+2025-10-01 20:00:05,494 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 20:00:05,497 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.kospi.d fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:00:05,508 - INFO - __main__ - Ingestion run completed: 4bea89a9-e6d1-41ba-9aa1-b4e6e5094317
+2025-10-01 20:13:34,353 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/901Y009/M/200001/202509/0///
+2025-10-01 20:13:34,357 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 20:13:34,987 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/901Y009/M/200001/202509/0/// HTTP/1.1" 200 None
+2025-10-01 20:13:35,215 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 20:13:35,218 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.cpi.headline.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:13:35,222 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/404Y014/M/200001/202509/*AA///
+2025-10-01 20:13:35,224 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 20:13:35,532 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/404Y014/M/200001/202509/*AA/// HTTP/1.1" 200 None
+2025-10-01 20:13:35,668 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 20:13:35,671 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.ppi.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:13:35,674 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/722Y001/M/200001/202509/0101000///
+2025-10-01 20:13:35,684 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 20:13:36,038 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/722Y001/M/200001/202509/0101000/// HTTP/1.1" 200 None
+2025-10-01 20:13:36,464 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 20:13:36,467 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.base.rate.d fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:13:36,470 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/731Y004/M/200001/202509/0000001/0000100//
+2025-10-01 20:13:36,472 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 20:13:37,141 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/731Y004/M/200001/202509/0000001/0000100// HTTP/1.1" 200 None
+2025-10-01 20:13:37,476 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 20:13:37,479 - INFO - app.pipelines.ecos.orchestrator - Indicator fx.usdkrw.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:13:37,482 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/301Y017/M/200001/202509/SA000///
+2025-10-01 20:13:37,485 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 20:13:37,844 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/301Y017/M/200001/202509/SA000/// HTTP/1.1" 200 None
+2025-10-01 20:13:37,950 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 20:13:37,953 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.current.account.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:13:37,956 - DEBUG - app.pipelines.ecos.api_client - ECOS URL https://ecos.bok.or.kr/api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/802Y001/D/20000101/20250930/0001000///
+2025-10-01 20:13:37,958 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): ecos.bok.or.kr:443
+2025-10-01 20:13:38,431 - DEBUG - urllib3.connectionpool - https://ecos.bok.or.kr:443 "GET /api/StatisticSearch/J36Y0CNVMK1HCDOIPTH1/json/kr/1/1000/802Y001/D/20000101/20250930/0001000/// HTTP/1.1" 200 None
+2025-10-01 20:13:40,308 - DEBUG - app.pipelines.ecos.api_client - ECOS response keys=['StatisticSearch']
+2025-10-01 20:13:40,311 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.kospi.d fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:13:40,331 - INFO - __main__ - Ingestion run completed: 41ca0cbe-114c-4a24-a8c6-81d69765e159
+2025-10-01 20:14:16,886 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.cpi.headline.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:14:17,291 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.ppi.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:14:18,203 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.base.rate.d fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:14:18,798 - INFO - app.pipelines.ecos.orchestrator - Indicator fx.usdkrw.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:14:19,272 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.current.account.m fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:14:20,501 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.kospi.d fetched=0 valid=0 inserted=0 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:14:20,536 - INFO - __main__ - Ingestion run completed: c0e6f0e6-4d64-449c-a37a-9e9b9f6bff38
+2025-10-01 20:15:45,680 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.cpi.headline.m fetched=308 valid=308 inserted=308 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:15:46,617 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.ppi.m fetched=308 valid=308 inserted=308 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:16:03,204 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.base.rate.d fetched=9404 valid=9404 inserted=9404 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:16:03,767 - INFO - app.pipelines.ecos.orchestrator - Indicator fx.usdkrw.m fetched=309 valid=309 inserted=309 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:16:04,409 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.current.account.m fetched=307 valid=307 inserted=307 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:16:17,099 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.kospi.d fetched=6360 valid=6360 inserted=6360 rejected=0 start=2000-01-01 end=2025-09-30
+2025-10-01 20:16:17,121 - INFO - __main__ - Ingestion run completed: 5d8a475b-e915-471b-aefc-4d31c2e8e366
+2025-10-01 20:17:47,620 - INFO - __main__ - Exported 308 rows for kr.cpi.headline.m
+2025-10-01 20:17:47,629 - INFO - __main__ - Exported 308 rows for kr.ppi.m
+2025-10-01 20:17:47,818 - INFO - __main__ - Exported 9404 rows for kr.base.rate.d
+2025-10-01 20:17:47,835 - INFO - __main__ - Exported 309 rows for fx.usdkrw.m
+2025-10-01 20:17:47,843 - INFO - __main__ - Exported 307 rows for kr.current.account.m
+2025-10-01 20:17:47,962 - INFO - __main__ - Exported 6360 rows for kr.kospi.d
+2025-10-01 20:17:47,962 - INFO - __main__ - Export complete. Total rows=16996 -> /home/asd1702/fin_sight_server/data/observations_core15.jsonl
+2025-10-01 20:21:24,074 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.cpi.headline.m fetched=1 valid=1 inserted=1 rejected=0 start=2025-08-02 end=2025-09-30
+2025-10-01 20:21:24,370 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.ppi.m fetched=1 valid=1 inserted=1 rejected=0 start=2025-08-02 end=2025-09-30
+2025-10-01 20:21:24,690 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.base.rate.d fetched=7 valid=7 inserted=7 rejected=0 start=2025-09-24 end=2025-09-30
+2025-10-01 20:21:25,237 - INFO - app.pipelines.ecos.orchestrator - Indicator fx.usdkrw.m fetched=1 valid=1 inserted=1 rejected=0 start=2025-09-02 end=2025-09-30
+2025-10-01 20:21:25,510 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.current.account.m fetched=1 valid=1 inserted=1 rejected=0 start=2025-07-02 end=2025-09-30
+2025-10-01 20:21:25,839 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.kospi.d fetched=5 valid=5 inserted=5 rejected=0 start=2025-09-24 end=2025-09-30
+2025-10-01 20:21:25,871 - INFO - __main__ - Ingestion run completed: 9068099a-b501-4e38-a6f6-bc9ecdd43a8c
+2025-10-01 21:17:56,231 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 2.2%, 메모리: 71.0% (여유: 2.2GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 21:22:57,236 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 2.1%, 메모리: 75.5% (여유: 1.9GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 21:29:15,016 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 3.9%, 메모리: 80.9% (여유: 1.4GB), 디스크: 6.8% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 21:29:29,502 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 3.4%, 메모리: 80.9% (여유: 1.4GB), 디스크: 6.8% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 21:30:21,500 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 3.5%, 메모리: 79.6% (여유: 1.5GB), 디스크: 6.8% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 21:34:41,790 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 3.3%, 메모리: 79.4% (여유: 1.6GB), 디스크: 6.8% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 21:35:07,759 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 4.3%, 메모리: 77.7% (여유: 1.7GB), 디스크: 6.8% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 21:40:08,762 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 2.8%, 메모리: 80.8% (여유: 1.5GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 21:44:14,297 - INFO - __main__ - 동적 company 실행 (key=samsung) - sectors.yaml 미정의, 기본 설정 사용
+2025-10-01 21:44:14,678 - ERROR - app.core.news_letter.collectors - newspaper3k 파싱 중 에러 발생 (URL: https://thesportsrush.com/nfl-news-ex-alabama-star-wants-nil-to-go-back-to-its-true-form-cites-johnny-manziels-texas-am-jersey-sales-as-example/): ArticleException - Article `download()` failed with 429 Client Error: Too Many Requests for url: https://thesportsrush.com/nfl-news-ex-alabama-star-wants-nil-to-go-back-to-its-true-form-cites-johnny-manziels-texas-am-jersey-sales-as-example/ on URL https://thesportsrush.com/nfl-news-ex-alabama-star-wants-nil-to-go-back-to-its-true-form-cites-johnny-manziels-texas-am-jersey-sales-as-example/
+2025-10-01 21:44:14,678 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.28초, 메모리변화=+0.0%, 현재메모리=82.9%
+2025-10-01 21:44:15,303 - ERROR - app.core.news_letter.collectors - newspaper3k 파싱 중 에러 발생 (URL: https://thesportsrush.com/nfl-news-ex-alabama-star-wants-nil-to-go-back-to-its-true-form-cites-johnny-manziels-texas-am-jersey-sales-as-example/): ArticleException - Article `download()` failed with 429 Client Error: Too Many Requests for url: https://thesportsrush.com/nfl-news-ex-alabama-star-wants-nil-to-go-back-to-its-true-form-cites-johnny-manziels-texas-am-jersey-sales-as-example/ on URL https://thesportsrush.com/nfl-news-ex-alabama-star-wants-nil-to-go-back-to-its-true-form-cites-johnny-manziels-texas-am-jersey-sales-as-example/
+2025-10-01 21:44:15,304 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.63초, 메모리변화=+0.0%, 현재메모리=82.9%
+2025-10-01 21:44:15,486 - ERROR - app.core.news_letter.collectors - newspaper3k 파싱 중 에러 발생 (URL: https://www.fastcompany.com/91412820/ai-investment-consumer-spending-economy-chat-gpt): ArticleException - Article `download()` failed with 403 Client Error: Forbidden for url: https://www.fastcompany.com/91412820/ai-investment-consumer-spending-economy-chat-gpt on URL https://www.fastcompany.com/91412820/ai-investment-consumer-spending-economy-chat-gpt
+2025-10-01 21:44:15,487 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.17초, 메모리변화=+0.0%, 현재메모리=82.9%
+2025-10-01 21:44:15,680 - ERROR - app.core.news_letter.collectors - newspaper3k 파싱 중 에러 발생 (URL: https://www.fastcompany.com/91412820/ai-investment-consumer-spending-economy-chat-gpt): ArticleException - Article `download()` failed with 403 Client Error: Forbidden for url: https://www.fastcompany.com/91412820/ai-investment-consumer-spending-economy-chat-gpt on URL https://www.fastcompany.com/91412820/ai-investment-consumer-spending-economy-chat-gpt
+2025-10-01 21:44:15,681 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.19초, 메모리변화=+0.0%, 현재메모리=82.9%
+2025-10-01 21:44:15,716 - INFO - app.core.news_letter.articles - prepare_articles 완료: usable=8/12
+2025-10-01 21:44:15,724 - INFO - __main__ - 이미 outline 존재 (batch_id=12) - 재생성 생략. --fresh 로 새로 생성 가능
+2025-10-01 21:45:09,765 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 4.6%, 메모리: 82.5% (여유: 1.3GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 21:50:10,769 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 1.9%, 메모리: 80.5% (여유: 1.5GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 21:55:11,774 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 2.6%, 메모리: 80.1% (여유: 1.5GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:00:12,778 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 2.8%, 메모리: 79.2% (여유: 1.6GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:02:19,656 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 8.1%, 메모리: 86.6% (여유: 1.0GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:02:19,661 - WARNING - app.core.monitoring - 메모리 사용량 높음: 86.6%
+2025-10-01 22:11:09,068 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 3.0%, 메모리: 83.7% (여유: 1.2GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:11:19,937 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 3.4%, 메모리: 85.2% (여유: 1.1GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:11:19,938 - WARNING - app.core.monitoring - 메모리 사용량 높음: 85.2%
+2025-10-01 22:14:55,796 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 7.7%, 메모리: 83.4% (여유: 1.3GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:16:40,626 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 2.3%, 메모리: 82.8% (여유: 1.3GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:17:00,862 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 3.1%, 메모리: 84.4% (여유: 1.2GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:22:01,866 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 1.9%, 메모리: 83.0% (여유: 1.3GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:27:02,870 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 2.7%, 메모리: 83.0% (여유: 1.3GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:32:03,873 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 1.9%, 메모리: 83.1% (여유: 1.3GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:37:04,877 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 2.3%, 메모리: 83.1% (여유: 1.3GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:42:05,883 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 1.9%, 메모리: 83.1% (여유: 1.3GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:47:06,888 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 3.4%, 메모리: 83.2% (여유: 1.3GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:52:07,892 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 2.7%, 메모리: 83.2% (여유: 1.3GB), 디스크: 6.7% (전체: 1006.9GB, 여유: 887.7GB)
+2025-10-01 22:57:08,894 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 1.6%, 메모리: 85.3% (여유: 1.1GB), 디스크: 6.8% (전체: 1006.9GB, 여유: 887.3GB)
+2025-10-01 22:57:08,898 - WARNING - app.core.monitoring - 메모리 사용량 높음: 85.3%
+2025-10-01 23:02:10,955 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 1.9%, 메모리: 85.4% (여유: 1.1GB), 디스크: 6.8% (전체: 1006.9GB, 여유: 887.0GB)
+2025-10-01 23:02:10,955 - WARNING - app.core.monitoring - 메모리 사용량 높음: 85.4%
+2025-10-01 23:07:11,970 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 1.2%, 메모리: 84.0% (여유: 1.2GB), 디스크: 6.9% (전체: 1006.9GB, 여유: 886.1GB)

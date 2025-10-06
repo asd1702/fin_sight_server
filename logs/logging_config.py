@@ -1,22 +1,30 @@
 import logging
 import os
+from typing import List
 
-LOG_DIR = "logs"
-if not os.path.exists(LOG_DIR):
-    os.makedirs(LOG_DIR)
-
-# 환경 변수로 로그 레벨 조정 가능하게 설정
+LOG_DIR = os.getenv("LOG_DIR", "logs")
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
+ENABLE_FILE_LOG = os.getenv("LOG_TO_FILE", "1").lower() not in ("0", "false", "no")
+
 log_level = getattr(logging, LOG_LEVEL, logging.INFO)
+
+handlers: List[logging.Handler] = [logging.StreamHandler()]
+
+if ENABLE_FILE_LOG:
+    try:
+        if not os.path.exists(LOG_DIR):
+            os.makedirs(LOG_DIR, exist_ok=True)
+        file_path = os.path.join(LOG_DIR, "pipeline.log")
+        handlers.insert(0, logging.FileHandler(file_path, encoding="utf-8"))
+    except Exception as e:  # PermissionError or others
+        # Fallback: only stdout logging
+        print(f"[logging] WARNING: file logging disabled ({e}). Using stdout only.")
 
 logging.basicConfig(
     level=log_level,
     format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
-    handlers=[
-        logging.FileHandler(f"{LOG_DIR}/pipeline.log", encoding='utf-8'),
-        logging.StreamHandler()
-    ]
+    handlers=handlers,
 )
 
-def get_logger(name):
+def get_logger(name: str) -> logging.Logger:
     return logging.getLogger(name)

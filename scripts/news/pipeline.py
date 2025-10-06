@@ -1,8 +1,18 @@
 import sys
 import os
+from pathlib import Path
 
-from fin_sight_server.app.core.news_guide import collectors, processors
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Ensure project root (two levels up: scripts/news -> project root)
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+# Prefer direct 'app...' import once root is on sys.path
+try:
+    from app.core.news_guide import collectors, processors  # type: ignore
+except ModuleNotFoundError:
+    # fallback to previous namespaced style if executed from outside root
+    from fin_sight_server.app.core.news_guide import collectors, processors  # type: ignore
 
 from dotenv import load_dotenv
 from tqdm import tqdm

@@ -29,6 +29,11 @@ class LetterListItem(BaseModel):
     class Config:
         from_attributes = True
 
+class BulkPublishResponse(BaseModel):
+    published: int
+    updated_batch_ids: List[int]
+    skipped_already_delivered: int
+
 @router.get("/{sector}/{key}", response_model=LetterOutlineSchema)
 def get_latest_letter(sector: str, key: str, db: Session = Depends(get_db)):
     batch = (

@@ -35,22 +35,22 @@ letters.outlines  (id, batch_id UNIQUE, outline JSONB, status, outline_version, 
 ## 기본 실행 예시
 ```bash
 # 사용 가능한 (sector,key) 목록
-python scripts/letter/run_sector.py --list
+python3 scripts/letter/run_sector.py --list
 
 # 특정 섹터 구성 상세
-python scripts/letter/run_sector.py --show-config macro
+python3 scripts/letter/run_sector.py --show-config macro
 
 # 거시경제(us_economy)
-python scripts/letter/run_sector.py --sector macro --key us_economy
+python3 scripts/letter/run_sector.py --sector macro --key us_economy
 
 # 시장(us_market) 기사 목표 18개로 실행
-python scripts/letter/run_sector.py --sector market --key us_market --size 18
+python3 scripts/letter/run_sector.py --sector market --key us_market --size 18
 
 # 동적 company (sectors.yaml 필요 없음)
-python scripts/letter/run_sector.py --sector company --key nvidia
+python3 scripts/letter/run_sector.py --sector company --key 회사이름
 
 # 기존 outline 무시하고 새로 생성
-python scripts/letter/run_sector.py --sector company --key nvidia --fresh
+python3 scripts/letter/run_sector.py --sector company --key 회사이름 --fresh
 ```
 
 실행 성공 시 출력:

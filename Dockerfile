@@ -1,35 +1,59 @@
-# Python 3.10 기반 이미지 사용
-FROM python:3.10-slim AS base
+    ## =============================
+    ## Multi-stage build (smaller + faster rebuilds)
+    ## =============================
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+    ## --- Builder stage: install dependencies into wheels layer ---
+    FROM python:3.10-slim AS builder
+    ENV PYTHONDONTWRITEBYTECODE=1 \
+        PYTHONUNBUFFERED=1 \
+        PIP_NO_CACHE_DIR=1
+    WORKDIR /app
 
-# 작업 디렉토리 설정
-WORKDIR /app
+    # Build deps only here (will not be in final image)
+    RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        gcc \
+        libpq-dev \
+        curl \
+        && rm -rf /var/lib/apt/lists/*
 
-# 시스템 패키지 업데이트 및 필요한 패키지 설치
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    g++ \
-    libpq-dev \
-    netcat-openbsd \
-    && rm -rf /var/lib/apt/lists/*
+    COPY requirements.txt .
+    # If BuildKit available, caching speeds up (optional hint)
+    RUN pip install --upgrade pip && pip wheel --wheel-dir /wheels -r requirements.txt
 
-# Python 의존성 파일 복사 및 설치
-COPY requirements.txt ./
-RUN pip install -r requirements.txt
+    ## --- Runtime stage: minimal runtime with wheels installed ---
+    FROM python:3.10-slim AS runtime
+    ENV PYTHONDONTWRITEBYTECODE=1 \
+        PYTHONUNBUFFERED=1 \
+        PIP_NO_CACHE_DIR=1
+    WORKDIR /app
 
-# 애플리케이션 코드 복사
-COPY . .
+    # Only runtime libs (no compilers)
+    RUN apt-get update && apt-get install -y --no-install-recommends \
+        libpq-dev \
+        netcat-openbsd \
+        curl \
+        && rm -rf /var/lib/apt/lists/*
 
-# 권한 분리를 위한 비루트 사용자 생성
-RUN useradd -m appuser && chown -R appuser:appuser /app
-USER appuser
+    # Copy wheels from builder and install
+    COPY --from=builder /wheels /wheels
+    RUN pip install --no-cache-dir /wheels/* && rm -rf /wheels
 
-# 포트 노출
-EXPOSE 8000
+    # Copy application source
+    COPY . .
 
-# 애플리케이션 실행
-ENTRYPOINT ["/app/docker-entrypoint.sh"]
+    # Ensure entrypoint is executable (in case git perms lost)
+    RUN chmod +x /app/docker-entrypoint.sh
+
+    # Create non-root user
+    RUN useradd -m -r appuser && chown -R appuser:appuser /app
+    USER appuser
+
+    EXPOSE 8000
+
+    # (Optional) Container healthcheck (FastAPI health endpoint)
+    HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+    CMD curl -f http://127.0.0.1:8000/health || exit 1
+
+    ENTRYPOINT ["/app/docker-entrypoint.sh"]
 

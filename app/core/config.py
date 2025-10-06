@@ -27,15 +27,10 @@ class Settings(BaseSettings):
     NEWS_DATA_API_KEY: str
 
     # --- 데이터베이스 연결 설정 ---
-    DB_HOST: str
-    DB_PORT: int
-    DB_NAME: str
-    DB_USER: str
-    DB_PASSWORD: str
     DATABASE_URL: str
     
     # --- 외부 서비스 URL ---
-    REDIS_URL: str
+#    REDIS_URL: str
 
     # --- API 서버 설정 ---
     DEBUG: bool
@@ -47,8 +42,8 @@ class Settings(BaseSettings):
     RETRY_ATTEMPTS: int
 
     # --- 임베딩 모델 설정 ---
-    EMBEDDING_MODEL: str
-    EMBEDDING_DIMENSION: int
+#    EMBEDDING_MODEL: str
+#    EMBEDDING_DIMENSION: int
 
     # --- LLM 설정 ---
     LLM_MODEL: str

@@ -1,0 +1,14 @@
+services:
+  app:
+    # Override: point to external RDS via environment and secrets file
+    environment:
+      # Provide these via an external, uncommitted secrets file or CI/CD
+      # RDS_DB_USER, RDS_DB_PASSWORD, RDS_DB_HOST, RDS_DB_NAME can be set in a secrets.env (ignored) then: docker compose --env-file secrets.env ...
+      RDS_DB_USER: ${RDS_DB_USER:-postgres}
+      RDS_DB_PASSWORD: ${RDS_DB_PASSWORD:-change_me}
+      RDS_DB_HOST: ${RDS_DB_HOST:-fin-sight-db.cdwkgswgkayp.ap-northeast-2.rds.amazonaws.com}
+      RDS_DB_NAME: ${RDS_DB_NAME:-postgres}
+      # DATABASE_URL assembled inline from the vars above
+      DATABASE_URL: postgresql://${RDS_DB_USER}:${RDS_DB_PASSWORD}@${RDS_DB_HOST}:5432/${RDS_DB_NAME}
+      # If your RDS forces SSL, append ?sslmode=require (uncomment next line and comment previous)
+      # DATABASE_URL: postgresql://${RDS_DB_USER}:${RDS_DB_PASSWORD}@${RDS_DB_HOST}:5432/${RDS_DB_NAME}?sslmode=require

@@ -3,6 +3,28 @@ set -euo pipefail
 
 echo "[entrypoint] Starting FinSight container..."
 
+# NOTE: We run as non-root (appuser). Avoid chown loops; rely on build-time ownership.
+# If logs dir missing (e.g., was pruned), recreate it (best-effort, ignore failures).
+if [ ! -d "/app/logs" ]; then
+    mkdir -p /app/logs 2>/dev/null || true
+fi
+
+# Build uvicorn runtime flags based on env (production quiet mode support)
+APP_LOG_LEVEL=${LOG_LEVEL:-info}
+UVICORN_FLAGS="--host 0.0.0.0 --port 8000"
+
+if [[ "${QUIET:-0}" == "1" ]]; then
+  UVICORN_FLAGS+=" --log-level warning --no-access-log"
+else
+  # Allow disabling access log separately
+  if [[ "${UVICORN_NO_ACCESS_LOG:-0}" == "1" ]]; then
+    UVICORN_FLAGS+=" --no-access-log"
+  fi
+  # Normalize log level to lower-case
+  lc_level=$(echo "$APP_LOG_LEVEL" | tr 'A-Z' 'a-z')
+  UVICORN_FLAGS+=" --log-level ${lc_level}"
+fi
+
 if [[ $# -eq 0 && -n "${DATABASE_URL:-}" ]]; then
   host_and_port=$(python - <<'PY'
 import os, urllib.parse as up
@@ -43,8 +65,8 @@ if [[ $# -eq 0 ]]; then
   else
     echo "[entrypoint] Skipping migrations"
   fi
-  echo "[entrypoint] Launching API server (uvicorn)"
-  exec uvicorn app.main:app --host 0.0.0.0 --port 8000
+  echo "[entrypoint] Launching API server (uvicorn) flags: ${UVICORN_FLAGS}" 
+  exec uvicorn app.main:app ${UVICORN_FLAGS}
 else
   echo "[entrypoint] Custom command detected, bypassing server + migrations: $*"
   exec "$@"

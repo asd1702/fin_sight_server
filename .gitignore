@@ -1,3 +1,10 @@
+# Ignore local secret overrides and pyc
+*.pyc
+__pycache__/
+.env.local
+docker-compose.override.yml
+secrets.env
+*.log
 # 환경 파일들
 .env
 .env.dev

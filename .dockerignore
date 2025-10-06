@@ -1,10 +1,19 @@
-# Python
+# Git / Version Control
+.git
+.gitignore
+
+# Docker files
+Dockerfile
+docker-compose.yml
+docker-compose.prod.yml
+.dockerignore
+
+# Python cache & artifacts
 __pycache__
 *.pyc
 *.pyo
 *.pyd
 .Python
-env
 pip-log.txt
 pip-delete-this-directory.txt
 .tox
@@ -15,12 +24,11 @@ nosetests.xml
 coverage.xml
 *.cover
 *.log
-.git
 .mypy_cache
 .pytest_cache
 .hypothesis
 
-# Virtual environments
+# Virtual environments & Environment variables
 .env
 .venv
 env/
@@ -28,15 +36,17 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.env.dev
+.env.prod
 
-# IDEs
+# IDEs & Editor files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS
+# OS generated files
 .DS_Store
 .DS_Store?
 ._*
@@ -45,13 +55,16 @@ venv.bak/
 ehthumbs.db
 Thumbs.db
 
-# Project specific
-logs/
+# Project specific - data, docs, local databases
 data/
+docs/
+archive/
 *.db
 *.sqlite
-.env.dev
-.env.prod
+
+# Documentation
+README.md
+LETTER_PIPELINE.md
 
 # Node modules (if any)
 node_modules/
