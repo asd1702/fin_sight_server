@@ -1,10 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Header
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import or_, text
 from typing import List
 import logging
 import asyncio
+from datetime import datetime, timedelta, timezone
+import os
 
 from ..database import get_db
 from ..models import Article, EnrichedArticle, ArticleStatus
@@ -16,6 +18,22 @@ router = APIRouter(
     prefix="/api/articles",
     tags=["articles"]
 )
+
+# --- Admin protection (simple header-based) ---
+ADMIN_API_KEY = os.getenv("ADMIN_API_KEY")
+UNSAFE_ADMIN_MODE = str(os.getenv("UNSAFE_ADMIN_MODE", "")).lower() in ("1", "true", "yes", "on")
+
+def require_admin(x_admin_key: str | None = Header(default=None, alias="X-ADMIN-KEY")):
+    # Temporary unsafe bypass for rapid iteration (DO NOT USE IN PRODUCTION)
+    if UNSAFE_ADMIN_MODE:
+        logger.warning("UNSAFE_ADMIN_MODE enabled: bypassing admin authentication for admin endpoints")
+        return True
+    if not ADMIN_API_KEY:
+        # If not configured, block admin endpoints by default
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Admin API not configured")
+    if x_admin_key != ADMIN_API_KEY:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized")
+    return True
 
 @router.get("/today", response_model=List[ArticleSimpleSchema])
 async def get_today_news(db: Session = Depends(get_db), skip: int = 0, limit: int = 20):
@@ -29,16 +47,18 @@ async def get_today_news(db: Session = Depends(get_db), skip: int = 0, limit: in
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="잘못된 쿼리 파라미터입니다: skip은 0 이상, limit은 1-100 사이여야 합니다"
             )
-        
-        articles = db.query(Article)\
-                    .filter(Article.status == ArticleStatus.PROCESSED)\
-                    .order_by(Article.published_at.desc())\
-                    .offset(skip)\
-                    .limit(limit)\
-                    .all()
-        
+
+        articles = (
+            db.query(Article)
+            .filter(Article.status == ArticleStatus.PROCESSED, Article.is_deleted == False)
+            .order_by(Article.published_at.desc())
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
+
         return articles
-        
+
     except HTTPException:
         raise
     except SQLAlchemyError as e:
@@ -66,28 +86,34 @@ async def get_news_by_category(category: str, db: Session = Depends(get_db), ski
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="카테고리 파라미터는 필수이며 빈 값일 수 없습니다"
             )
-        
+
         if skip < 0 or limit <= 0 or limit > 100:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="잘못된 쿼리 파라미터입니다: skip은 0 이상, limit은 1-100 사이여야 합니다"
             )
-        
-        articles = db.query(Article)\
-                    .filter(Article.status == ArticleStatus.PROCESSED, Article.category == category)\
-                    .order_by(Article.published_at.desc())\
-                    .offset(skip)\
-                    .limit(limit)\
-                    .all()
-        
+
+        articles = (
+            db.query(Article)
+            .filter(
+                Article.status == ArticleStatus.PROCESSED,
+                Article.is_deleted == False,
+                Article.category == category,
+            )
+            .order_by(Article.published_at.desc())
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
+
         if not articles:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, 
+                status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"'{category}' 카테고리의 기사를 찾을 수 없습니다"
             )
-        
+
         return articles
-        
+
     except HTTPException:
         raise
     except SQLAlchemyError as e:
@@ -141,6 +167,7 @@ async def search_articles(q: str, db: Session = Depends(get_db), skip: int = 0, 
             db.query(Article)
             .filter(
                 Article.status == ArticleStatus.PROCESSED,
+                Article.is_deleted == False,
                 or_(
                     Article.title.ilike(pattern),
                     Article.description.ilike(pattern),
@@ -183,21 +210,21 @@ async def get_article_detail(article_id: int, db: Session = Depends(get_db)):
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="기사 ID는 양의 정수여야 합니다"
             )
-        
-        article = db.query(Article).filter(Article.id == article_id).first()
-        
+
+        article = db.query(Article).filter(Article.id == article_id, Article.is_deleted == False).first()
+
         if not article:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, 
+                status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"ID {article_id}인 기사를 찾을 수 없습니다"
             )
-        
+
         if article.status != ArticleStatus.PROCESSED:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 detail=f"ID {article_id}인 기사가 아직 처리 중입니다"
             )
-        
+
         enriched_data = db.query(EnrichedArticle).filter(EnrichedArticle.article_id == article_id).first()
 
         # ArticleDetailSchema에 맞는 데이터 구성
@@ -215,7 +242,7 @@ async def get_article_detail(article_id: int, db: Session = Depends(get_db)):
             statistics_data=enriched_data.statistics_data if enriched_data and enriched_data.statistics_data else [],
             images=article.content.images if article.content and article.content.images else []
         )
-        
+
     except HTTPException:
         raise
     except SQLAlchemyError as e:
@@ -230,3 +257,71 @@ async def get_article_detail(article_id: int, db: Session = Depends(get_db)):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="서버 내부 오류가 발생했습니다"
         )
+
+
+# ---------------- Admin endpoints ----------------
+@router.delete("/admin/{article_id}", status_code=204)
+async def admin_soft_delete_article(
+    article_id: int,
+    reason: str | None = None,
+    lock_hours: int = 24,
+    db: Session = Depends(get_db),
+    _: bool = Depends(require_admin),
+):
+    if article_id <= 0:
+        raise HTTPException(status_code=400, detail="유효하지 않은 ID")
+    article = db.query(Article).filter(Article.id == article_id).first()
+    if not article:
+        raise HTTPException(status_code=404, detail="기사 없음")
+    if article.is_deleted:
+        return
+    now = datetime.now(timezone.utc)
+    article.is_deleted = True
+    article.deleted_at = now
+    article.delete_reason = reason
+    article.deleted_by = "admin"
+    article.delete_lock_until = now + timedelta(hours=max(0, lock_hours))
+    db.add(article)
+    db.commit()
+
+
+@router.post("/admin/{article_id}/restore", status_code=204)
+async def admin_restore_article(
+    article_id: int,
+    db: Session = Depends(get_db),
+    _: bool = Depends(require_admin),
+):
+    if article_id <= 0:
+        raise HTTPException(status_code=400, detail="유효하지 않은 ID")
+    article = db.query(Article).filter(Article.id == article_id).first()
+    if not article:
+        raise HTTPException(status_code=404, detail="기사 없음")
+    if not article.is_deleted:
+        return
+    article.is_deleted = False
+    article.deleted_at = None
+    article.delete_reason = None
+    article.deleted_by = None
+    article.delete_lock_until = None
+    db.add(article)
+    db.commit()
+
+
+@router.delete("/admin/{article_id}/purge", status_code=204)
+async def admin_purge_article(
+    article_id: int,
+    db: Session = Depends(get_db),
+    _: bool = Depends(require_admin),
+):
+    if article_id <= 0:
+        raise HTTPException(status_code=400, detail="유효하지 않은 ID")
+    article = db.query(Article).filter(Article.id == article_id).first()
+    if not article:
+        return
+    # 락 시간이 남아있으면 삭제 금지
+    now = datetime.now(timezone.utc)
+    if article.delete_lock_until and article.delete_lock_until > now:
+        raise HTTPException(status_code=409, detail="락 시간이 지나야 영구 삭제 가능")
+    # 하드 삭제 (관계에 delete-orphan 설정되어 있음)
+    db.delete(article)
+    db.commit()

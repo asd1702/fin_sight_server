@@ -1,6 +1,6 @@
 # models/article.py
 
-from sqlalchemy import Column, Integer, String, Text, DateTime, Enum, ForeignKey, BigInteger, func
+from sqlalchemy import Column, Integer, String, Text, DateTime, Enum, ForeignKey, BigInteger, func, Boolean
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
 from pgvector.sqlalchemy import Vector
@@ -20,6 +20,13 @@ class Article(Base):
     status = Column(Enum(ArticleStatus), nullable=False, default=ArticleStatus.PENDING)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+    # Soft delete fields
+    is_deleted = Column(Boolean, nullable=False, server_default='false', index=True)
+    deleted_at = Column(DateTime(timezone=True), nullable=True)
+    deleted_by = Column(String(100), nullable=True)
+    delete_reason = Column(Text, nullable=True)
+    delete_lock_until = Column(DateTime(timezone=True), nullable=True, index=True)
 
     hashtags = Column(JSONB, nullable=True)
     
