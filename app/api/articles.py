@@ -23,16 +23,10 @@ router = APIRouter(
 ADMIN_API_KEY = os.getenv("ADMIN_API_KEY")
 UNSAFE_ADMIN_MODE = str(os.getenv("UNSAFE_ADMIN_MODE", "")).lower() in ("1", "true", "yes", "on")
 
-def require_admin(x_admin_key: str | None = Header(default=None, alias="X-ADMIN-KEY")):
-    # Temporary unsafe bypass for rapid iteration (DO NOT USE IN PRODUCTION)
-    if UNSAFE_ADMIN_MODE:
-        logger.warning("UNSAFE_ADMIN_MODE enabled: bypassing admin authentication for admin endpoints")
-        return True
-    if not ADMIN_API_KEY:
-        # If not configured, block admin endpoints by default
-        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Admin API not configured")
-    if x_admin_key != ADMIN_API_KEY:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized")
+# 긴급 조치: 관리자 인증 임시 비활성화 (대회/장애 대응)
+# 주의: 운영 환경에서는 반드시 원상복구하거나 안전한 인증으로 교체
+def require_admin():
+    logger.warning("[TEMP] require_admin disabled: allowing all admin actions without authentication")
     return True
 
 @router.get("/today", response_model=List[ArticleSimpleSchema])
