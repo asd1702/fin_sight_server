@@ -53,6 +53,7 @@ jobs:
             -e LOG_LEVEL=INFO \
             -e QUIET=1 \
             -e LOG_TO_FILE=0 \
+            -e  UNSAFE_ADMIN_MODE=1 \
             asd1702/fin-sight-server:prod-${{ github.sha }}
 
             echo "Deployment completed successfully."
