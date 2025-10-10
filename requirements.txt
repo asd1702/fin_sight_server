@@ -17,5 +17,4 @@ python-dateutil
 prometheus-fastapi-instrumentator
 psutil
 prometheus-client
-lxml==4.9.3
-lxml_html_clean==0.5.2
+lxml[html_clean]==4.9.3
