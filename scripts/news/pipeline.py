@@ -2,17 +2,14 @@ import sys
 import os
 from pathlib import Path
 
-# Ensure project root (two levels up: scripts/news -> project root)
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-# Prefer direct 'app...' import once root is on sys.path
 try:
-    from app.core.news_guide import collectors, processors  # type: ignore
+    from app.core.news_guide import collectors, processors
 except ModuleNotFoundError:
-    # fallback to previous namespaced style if executed from outside root
-    from fin_sight_server.app.core.news_guide import collectors, processors  # type: ignore
+    from fin_sight_server.app.core.news_guide import collectors, processors
 
 from dotenv import load_dotenv
 from tqdm import tqdm
@@ -35,8 +32,8 @@ def run_article_processing_pipeline():
     try:
         # --- 1단계: 신규 기사 수집 및 원문 저장 (기존과 동일) ---
         logger.info("\n--- 1단계: 신규 기사 수집 시작 ---")
-        #search_keywords = ["금리", "주식", "부동산", "채권", "물가", "환율", "경제성장률", "수출"]
-        search_keywords = ["주식, 금리"] # 테스트용
+        search_keywords = ["금리", "주식", "부동산", "채권", "물가", "환율", "경제성장률", "수출"]
+        #search_keywords = ["주식, 금리"] # 테스트용
 
         for keyword in tqdm(search_keywords, desc="키워드별 기사 수집"):
             try:
@@ -64,7 +61,7 @@ def run_article_processing_pipeline():
                 continue
         logger.info("--- 1단계: 신규 기사 수집 완료 ---\n")
 
-        # --- 2단계: 처리 대기 중인 기사 가공 (업그레이드된 로직) ---
+        # --- 2단계: 처리 대기 중인 기사 가공 ---
         pending_articles = services.get_pending_articles(db)
         logger.info(f"--- 2단계: 총 {len(pending_articles)}개의 기사 처리 시작 ---")
         
