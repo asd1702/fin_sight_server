@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str
     
     # --- 외부 서비스 URL ---
-#    REDIS_URL: str
+    REDIS_URL: str | None = None
 
     # --- API 서버 설정 ---
     DEBUG: bool
@@ -42,8 +42,8 @@ class Settings(BaseSettings):
     RETRY_ATTEMPTS: int
 
     # --- 임베딩 모델 설정 ---
-#    EMBEDDING_MODEL: str
-#    EMBEDDING_DIMENSION: int
+    EMBEDDING_MODEL: str | None = None
+    EMBEDDING_DIMENSION: int | None = None
 
     # --- LLM 설정 ---
     LLM_MODEL: str
@@ -68,8 +68,9 @@ class Settings(BaseSettings):
 
     # --- Pydantic 설정 ---
     model_config = SettingsConfigDict(
-        env_file=ENV_FILE, 
-        env_file_encoding='utf-8'
+        env_file=ENV_FILE,
+        env_file_encoding='utf-8',
+        extra='ignore'
     )
 
 settings = Settings()

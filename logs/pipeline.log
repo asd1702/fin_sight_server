@@ -2669,3 +2669,284 @@ ValueError: ECOS_API_KEY not set in environment or passed to EcosApiClient
 2025-10-01 23:02:10,955 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 1.9%, 메모리: 85.4% (여유: 1.1GB), 디스크: 6.8% (전체: 1006.9GB, 여유: 887.0GB)
 2025-10-01 23:02:10,955 - WARNING - app.core.monitoring - 메모리 사용량 높음: 85.4%
 2025-10-01 23:07:11,970 - DEBUG - app.core.monitoring - 시스템 상태 - CPU: 1.2%, 메모리: 84.0% (여유: 1.2GB), 디스크: 6.9% (전체: 1006.9GB, 여유: 886.1GB)
+2025-10-10 19:17:11,766 - INFO - __main__ - 
+--- 1단계: 신규 기사 수집 시작 ---
+2025-10-10 19:17:12,033 - INFO - app.core.news_guide.collectors - 네이버 API '금리' 키워드로 5개 기사 메타데이터 수신 성공.
+2025-10-10 19:17:12,036 - INFO - app.core.monitoring - 성능 모니터링 - call_naver_api: 실행시간=0.25초, 메모리변화=+0.0%, 현재메모리=72.0%
+2025-10-10 19:17:12,761 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://news.einfomax.co.kr/news/articleView.html?idxno=4377930
+2025-10-10 19:17:12,763 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.73초, 메모리변화=+0.0%, 현재메모리=72.0%
+2025-10-10 19:17:13,043 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 16) [亞증시-종합] 과열 우려에 '숨 고르기' 장세
+2025-10-10 19:17:13,931 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 0개 이미지 추출 - http://coinreaders.com/191526
+2025-10-10 19:17:13,932 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.89초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:13,952 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 17) 비트코인, 고래 매도와 기관 매집 충돌...방향은 어디로 갈까
+2025-10-10 19:17:14,386 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://n.news.naver.com/mnews/article/449/0000323018?sid=101
+2025-10-10 19:17:14,388 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.43초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:14,399 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 18) 외국인 ‘바이 코리아’로 불장…코스피, 사상 첫 3600선 돌파
+2025-10-10 19:17:14,814 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 0개 이미지 추출 - https://news.einfomax.co.kr/news/articleView.html?idxno=4377928
+2025-10-10 19:17:14,815 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.41초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:14,829 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 19) [채권-마감] 금리 상승…외국인 선물매도·대외금리 연동
+2025-10-10 19:17:15,337 - INFO - app.core.news_guide.collectors - 기사 본문 길이 부족으로 건너뜀: 161자 (최소 200자 필요) - https://n.news.naver.com/mnews/article/018/0006135271?sid=101
+2025-10-10 19:17:15,338 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.51초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:15,339 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://n.news.naver.com/mnews/article/018/0006135271?sid=101
+2025-10-10 19:17:15,605 - INFO - app.core.news_guide.collectors - 네이버 API '주식' 키워드로 5개 기사 메타데이터 수신 성공.
+2025-10-10 19:17:15,608 - INFO - app.core.monitoring - 성능 모니터링 - call_naver_api: 실행시간=0.27초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:16,112 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 1개 이미지 추출 - http://www.whitepaper.co.kr/news/articleView.html?idxno=252980
+2025-10-10 19:17:16,113 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.50초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:16,137 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 20) 이재용 회장 주식재산 20조 원 넘겨…삼성전자 주식 가치 급등 영향
+2025-10-10 19:17:16,577 - INFO - app.core.news_guide.collectors - 기사 본문 길이 부족으로 건너뜀: 194자 (최소 200자 필요) - https://n.news.naver.com/mnews/article/092/0002393356?sid=105
+2025-10-10 19:17:16,578 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.44초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:16,578 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://n.news.naver.com/mnews/article/092/0002393356?sid=105
+2025-10-10 19:17:19,322 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 3개 이미지 추출 - https://www.kbmaeil.com/article/20251010500085
+2025-10-10 19:17:19,325 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=2.75초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:19,357 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 21) 코스피, 3600선 돌파···하지만 TK지역 상장사 주가는 ‘냉랭’ 온도차 뚜렷
+2025-10-10 19:17:19,743 - INFO - app.core.news_guide.collectors - 기사 본문 길이 부족으로 건너뜀: 161자 (최소 200자 필요) - https://n.news.naver.com/mnews/article/082/0001348321?sid=102
+2025-10-10 19:17:19,745 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.39초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:19,745 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://n.news.naver.com/mnews/article/082/0001348321?sid=102
+2025-10-10 19:17:20,137 - INFO - app.core.news_guide.collectors - 기사 본문 길이 부족으로 건너뜀: 170자 (최소 200자 필요) - https://n.news.naver.com/mnews/article/014/0005417650?sid=102
+2025-10-10 19:17:20,138 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.39초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:20,139 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://n.news.naver.com/mnews/article/014/0005417650?sid=102
+2025-10-10 19:17:20,345 - INFO - app.core.news_guide.collectors - 네이버 API '부동산' 키워드로 5개 기사 메타데이터 수신 성공.
+2025-10-10 19:17:20,348 - INFO - app.core.monitoring - 성능 모니터링 - call_naver_api: 실행시간=0.21초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:21,320 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://magazine.hankyung.com/job-joy/article/202510101859d
+2025-10-10 19:17:21,323 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.97초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:21,347 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 22) "공실 넘쳐나요" 위기의 대학가 상권, 신촌을 말하다
+2025-10-10 19:17:21,540 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.19초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:21,540 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://lawtalknews.co.kr/article/R3RSO2JNOI5J
+2025-10-10 19:17:21,944 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://n.news.naver.com/mnews/article/449/0000323018?sid=101
+2025-10-10 19:17:21,946 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.41초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:22,349 - INFO - app.core.news_guide.collectors - 기사 본문 길이 부족으로 건너뜀: 161자 (최소 200자 필요) - https://n.news.naver.com/mnews/article/449/0000323015?sid=115
+2025-10-10 19:17:22,350 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.40초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:22,351 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://n.news.naver.com/mnews/article/449/0000323015?sid=115
+2025-10-10 19:17:22,714 - INFO - app.core.news_guide.collectors - 기사 본문 길이 부족으로 건너뜀: 194자 (최소 200자 필요) - https://n.news.naver.com/mnews/article/469/0000891273?sid=100
+2025-10-10 19:17:22,716 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.36초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:22,716 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://n.news.naver.com/mnews/article/469/0000891273?sid=100
+2025-10-10 19:17:22,953 - INFO - app.core.news_guide.collectors - 네이버 API '채권' 키워드로 5개 기사 메타데이터 수신 성공.
+2025-10-10 19:17:22,955 - INFO - app.core.monitoring - 성능 모니터링 - call_naver_api: 실행시간=0.24초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:23,577 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://news.einfomax.co.kr/news/articleView.html?idxno=4377930
+2025-10-10 19:17:23,579 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.62초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:24,041 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 4개 이미지 추출 - http://www.sisacast.kr/news/articleView.html?idxno=83283
+2025-10-10 19:17:24,042 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.46초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:24,055 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 23) [싱글족의 법률상식] 1인 가구, 전세사기 예방하고 보증금 지키는 방법은?
+2025-10-10 19:17:28,003 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 5개 이미지 추출 - https://www.tokenpost.kr/news/insights/293066
+2025-10-10 19:17:28,004 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=3.95초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:28,017 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 24) “DeFi는 실험이 끝났다” — KBW서 공개된 Clearpool PayFi의 글로벌 유동성 혁신
+2025-10-10 19:17:28,399 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 0개 이미지 추출 - https://news.einfomax.co.kr/news/articleView.html?idxno=4377928
+2025-10-10 19:17:28,401 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.38초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:28,809 - INFO - app.core.news_guide.collectors - 기사 본문 길이 부족으로 건너뜀: 161자 (최소 200자 필요) - https://n.news.naver.com/mnews/article/018/0006135271?sid=101
+2025-10-10 19:17:28,811 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.41초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:28,811 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://n.news.naver.com/mnews/article/018/0006135271?sid=101
+2025-10-10 19:17:29,025 - INFO - app.core.news_guide.collectors - 네이버 API '물가' 키워드로 5개 기사 메타데이터 수신 성공.
+2025-10-10 19:17:29,027 - INFO - app.core.monitoring - 성능 모니터링 - call_naver_api: 실행시간=0.21초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:29,441 - INFO - app.core.news_guide.collectors - 기사 본문 길이 부족으로 건너뜀: 194자 (최소 200자 필요) - https://n.news.naver.com/mnews/article/047/0002490894?sid=103
+2025-10-10 19:17:29,442 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.41초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:29,442 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://n.news.naver.com/mnews/article/047/0002490894?sid=103
+2025-10-10 19:17:29,893 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://n.news.naver.com/mnews/article/052/0002257645?sid=100
+2025-10-10 19:17:29,894 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.45초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:29,912 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 25) [이슈플러스] 연휴 끝, 국정감사 전열 정비..."내란 청산" vs "독재 저지"
+2025-10-10 19:17:31,089 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 2개 이미지 추출 - https://www.startuptoday.co.kr/news/articleView.html?idxno=521868
+2025-10-10 19:17:31,091 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=1.18초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:31,108 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 26) "긴 연휴 끝 뭐 해 먹지?" 이마트, 일상 복귀 할인 대전
+2025-10-10 19:17:31,557 - INFO - app.core.news_guide.collectors - 기사 본문 길이 부족으로 건너뜀: 161자 (최소 200자 필요) - https://n.news.naver.com/mnews/article/018/0006135267?sid=101
+2025-10-10 19:17:31,559 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.45초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:31,559 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://n.news.naver.com/mnews/article/018/0006135267?sid=101
+2025-10-10 19:17:33,247 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 5개 이미지 추출 - http://www.metroseoul.co.kr/article/20251010500022
+2025-10-10 19:17:33,248 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=1.69초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:33,289 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 27) 파주시, 2026년 생활임금 시급 12,070원 확정…전년 대비 2.9% 인상
+2025-10-10 19:17:33,466 - INFO - app.core.news_guide.collectors - 네이버 API '환율' 키워드로 5개 기사 메타데이터 수신 성공.
+2025-10-10 19:17:33,469 - INFO - app.core.monitoring - 성능 모니터링 - call_naver_api: 실행시간=0.18초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:33,920 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://news.einfomax.co.kr/news/articleView.html?idxno=4377930
+2025-10-10 19:17:33,923 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.45초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:34,363 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://n.news.naver.com/mnews/article/057/0001912478?sid=101
+2025-10-10 19:17:34,365 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.44초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:34,377 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 28) 주가 이어 환율도 뛰었다…5개월 만에 1420원대
+2025-10-10 19:17:34,759 - INFO - app.core.news_guide.collectors - 기사 본문 길이 부족으로 건너뜀: 194자 (최소 200자 필요) - https://n.news.naver.com/mnews/article/055/0001298769?sid=102
+2025-10-10 19:17:34,761 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.38초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:34,762 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://n.news.naver.com/mnews/article/055/0001298769?sid=102
+2025-10-10 19:17:35,262 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://n.news.naver.com/mnews/article/449/0000323019?sid=101
+2025-10-10 19:17:35,264 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.50초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:35,295 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 29) 삼성전자·하이닉스 쌍끌이…투톱 빼면 주춤
+2025-10-10 19:17:36,757 - INFO - app.core.news_guide.collectors - 기사 본문 길이 부족으로 건너뜀: 161자 (최소 200자 필요) - https://n.news.naver.com/mnews/article/056/0012044336?sid=101
+2025-10-10 19:17:36,759 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=1.46초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:36,759 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://n.news.naver.com/mnews/article/056/0012044336?sid=101
+2025-10-10 19:17:37,027 - INFO - app.core.news_guide.collectors - 네이버 API '경제성장률' 키워드로 5개 기사 메타데이터 수신 성공.
+2025-10-10 19:17:37,031 - INFO - app.core.monitoring - 성능 모니터링 - call_naver_api: 실행시간=0.27초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:39,877 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 3개 이미지 추출 - http://dream.kotra.or.kr/kotranews/cms/news/actionKotraBoardDetail.do?SITE_NO=3&MENU_ID=80&CONTENTS_NO=2&bbsGbn=242&bbsSn=242&pNttSn=234665
+2025-10-10 19:17:39,880 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=2.85초, 메모리변화=+0.0%, 현재메모리=72.1%
+2025-10-10 19:17:39,908 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 30) 쿠웨이트 최신 경제 동향
+2025-10-10 19:17:42,767 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 0개 이미지 추출 - http://dream.kotra.or.kr/kotranews/cms/news/actionKotraBoardDetail.do?SITE_NO=3&MENU_ID=90&CONTENTS_NO=1&bbsGbn=244&bbsSn=244&pNttSn=235173
+2025-10-10 19:17:42,771 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=2.86초, 메모리변화=+0.1%, 현재메모리=72.2%
+2025-10-10 19:17:42,798 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 31) 한-태국 포괄적 경제동반자협정(CEPA) 제7차 협상, 2025년 타결 시도 속도전
+2025-10-10 19:17:44,350 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 3개 이미지 추출 - https://www.straightnews.co.kr/news/articleView.html?idxno=283440
+2025-10-10 19:17:44,352 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=1.55초, 메모리변화=+0.0%, 현재메모리=72.2%
+2025-10-10 19:17:44,372 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 32) [통일로에서] AI 초강국을 향한 대한민국의 선택과 과제
+2025-10-10 19:17:46,948 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 5개 이미지 추출 - https://www.newspim.com/news/view/20251010000822
+2025-10-10 19:17:46,950 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=2.58초, 메모리변화=+0.1%, 현재메모리=72.3%
+2025-10-10 19:17:46,963 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 33) 여야, 추석 민심 '아전인수' 해석…밑바닥은 '경제 어렵다'
+2025-10-10 19:17:48,614 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 1개 이미지 추출 - https://www.sisajournal-e.com/news/articleView.html?idxno=415923
+2025-10-10 19:17:48,615 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=1.65초, 메모리변화=-0.1%, 현재메모리=72.2%
+2025-10-10 19:17:48,626 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 34) 금리차·관세 불확실성에 환율 불안 심화···“수출효과 없이 물가만 뛸수도” < 경제정책 < 기사본문
+2025-10-10 19:17:48,829 - INFO - app.core.news_guide.collectors - 네이버 API '수출' 키워드로 5개 기사 메타데이터 수신 성공.
+2025-10-10 19:17:48,831 - INFO - app.core.monitoring - 성능 모니터링 - call_naver_api: 실행시간=0.20초, 메모리변화=+0.0%, 현재메모리=72.2%
+2025-10-10 19:17:49,028 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 0개 이미지 추출 - http://www.newsroad.co.kr/news/articleView.html?idxno=47005
+2025-10-10 19:17:49,030 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.20초, 메모리변화=+0.0%, 현재메모리=72.2%
+2025-10-10 19:17:49,049 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 35) “AI와 무역개혁이 남아시아의 생존 해법”…세계은행, 올해 성장률 6.6% 상향
+2025-10-10 19:17:52,869 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 3개 이미지 추출 - https://www.kbmaeil.com/article/20251010500085
+2025-10-10 19:17:52,871 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=3.82초, 메모리변화=+0.1%, 현재메모리=72.3%
+2025-10-10 19:17:53,337 - INFO - app.core.news_guide.collectors - 기사 본문 길이 부족으로 건너뜀: 156자 (최소 200자 필요) - https://n.news.naver.com/mnews/article/421/0008531009?sid=101
+2025-10-10 19:17:53,338 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.46초, 메모리변화=-0.1%, 현재메모리=72.2%
+2025-10-10 19:17:53,339 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://n.news.naver.com/mnews/article/421/0008531009?sid=101
+2025-10-10 19:17:53,829 - INFO - app.core.news_guide.collectors - 기사 본문 길이 부족으로 건너뜀: 194자 (최소 200자 필요) - https://n.news.naver.com/mnews/article/092/0002393355?sid=105
+2025-10-10 19:17:53,831 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=0.49초, 메모리변화=+0.0%, 현재메모리=72.2%
+2025-10-10 19:17:53,831 - WARNING - __main__ - 콘텐츠가 너무 짧거나 없어서 수집을 건너뜁니다: https://n.news.naver.com/mnews/article/092/0002393355?sid=105
+2025-10-10 19:17:55,755 - INFO - app.core.news_guide.collectors - 기사 크롤링 완료: 4개 이미지 추출 - https://www.cbci.co.kr/news/articleView.html?idxno=535861
+2025-10-10 19:17:55,756 - INFO - app.core.monitoring - 성능 모니터링 - crawl_article_with_newspaper3k: 실행시간=1.92초, 메모리변화=+0.0%, 현재메모리=72.2%
+2025-10-10 19:17:55,783 - INFO - app.core.services - 신규 기사 저장 완료: (ID: 36) 디시오, 일본 종합상사 미쓰이물산과 전력반도체 공급 위해 '맞손'
+2025-10-10 19:17:55,784 - INFO - __main__ - --- 1단계: 신규 기사 수집 완료 ---
+
+2025-10-10 19:17:55,791 - INFO - __main__ - --- 2단계: 총 21개의 기사 처리 시작 ---
+2025-10-10 19:17:55,857 - INFO - app.core.services - 기사 ID 17의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:18:09,906 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:18:09,922 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:18:09,923 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=14.06초, 메모리변화=+0.1%, 현재메모리=72.3%
+2025-10-10 19:18:09,923 - INFO - __main__ - 기사 ID 17: LLM이 관련 지표 ['kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:18:09,969 - INFO - app.core.services - 기사 ID 17의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:18:09,969 - INFO - __main__ - 기사 ID 17 처리 성공.
+2025-10-10 19:18:09,975 - INFO - app.core.services - 기사 ID 18의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:18:19,265 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:18:19,294 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:18:19,295 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=9.32초, 메모리변화=+0.1%, 현재메모리=72.4%
+2025-10-10 19:18:19,295 - INFO - __main__ - 기사 ID 18: LLM이 관련 지표 ['kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:18:19,310 - INFO - app.core.services - 기사 ID 18의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:18:19,310 - INFO - __main__ - 기사 ID 18 처리 성공.
+2025-10-10 19:18:19,317 - INFO - app.core.services - 기사 ID 19의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:18:28,016 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:18:28,018 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:18:28,018 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=8.70초, 메모리변화=+1.8%, 현재메모리=74.2%
+2025-10-10 19:18:28,018 - INFO - __main__ - 기사 ID 19: LLM이 관련 지표 ['kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:18:28,045 - INFO - app.core.services - 기사 ID 19의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:18:28,045 - INFO - __main__ - 기사 ID 19 처리 성공.
+2025-10-10 19:18:28,052 - INFO - app.core.services - 기사 ID 16의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:18:37,629 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:18:37,631 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:18:37,632 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=9.58초, 메모리변화=+0.0%, 현재메모리=74.2%
+2025-10-10 19:18:37,632 - INFO - __main__ - 기사 ID 16: LLM이 관련 지표 ['fx.usdkrw.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:18:37,658 - INFO - app.core.services - 기사 ID 16의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:18:37,661 - INFO - __main__ - 기사 ID 16 처리 성공.
+2025-10-10 19:18:37,672 - INFO - app.core.services - 기사 ID 20의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:18:47,466 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:18:47,468 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:18:47,469 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=9.79초, 메모리변화=-2.5%, 현재메모리=71.7%
+2025-10-10 19:18:47,469 - INFO - __main__ - 기사 ID 20: LLM이 관련 지표 ['kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:18:47,490 - INFO - app.core.services - 기사 ID 20의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:18:47,490 - INFO - __main__ - 기사 ID 20 처리 성공.
+2025-10-10 19:18:47,499 - INFO - app.core.services - 기사 ID 21의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:18:58,309 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:18:58,312 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:18:58,312 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=10.81초, 메모리변화=-0.1%, 현재메모리=71.6%
+2025-10-10 19:18:58,313 - INFO - __main__ - 기사 ID 21: LLM이 관련 지표 ['kr.kospi.d']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:18:58,351 - INFO - app.core.services - 기사 ID 21의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:18:58,351 - INFO - __main__ - 기사 ID 21 처리 성공.
+2025-10-10 19:18:58,357 - INFO - app.core.services - 기사 ID 22의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:19:10,599 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:19:10,604 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:19:10,605 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=12.25초, 메모리변화=+0.0%, 현재메모리=71.6%
+2025-10-10 19:19:10,606 - INFO - __main__ - 기사 ID 22: LLM이 관련 지표 ['kr.current.account.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:19:10,645 - INFO - app.core.services - 기사 ID 22의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:19:10,646 - INFO - __main__ - 기사 ID 22 처리 성공.
+2025-10-10 19:19:10,652 - INFO - app.core.services - 기사 ID 23의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:19:21,629 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:19:21,635 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:19:21,636 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=10.98초, 메모리변화=+0.1%, 현재메모리=71.7%
+2025-10-10 19:19:21,661 - INFO - app.core.services - 기사 ID 23의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:19:21,661 - INFO - __main__ - 기사 ID 23 처리 성공.
+2025-10-10 19:19:21,676 - INFO - app.core.services - 기사 ID 24의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:19:32,209 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:19:32,212 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:19:32,213 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=10.53초, 메모리변화=+0.0%, 현재메모리=71.7%
+2025-10-10 19:19:32,213 - INFO - __main__ - 기사 ID 24: LLM이 관련 지표 ['kr.current.account.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:19:32,244 - INFO - app.core.services - 기사 ID 24의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:19:32,244 - INFO - __main__ - 기사 ID 24 처리 성공.
+2025-10-10 19:19:32,252 - INFO - app.core.services - 기사 ID 25의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:19:43,467 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:19:43,474 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:19:43,475 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=11.22초, 메모리변화=+0.0%, 현재메모리=71.7%
+2025-10-10 19:19:43,497 - INFO - app.core.services - 기사 ID 25의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:19:43,497 - INFO - __main__ - 기사 ID 25 처리 성공.
+2025-10-10 19:19:43,504 - INFO - app.core.services - 기사 ID 26의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:19:56,221 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:19:56,226 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:19:56,227 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=12.72초, 메모리변화=+0.0%, 현재메모리=71.7%
+2025-10-10 19:19:56,227 - INFO - __main__ - 기사 ID 26: LLM이 관련 지표 ['kr.cpi.headline.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:19:56,247 - INFO - app.core.services - 기사 ID 26의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:19:56,247 - INFO - __main__ - 기사 ID 26 처리 성공.
+2025-10-10 19:19:56,255 - INFO - app.core.services - 기사 ID 27의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:20:07,224 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:20:07,226 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:20:07,227 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=10.97초, 메모리변화=+0.0%, 현재메모리=71.7%
+2025-10-10 19:20:07,227 - INFO - __main__ - 기사 ID 27: LLM이 관련 지표 ['kr.cpi.headline.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:20:07,242 - INFO - app.core.services - 기사 ID 27의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:20:07,242 - INFO - __main__ - 기사 ID 27 처리 성공.
+2025-10-10 19:20:07,250 - INFO - app.core.services - 기사 ID 28의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:20:16,349 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:20:16,355 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:20:16,359 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=9.10초, 메모리변화=+0.0%, 현재메모리=71.7%
+2025-10-10 19:20:16,360 - INFO - __main__ - 기사 ID 28: LLM이 관련 지표 ['fx.usdkrw.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:20:16,386 - INFO - app.core.services - 기사 ID 28의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:20:16,386 - INFO - __main__ - 기사 ID 28 처리 성공.
+2025-10-10 19:20:16,392 - INFO - app.core.services - 기사 ID 29의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:20:25,993 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:20:26,003 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:20:26,005 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=9.61초, 메모리변화=-0.1%, 현재메모리=71.6%
+2025-10-10 19:20:26,006 - INFO - __main__ - 기사 ID 29: LLM이 관련 지표 ['fx.usdkrw.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:20:26,031 - INFO - app.core.services - 기사 ID 29의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:20:26,031 - INFO - __main__ - 기사 ID 29 처리 성공.
+2025-10-10 19:20:26,040 - INFO - app.core.services - 기사 ID 30의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:20:37,449 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:20:37,451 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:20:37,451 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=11.41초, 메모리변화=+0.1%, 현재메모리=71.7%
+2025-10-10 19:20:37,452 - INFO - __main__ - 기사 ID 30: LLM이 관련 지표 ['kr.current.account.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:20:37,481 - INFO - app.core.services - 기사 ID 30의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:20:37,482 - INFO - __main__ - 기사 ID 30 처리 성공.
+2025-10-10 19:20:37,492 - INFO - app.core.services - 기사 ID 31의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:20:47,363 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:20:47,365 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:20:47,366 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=9.87초, 메모리변화=-0.1%, 현재메모리=71.6%
+2025-10-10 19:20:47,366 - INFO - __main__ - 기사 ID 31: LLM이 관련 지표 ['kr.current.account.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:20:47,378 - INFO - app.core.services - 기사 ID 31의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:20:47,379 - INFO - __main__ - 기사 ID 31 처리 성공.
+2025-10-10 19:20:47,388 - INFO - app.core.services - 기사 ID 32의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:20:57,402 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:20:57,404 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:20:57,405 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=10.01초, 메모리변화=+0.1%, 현재메모리=71.7%
+2025-10-10 19:20:57,405 - INFO - __main__ - 기사 ID 32: LLM이 관련 지표 ['kr.current.account.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:20:57,426 - INFO - app.core.services - 기사 ID 32의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:20:57,427 - INFO - __main__ - 기사 ID 32 처리 성공.
+2025-10-10 19:20:57,440 - INFO - app.core.services - 기사 ID 33의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:21:15,017 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:21:15,019 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:21:15,020 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=17.58초, 메모리변화=+0.0%, 현재메모리=71.7%
+2025-10-10 19:21:15,020 - INFO - __main__ - 기사 ID 33: LLM이 관련 지표 ['kr.current.account.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:21:15,042 - INFO - app.core.services - 기사 ID 33의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:21:15,042 - INFO - __main__ - 기사 ID 33 처리 성공.
+2025-10-10 19:21:15,049 - INFO - app.core.services - 기사 ID 34의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:21:26,819 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:21:26,821 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:21:26,822 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=11.77초, 메모리변화=+0.0%, 현재메모리=71.7%
+2025-10-10 19:21:26,822 - INFO - __main__ - 기사 ID 34: LLM이 관련 지표 ['fx.usdkrw.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:21:26,837 - INFO - app.core.services - 기사 ID 34의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:21:26,838 - INFO - __main__ - 기사 ID 34 처리 성공.
+2025-10-10 19:21:26,848 - INFO - app.core.services - 기사 ID 35의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:21:38,647 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:21:38,649 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:21:38,650 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=11.80초, 메모리변화=+0.0%, 현재메모리=71.7%
+2025-10-10 19:21:38,651 - INFO - __main__ - 기사 ID 35: LLM이 관련 지표 ['kr.current.account.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:21:38,672 - INFO - app.core.services - 기사 ID 35의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:21:38,673 - INFO - __main__ - 기사 ID 35 처리 성공.
+2025-10-10 19:21:38,680 - INFO - app.core.services - 기사 ID 36의 상태를 PROCESSING(으)로 업데이트.
+2025-10-10 19:21:47,529 - INFO - httpx - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-10 19:21:47,531 - INFO - app.core.news_guide.processors - LLM 분석 데이터 수신 및 파싱 성공
+2025-10-10 19:21:47,532 - WARNING - app.core.monitoring - 성능 모니터링 - analyze_article_with_llm: 실행시간=8.85초, 메모리변화=+0.0%, 현재메모리=71.7%
+2025-10-10 19:21:47,532 - INFO - __main__ - 기사 ID 36: LLM이 관련 지표 ['kr.current.account.m']를 식별했습니다. 시계열 데이터를 조회합니다.
+2025-10-10 19:21:47,552 - INFO - app.core.services - 기사 ID 36의 분석 결과 및 통계 데이터 저장 완료
+2025-10-10 19:21:47,553 - INFO - __main__ - 기사 ID 36 처리 성공.
+2025-10-10 19:21:47,553 - INFO - __main__ - --- 2단계: 기사 처리 완료 ---
