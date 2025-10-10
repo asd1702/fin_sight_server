@@ -2950,3 +2950,10 @@ ValueError: ECOS_API_KEY not set in environment or passed to EcosApiClient
 2025-10-10 19:21:47,552 - INFO - app.core.services - 기사 ID 36의 분석 결과 및 통계 데이터 저장 완료
 2025-10-10 19:21:47,553 - INFO - __main__ - 기사 ID 36 처리 성공.
 2025-10-10 19:21:47,553 - INFO - __main__ - --- 2단계: 기사 처리 완료 ---
+2025-10-10 20:29:13,853 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.cpi.headline.m fetched=1 valid=1 inserted=1 rejected=0 start=2025-08-02 end=2025-10-09
+2025-10-10 20:29:14,091 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.ppi.m fetched=1 valid=1 inserted=1 rejected=0 start=2025-08-02 end=2025-10-09
+2025-10-10 20:29:14,412 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.base.rate.d fetched=13 valid=13 inserted=13 rejected=0 start=2025-09-26 end=2025-10-09
+2025-10-10 20:29:14,690 - INFO - app.pipelines.ecos.orchestrator - Indicator fx.usdkrw.m fetched=1 valid=1 inserted=1 rejected=0 start=2025-09-02 end=2025-10-09
+2025-10-10 20:29:14,956 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.current.account.m fetched=2 valid=2 inserted=2 rejected=0 start=2025-07-02 end=2025-10-09
+2025-10-10 20:29:15,247 - INFO - app.pipelines.ecos.orchestrator - Indicator kr.kospi.d fetched=5 valid=5 inserted=5 rejected=0 start=2025-09-26 end=2025-10-09
+2025-10-10 20:29:15,261 - INFO - __main__ - Ingestion run completed: 7c8a8d85-97e0-40eb-80dd-ab625d1fc127

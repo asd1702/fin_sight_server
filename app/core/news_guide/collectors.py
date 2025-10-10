@@ -218,4 +218,4 @@ def crawl_article_with_newspaper3k(url: str) -> tuple[str | None, str | None, li
         
     except Exception as e:
         logger.error(f"newspaper3k 파싱 중 에러 발생 (URL: {url}): {e.__class__.__name__} - {e}")
-        return None, None
+        return None, None, None
