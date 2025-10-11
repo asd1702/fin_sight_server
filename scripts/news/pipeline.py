@@ -32,8 +32,8 @@ def run_article_processing_pipeline():
     try:
         # --- 1단계: 신규 기사 수집 및 원문 저장 (기존과 동일) ---
         logger.info("\n--- 1단계: 신규 기사 수집 시작 ---")
-        search_keywords = ["금리", "주식", "부동산", "채권", "물가", "환율", "경제성장률", "수출"]
-        #search_keywords = ["주식, 금리"] # 테스트용
+        #search_keywords = ["금리", "주식", "부동산", "채권", "물가", "환율", "경제성장률", "수출"]
+        search_keywords = ["관세", "미국"] # 테스트용
 
         for keyword in tqdm(search_keywords, desc="키워드별 기사 수집"):
             try:
