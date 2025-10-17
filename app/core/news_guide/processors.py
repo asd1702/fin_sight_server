@@ -6,10 +6,22 @@ from sqlalchemy.orm import Session
 from ...models.statistic_model.statistic import Indicator
 from logs.logging_config import get_logger
 from ..monitoring import monitor_performance
+"""
+주의: 본 파일은 LLM 호출(외부 네트워크)을 포함하므로 테스트 시 유효한 API 키와 연결 환경이 필요합니다.
+"""
+
+import json
+from ..config import settings
+from openai import OpenAI, RateLimitError, APIConnectionError, APIStatusError
+from sqlalchemy.orm import Session
+
+from ...models.statistic_model.statistic import Indicator
+from logs.logging_config import get_logger
+from ..monitoring import monitor_performance
 
 logger = get_logger(__name__)
 
-# OpenAI 클라이언트 초기화
+# OpenAI 클라이언트 초기화: 환경변수에 API 키가 필요합니다.
 OPENAI_API_KEY = settings.OPENAI_API_KEY
 if not OPENAI_API_KEY:
     raise ValueError("'.env' 파일에 OPENAI_API_KEY가 설정되지 않았습니다.")
@@ -118,8 +130,8 @@ JSON Output:
 """
 
 def get_available_indicators_for_llm(db: Session) -> list[dict]:
-    """
-    LLM에게 컨텍스트로 제공할, DB에 저장된 유효한 지표 목록을 조회합니다.
+    """LLM에게 컨텍스트로 제공할, DB에 저장된 유효한 지표 목록을 조회합니다.
+
     name이 없는 데이터는 제외합니다.
     """
     indicators = db.query(Indicator).filter(Indicator.name.isnot(None)).all()
@@ -132,10 +144,10 @@ def get_available_indicators_for_llm(db: Session) -> list[dict]:
         for ind in indicators
     ]
 
+
 @monitor_performance(include_memory=True)
 def analyze_article_with_llm(db: Session, content: str, model="gpt-4o-mini") -> dict | None:
-    """
-    기사 원문을 LLM에 보내 배경지식, 키워드, 관련 통계 지표 ID 등을 분석하고 추출합니다.
+    """기사 원문을 LLM에 보내 배경지식, 키워드, 관련 통계 지표 ID 등을 분석하고 추출합니다.
 
     Args:
         db (Session): 데이터베이스 세션.

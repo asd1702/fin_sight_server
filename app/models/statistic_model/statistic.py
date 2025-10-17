@@ -51,5 +51,12 @@ class Observation(Base):
         {'schema': 'statistics'}
     )
 
+    """models.statistic_model.statistic
+
+    SQLAlchemy 모델 정의: 경제 지표 메타데이터(Indicator)와 시계열 관측치(Observation).
+
+    개발자 메모:
+      - 이 모듈은 'statistics' 스키마를 사용합니다. Alembic 마이그레이션/초기화 시 스키마 생성 여부를 확인하세요.
+    """
     # Indicator와의 관계 설정
     indicator = relationship("Indicator", back_populates="observations")

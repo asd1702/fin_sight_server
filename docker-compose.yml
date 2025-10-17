@@ -1,6 +1,8 @@
 version: '3.8'
 
 services:
+  # 모니터링 스택 (로컬/운영 모니터링용)
+  # 이 compose는 주로 로컬 개발 또는 운영 모니터링을 빠르게 띄울 때 사용됩니다.
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -41,5 +43,6 @@ services:
       - monitoring-net
 
 networks:
+  # 모니터링 전용 네트워크
   monitoring-net:
     driver: bridge

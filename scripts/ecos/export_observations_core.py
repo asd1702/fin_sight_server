@@ -1,9 +1,12 @@
-"""Export core indicator observations to JSONL (observations_core15.jsonl).
+"""
+관측치(core) JSONL 내보내기 스크립트
 
-This replicates the original seeding file so you can regenerate it from the DB
-after running incremental ingestion. By default exports all indicators whose
-indicator_id ends with one of (.d, .m, .q, .y) and are in the catalog file
-catalog_core15.json (if present). You can also pass --only to restrict.
+이 스크립트는 DB에 적재된 관측치(observations)를 읽어 `data/observations_core15.jsonl`
+형식으로 재생성합니다. 주로 백업, 재배포, 또는 다른 환경으로 시드 재생성 용도로 사용합니다.
+
+기본 동작:
+    - 카탈로그(`data/catalog_core15.json`)에 있는 지표들만 내보냅니다(파일이 없으면 전체 내보냄).
+    - `--only` 옵션으로 특정 indicator_id 목록만 내보낼 수 있습니다.
 """
 from __future__ import annotations
 import os
@@ -30,6 +33,11 @@ OUTPUT_FILE = os.path.join(DATA_DIR, 'observations_core15.jsonl')
 
 
 def load_catalog_ids() -> Set[str]:
+    """카탈로그 파일에서 indicator_id 집합을 로드합니다.
+
+    반환값: 카탈로그에 정의된 indicator_id의 집합. 파일이 없거나 읽기 실패 시 빈 집합을 반환합니다.
+    """
+    # 카탈로그 파일이 없으면 전체 내보내기로 간주
     if not os.path.exists(CATALOG_FILE):
         logger.warning("Catalog file %s not found; exporting all indicators", CATALOG_FILE)
         return set()
@@ -43,6 +51,13 @@ def load_catalog_ids() -> Set[str]:
 
 
 def iter_indicator_ids(session, only: Set[str], from_catalog: Set[str]) -> Iterable[str]:
+    """DB에서 내보낼 indicator_id를 순회합니다.
+
+    필터링 규칙:
+      - `only`가 주어지면 해당 집합에 포함된 id만 처리
+      - `from_catalog`가 비어있지 않으면 카탈로그에 존재하는 id만 처리
+    """
+    # DB에서 모든 indicator_id를 조회한 뒤, 필요하면 필터링 적용
     q = session.query(Indicator.indicator_id)
     for (iid,) in q.all():
         if only and iid not in only:
@@ -53,13 +68,22 @@ def iter_indicator_ids(session, only: Set[str], from_catalog: Set[str]) -> Itera
 
 
 def export(core_only: bool, only_ids: Set[str]):
+    """관측치를 JSONL로 내보냅니다.
+
+    파라미터:
+      - core_only: True이면 카탈로그 기준 필터 적용(단, 카탈로그 파일이 없으면 전체)
+      - only_ids: 특정 id 집합만 내보내려면 전달
+    """
+    # DB 세션 열기 및 카탈로그 로드
     session = SessionLocal()
     catalog_ids = load_catalog_ids()
     exported = 0
+    # 출력 파일에 JSONL 형식으로 기록
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as out:
         for iid in iter_indicator_ids(session, only_ids, catalog_ids):
             obs = session.query(Observation).filter(Observation.indicator_id == iid).order_by(Observation.date).all()
             if not obs:
+                # 저장된 관측치가 없으면 건너뜀
                 continue
             for row in obs:
                 out.write(json.dumps({

@@ -1,25 +1,18 @@
-#!/usr/bin/env python3
-"""Generic sector/key_word newsletter pipeline runner.
-
+"""
 Usage:
-  python3 scripts/letter/run_sector.py --sector macro --key us_economy
-  python3 scripts/letter/run_sector.py --sector market --key us_market --size 15
+    # 목록 보기
+    python3 scripts/letter/run_sector.py --list
 
-Features:
-  - sectors.yaml 기반으로 queries / prompt_key / size / min_articles 로드
-  - (sector, key_word) 배치 재사용 (미완료 시)
-  - 기사 수집 + 크롤링: app.core.news_letter.articles.prepare_articles
-  - LLM outline 생성: processors.build_column_outline_with_llm (topic=prompt_key fallback)
-  - 결과 JSON 저장: data/letters/<sector>_<key>_<ts>.json
+    # 섹터 구성 상세
+    python3 scripts/letter/run_sector.py --show-config macro
 
-Assumptions:
-  - sector/key_word 에 대응하는 prompt_key 가 prompts.yaml 에 없으면 fallback 'company'
-  - settings.LETTER_MIN_ARTICLES 전역 값 사용 (섹터별 override 를 sectors.yaml 에서 min_articles로 가능)
+    # 특정 섹터/키 실행
+    python3 scripts/letter/run_sector.py --sector macro --key us_economy
 
-Future extension hooks:
-  - 추가 source adapter
-  - outline schema versioning
-  - metric export
+    # 동적 company 실행
+    python3 scripts/letter/run_sector.py --sector company --key nvidia
+
+Note: 자세한 옵션은 --help 를 참고하세요.
 """
 from __future__ import annotations
 import os
@@ -65,6 +58,20 @@ def _slugify(s: str) -> str:
 
 
 def run_sector(sector: str, key_word: str, size: int | None, language: str, country: str, fresh: bool) -> str | None:
+    """섹터 파이프라인을 실행하고 결과 batch id 문자열을 반환합니다.
+
+    반환값:
+      - 성공 시: 'batch:<id>' 문자열
+      - 실패/조건 미충족: None
+
+    동작 요약:
+      1. `sectors.yaml` 또는 동적 company 구성을 통해 쿼리/프롬프트/사이즈 결정
+      2. `article_mod.prepare_articles`로 기사 수집 및 크롤링
+      3. 기존 outline 존재 여부 확인: --fresh이면 새 배치 생성, 아니면 기존 batch 반환
+      4. LLM 호출로 outline 생성 및 DB 저장
+
+    주의: 이 함수는 DB 세션을 생성/종료하며 내부에서 commit을 수행합니다.
+    """
     # Lazy imports AFTER env loaded
     from app.database import SessionLocal  # type: ignore
     from app.core.config import settings  # type: ignore

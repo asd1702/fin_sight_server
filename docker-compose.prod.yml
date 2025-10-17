@@ -2,7 +2,8 @@
 
 
 services:
-  # FinSight 애플리케이션
+  # FinSight 애플리케이션 서비스 정의
+  # 운영 환경(도커로 배포하는 경우): DATABASE_URL을 외부 RDS로 재정의하여 사용합니다.
   app:
     build:
       context: .
@@ -18,7 +19,6 @@ services:
       - DATABASE_URL=postgresql://finsight_user:finsight_password@db:5432/finsight_db
       # QUIET 모드가 켜져 있으면 uvicorn access log 억제 및 warning 레벨
       - QUIET=${QUIET:-1}
-    # Removed bind mount for logs to avoid permission issues; logs go to stdout (and file internally if permitted)
     # docker-entrypoint.sh 가 실행 가능해야 함 (git 권한 유지 또는 chmod +x)
     networks:
       - finsight-network
@@ -38,7 +38,6 @@ services:
       - POSTGRES_PASSWORD=finsight_password
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    # No host port binding; container is reachable as 'db:5432' within the Docker network
     networks:
       - finsight-network
     restart: unless-stopped

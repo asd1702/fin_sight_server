@@ -1,5 +1,22 @@
+"""
+애플리케이션 설정 관리 모듈
+
+환경 파일 선택 우선순위를 처리하고 Pydantic 기반의 `Settings` 클래스를
+정의합니다. 애플리케이션 전역에서 `settings` 인스턴스를 통해 설정 값을 사용합니다.
+
+ENV 파일 우선순위:
+  1. 환경변수 `ENV_FILE`에 지정된 파일
+  2. 현재 작업 디렉터리의 `.env`
+  3. `.env.dev`
+  4. `.env.prod`
+  기본값은 `.env.dev`입니다.
+
+설정값은 Pydantic의 `BaseSettings`를 확장하여 타입 검증과 기본값을 제공합니다.
+"""
+
 import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
 
 # ENV 파일 선택 우선순위: ENV_FILE 환경변수 > .env > .env.dev > .env.prod
 _env_file_from_env = os.getenv("ENV_FILE")
@@ -12,13 +29,17 @@ elif os.path.exists(".env.dev"):
 elif os.path.exists(".env.prod"):
     ENV_FILE = ".env.prod"
 else:
+    # 개발 편의를 위해 기본값은 .env.dev
     ENV_FILE = ".env.dev"
 
+
 class Settings(BaseSettings):
+    """애플리케이션에서 사용하는 모든 설정 항목을 정의합니다.
+
+    각 필드는 `.env` 또는 지정된 ENV 파일에서 읽어오며, 타입 검증과
+    기본값(있는 경우)을 제공합니다. 주석은 개발자가 필드 목적을
+    빠르게 이해하도록 도움을 줍니다.
     """
-    .env 파일의 모든 설정 변수를 관리하는 클래스
-    """
-    
     # --- 외부 API 키 ---
     OPENAI_API_KEY: str
     NAVER_CLIENT_ID: str
@@ -30,6 +51,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str
     
     # --- 외부 서비스 URL ---
+    # Redis 등 캐시 저장소를 사용하는 경우 URL을 지정
     REDIS_URL: str | None = None
 
     # --- API 서버 설정 ---
@@ -48,7 +70,7 @@ class Settings(BaseSettings):
     # --- LLM 설정 ---
     LLM_MODEL: str
     MAX_TOKENS: int
-    TEMPERATURE: float # 0도 실수로 처리 가능하여 float으로 지정
+    TEMPERATURE: float  # 0도 실수로 처리 가능하여 float으로 지정
 
     # --- 뉴스레터 파이프라인 설정(기본값 제공) ---
     # 임시 데이터 TTL(시간)
@@ -67,11 +89,13 @@ class Settings(BaseSettings):
     LETTER_CACHE_MAX_AGE_DAYS: int = 14
 
     # --- Pydantic 설정 ---
+    # model_config를 사용해 env_file 경로와 인코딩, 추가 필드 처리 방법을 지정
     model_config = SettingsConfigDict(
         env_file=ENV_FILE,
         env_file_encoding='utf-8',
         extra='ignore'
     )
+
 
 settings = Settings()
 
