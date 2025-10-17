@@ -37,7 +37,7 @@ app.add_middleware(
         "http://localhost:3000",
         "http://localhost:3001",
         "https://finsight-c-tctt.vercel.app",
-        "https://finview.kr",
+        "https://www.finview.kr",
     ],
     allow_credentials=True,
     allow_methods=["*"],
