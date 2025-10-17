@@ -10,11 +10,10 @@ FinSight는 한국의 금융 뉴스를 자동으로 수집하고, AI를 활용�
 - **AI 기반 분석**: OpenAI를 활용한 뉴스 내용 분석 및 카테고리 분류
 - **경제 지표 연동**: 한국은행 ECOS API를 통한 경제 지표 데이터 수집
 - **REST API**: FastAPI 기반의 웹 API 서버
-- **모니터링**: Prometheus와 Grafana를 통한 시스템 모니터링
 
 ## 🏗️ 시스템 아키텍처
 
-![FinSight architecture](docs/architecture.png)
+![FinSight architecture](docs/serverArchitecture.png)
 
 
 ## 🔄 데이터 파이프라인
@@ -75,7 +74,6 @@ FinSight는 한국의 금융 뉴스를 자동으로 수집하고, AI를 활용�
 
 ### AI/ML
 - **OpenAI API**: LLM 분석
-- **KSS**: 한국어 문장 분리 (선택적 사용)
 - **newspaper3k**: 웹 크롤링
 
 ### 모니터링
@@ -117,6 +115,7 @@ NAVER_CLIENT_ID=your_naver_client_id
 NAVER_CLIENT_SECRET=your_naver_client_secret
 OPENAI_API_KEY=your_openai_api_key
 ECOS_API_KEY=your_ecos_api_key
+NEWS_DATA_API_KEY=your_news_data_api_key
 
 # Application
 DEBUG=True
@@ -146,25 +145,23 @@ python pipeline.py
 # Docker Compose로 모니터링 스택 실행
 docker-compose up -d
 
-# Grafana 접속: http://localhost:3000
-# Prometheus 접속: http://localhost:9090
 ```
 
 ## 📊 API 사용 예시
 
 ### 뉴스 기사 조회
 ```bash
-curl -X GET "http://localhost:8000/articles?limit=10&skip=0"
+curl -X GET "http://finsight-server.store/articles?limit=10&skip=0"
 ```
 
 ### 헬스체크
 ```bash
-curl -X GET "http://localhost:8000/health"
+curl -X GET "http://finsight-server.store/health"
 ```
 
 ### 시스템 메트릭
 ```bash
-curl -X GET "http://localhost:8000/metrics"
+curl -X GET "http://finsight-server.store/metrics"
 ```
 
 ## 🗂️ 프로젝트 구조
@@ -177,14 +174,17 @@ fin_sight_server/
 │   ├── models/            # 데이터베이스 모델
 │   ├── schemas/           # Pydantic 스키마
 │   └── database.py        # 데이터베이스 설정
-├── ecos/                  # 경제지표 수집 모듈
-│   └── data_pipeline/
-├── data/                  # 데이터 저장소
+|
+|
+├── scripts/
+|   ├── ecos/              # ecos 데이터수집 파이프라인
+|   ├── letter/            # letter 초안 데이터 수집 파이프라인
+|   └── news/              # news 데이터수집 파이프라인
+|
 ├── logs/                  # 로그 설정 및 파일
 ├── scripts/               # 유틸리티 스크립트
 ├── alembic/               # 데이터베이스 마이그레이션
 ├── docker-compose.yml     # 모니터링 스택
-├── pipeline.py            # 메인 데이터 파이프라인
 └── pyproject.toml         # 프로젝트 설정
 ```
 
