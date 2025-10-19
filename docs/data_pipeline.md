@@ -173,6 +173,12 @@ python scripts/ecos/export_observations_core.py --only ...코어셋...
 | state 레코드 없음 | bootstrap 미실행 | `ingest_catalog.py --bootstrap-state` 또는 관측치로부터 수동 생성 |
 | value 정정 필요 | 현재 upsert value overwrite | 추후 변경 이력 테이블 설계 고려 |
 
+### 실패/재시도 정책(현재 구현 기준)
+- API 호출 재시도: EcosApiClient는 각 페이지 요청에 대해 timeout=15초, 최대 3회 재시도(backoff 포함)를 수행합니다. 응답이 200이 아니거나 JSON 파싱 실패 시 재시도하며, 연속 실패 시 마지막 오류와 함께 예외를 발생시킵니다.
+- 페이지네이션: 한 페이지에 page_size(기본 1000) 미만이 반환되면 마지막 페이지로 간주하고 다음 페이지 요청을 중단합니다.
+- indicator 단위 오류 처리: orchestrator는 지표별 try/except로 보호되어 있어, 특정 지표에서 예외가 발생해도 다른 지표 처리는 계속됩니다. 실패한 지표는 로그에 남고, 전체 run의 status는 삽입/오류 수에 따라 SUCCESS/PARTIAL/FAILED 중 하나로 설정됩니다.
+- 트랜잭션/커밋: CLI는 전체 실행이 끝난 뒤 한 번 commit합니다. 중간에 예외가 발생하면 rollback 후 비정상 종료합니다. 개별 지표 처리 중 오류는 카운트만 증가되며 나머지 지표는 처리됩니다.
+
 ---
 ## 향후 개선
 1. Upsert 결과: inserted vs updated 분리 (RETURNING + 시스템 컬럼)
