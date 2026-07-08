@@ -31,7 +31,7 @@ jobs:
           tags: |
             asd1702/fin-sight-server:latest
             asd1702/fin-sight-server:prod-${{ github.sha }}
-  
+
   deploy:
     name: Deploy to EC2
     needs: build-and-push
@@ -46,8 +46,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             docker rm -f finsight-server || true
-            docker pull asd1702/fin-sight-server:prod-${{ github.sha}}
-            cd opt/finsight
+            docker pull asd1702/fin-sight-server:prod-${{ github.sha }}
+            cd /opt/finsight
 
             docker run -d --name finsight-server \
             -p 8000:8000 \
@@ -56,9 +56,6 @@ jobs:
             -e LOG_LEVEL=INFO \
             -e QUIET=1 \
             -e LOG_TO_FILE=0 \
-            -e  UNSAFE_ADMIN_MODE=1 \
             asd1702/fin-sight-server:prod-${{ github.sha }}
 
             echo "Deployment completed successfully."
-            
-             
