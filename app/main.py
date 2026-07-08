@@ -7,11 +7,9 @@ FinSight API Server의 진입점 모듈
  - Prometheus 계측을 위한 Instrumentator 설정 및 /metrics 노출
  - 주기적인 시스템 메트릭 수집(백그라운드 태스크)
  - API 라우터 포함(articles, health, letters)
- - 정적 파일 서빙(간단한 HTML 뷰어용)
 """
 
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from prometheus_fastapi_instrumentator import Instrumentator
 from app.api import articles, health, letters
@@ -94,14 +92,6 @@ async def startup_event():
 app.include_router(articles.router)
 app.include_router(health.router)
 app.include_router(letters.router)
-
-
-# ---------------------------
-# 정적 파일 서빙
-# ---------------------------
-# 간단한 HTML 뷰어 등 정적 파일을 제공하기 위해 루트 경로(작업 디렉토리)를 마운트합니다.
-# 필요에 따라 실제 정적 파일 디렉토리를 지정하는 것이 안전합니다.
-app.mount("/static", StaticFiles(directory="."), name="static")
 
 
 @app.get("/")
