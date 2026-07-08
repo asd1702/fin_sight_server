@@ -1,262 +1,165 @@
+<div align="center">
+
 # FinSight Server
 
-금융 뉴스 수집·분석 API 서버(FastAPI 기반). 이 문서는 현재 코드에 근거해 실제로 존재하는 기능과 운영 방법만을 정리합니다.
+**금융 뉴스를 수집·분석해 제공하는 API 서버**
 
-## 목차
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS%20EC2%2FRDS-FF9900?style=flat-square&logo=amazonaws&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/CI%2FCD-2088FF?style=flat-square&logo=githubactions&logoColor=white)
 
-- [주요 기능](#주요-기능)
-- [아키텍처](#아키텍처)
-- [프로젝트 구조(요약)](#프로젝트-구조요약)
-- [요구 사항](#요구-사항)
-- [시작하기](#시작하기)
-- [Docker/Compose](#dockercompose)
-- [데이터 파이프라인](#데이터-파이프라인)
-- [API 개요](#api-개요)
-- [보안/운영 참고](#보안운영-참고)
-- [CI/CD(요약)](#cicd요약)
-- [트러블슈팅](#트러블슈팅)
-- [라이선스](#라이선스)
+</div>
 
-## 주요 기능
+---
 
-- FastAPI 기반 REST API 제공
-- PostgreSQL + SQLAlchemy + Alembic 마이그레이션
-- Prometheus 메트릭(`/metrics`) 노출 및 기본 시스템 메트릭 로깅
-- Docker/Docker Compose 및 GitHub Actions 기반 배포 파이프라인
+## Overview
 
-## 아키텍처
+FinSight는 5인 팀 프로젝트의 뉴스 수집·분석 백엔드 서버입니다. 백엔드 서버가 두 개로 나뉘어 있었고, 그중 뉴스 수집·분석 서버를 맡아 설계부터 배포·운영까지 담당했습니다. (다른 백엔드는 퀴즈·로그인 도메인을 담당했습니다.)
 
-아래는 시스템 아키텍처 개요입니다. 운영 환경에서는 EC2 상의 Docker 컨테이너에서 애플리케이션을 구동하고, 데이터베이스는 Amazon RDS(PostgreSQL)를 사용합니다.
+단순 CRUD 서버가 아니라, 외부 데이터를 매일 자동으로 수집하고 LLM으로 분석해 저장하는 파이프라인과 그 결과를 내려주는 API, 그리고 이걸 굴리기 위한 인프라(EC2·RDS·CI/CD·모니터링)까지 포함합니다.
 
-![Architecture](docs/serverArchitecture.png)
+- 대회 기간 중 약 한 달간 실서비스로 운영 (`finview.kr` 연동)
+- 매일 정해진 시각에 자동 수집·분석 배치 실행
+- EC2(앱) / RDS(DB) 분리 배포
 
+## Architecture
 
+```mermaid
+flowchart TB
+    subgraph ext["External APIs"]
+        naver["Naver News API"]
+        ecos["ECOS API<br/>(경제지표)"]
+        openai["OpenAI API<br/>(LLM 분석)"]
+    end
 
-## 프로젝트 구조(요약)
+    subgraph batch["Data Pipeline · 매일 자동 배치"]
+        pipe["수집 → 본문 크롤링 → LLM 분석 → 저장"]
+    end
+
+    subgraph ec2["AWS EC2 · Docker"]
+        api["FastAPI Server<br/>REST API · /metrics"]
+    end
+
+    db[("Amazon RDS<br/>PostgreSQL")]
+    client["Client<br/>(finview.kr)"]
+    prom["Prometheus"]
+
+    subgraph cicd["CI/CD"]
+        gha["GitHub Actions"] --> img["Docker Hub<br/>Image"] --> dep["EC2 Deploy"]
+    end
+
+    naver --> pipe
+    ecos --> pipe
+    openai --> pipe
+    pipe -->|write| db
+    client <-->|REST| api
+    api <-->|SQLAlchemy| db
+    prom -.scrape.-> api
+    dep -.deploy.-> ec2
+```
+
+## Tech Stack
+
+| 구분 | 기술 |
+| --- | --- |
+| Language | Python 3.10+ |
+| Framework | FastAPI |
+| Database | PostgreSQL · SQLAlchemy · Alembic · pg_bigm |
+| Infra | AWS EC2, Amazon RDS, Docker, Docker Compose |
+| CI/CD | GitHub Actions, Docker Hub |
+| Monitoring | Prometheus (`/metrics`) |
+| External | Naver News API, ECOS(경제지표), OpenAI API |
+
+## Features
+
+- 매일 정해진 시각에 뉴스 수집 → 본문 크롤링·필터링 → LLM 분석 → 경제지표 연계 저장까지 무인으로 도는 자동화 파이프라인
+- 기사 조회/검색 API (최신·카테고리별·키워드 검색, 분석 결과 포함 상세)
+- 섹터/주제별 뉴스레터 아웃라인 생성·발행
+- 관리자 API (기사 소프트 삭제/복구/영구삭제, `X-ADMIN-KEY` 인증)
+- Prometheus 메트릭 노출 및 주기적 시스템 메트릭 로깅
+
+## 설계 의사결정
+
+**EC2와 RDS 분리.** 앱 서버는 언제든 컨테이너를 갈아끼울 수 있어야 한다고 봤습니다. 데이터를 EC2 안에 두면 재배포할 때마다 날아갈 위험이 있어서, 상태는 관리형 RDS에 맡기고 앱은 stateless하게 뒀습니다. 백업과 가용성 관리도 자연스럽게 RDS 쪽으로 넘어갔습니다.
+
+**환경 파일 우선순위.** `ENV_FILE > .env > .env.dev > .env.prod` 순으로 설정을 읽게 해서, 로컬·개발·운영을 코드 수정 없이 전환할 수 있게 했습니다.
+
+**CI/CD.** main에 push하면 GitHub Actions가 이미지를 빌드·푸시하고 EC2에 SSH로 붙어 컨테이너를 교체합니다. 문서 변경(`docs/`, `README.md`)은 `paths-ignore`로 빼서 불필요한 배포를 막았습니다.
+
+**용어 요약 컬럼 (Progressive Disclosure).** 수집한 경제 용어의 정의(`definition`)가 너무 길어서 그대로 노출하면 화면이 부담스러웠습니다. `domain_terms`에 `summary` 컬럼을 추가하고(Alembic 마이그레이션), 요약을 먼저 보여주고 긴 정의는 필요할 때 펼치는 식으로 풀었습니다.
+
+**데이터베이스 인덱싱.** 조회 쿼리의 실행계획을 `EXPLAIN`으로 확인하며 인덱스를 설계했습니다.
+- 목록 조회(`/today`, `/category`)는 `status`·`is_deleted` 필터에 `published_at DESC` 정렬이 붙는 패턴이라, `(status, is_deleted, published_at DESC)` 복합 인덱스로 Seq Scan + Sort를 Index Scan으로 전환했습니다(정렬 연산 제거).
+- 한국어 부분일치 검색은 처음에 pg_trgm을 적용했으나, 3-gram 특성상 '금융' 같은 2글자 한국어를 색인하지 못해 인덱스가 무효했습니다. CJK용 **pg_bigm(2-gram)** 함수 인덱스로 교체하고 검색을 `lower(col) LIKE`로 변경해 `Bitmap Index Scan`으로 전환했습니다. (벤치마크 상세는 별도 문서)
+
+## 트러블슈팅: 뉴스 수집 신뢰성
+
+처음엔 브라우저에서 멀쩡히 보이던 기사가 `requests`로 받으면 빈 HTML만 오거나 본문이 비어 있었습니다. 원인을 좁히려고 응답 코드와 HTML을 직접 찍어 브라우저 결과와 비교해봤는데, 알고 보니 JS 렌더링 문제가 아니라 요청에 User-Agent가 없어서 봇으로 막힌 것이었습니다. 그래서 헤더에 브라우저 User-Agent를 실어 차단을 우회하고, BeautifulSoup으로 본문 컨테이너 태그만 정확히 집어 추출했습니다.
+
+이렇게 수집한 원문을 DB에 저장하고 LLM으로 넘기려다 두 번째 문제를 만났습니다. 본문에 광고 텍스트와 깨진 문자가 섞여 있었는데, 이대로 LLM에 넣으면 분석 품질이 떨어질 게 뻔했기 때문입니다. 그래서 파싱 전에 `<script>`·`<style>`·광고 요소를 DOM에서 먼저 제거하고, 남은 텍스트는 정규식으로 기자 이메일 같은 패턴까지 후처리로 걸러냈습니다.
+
+그런데 아무리 정제해도 모든 기사가 깨끗하게 나오지는 않았습니다. 그래서 본문 최소 길이 같은 '정상 수집' 기준을 정해두고, 이 기준을 넘기지 못한 기사는 아예 LLM에 보내지 않고 폐기하도록 했습니다. 결국 외부 데이터는 믿을 수 없다는 전제로, 문제 있는 데이터가 하류(LLM·DB)까지 흘러가기 전에 수집 단계에서 걸러내는 쪽을 택한 셈입니다. 이 기준은 대회 기간 한 달 동안 매일 자동 배치에 그대로 적용되며 안정적으로 돌아갔습니다.
+
+## Getting Started
+
+```bash
+# 1. 의존성 설치
+python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+# 2. 환경 변수 설정
+cp .env.example .env        # DATABASE_URL, OPENAI_API_KEY, NAVER_*, ECOS_API_KEY 등 채우기
+
+# 3. DB 마이그레이션 (한국어 검색 인덱스에 pg_bigm 확장이 필요합니다.
+#    로컬은 pg_bigm 설치 필요, AWS RDS는 기본 지원)
+alembic upgrade head
+
+# 4. 개발 서버 실행
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+- API 문서: `http://localhost:8000/docs`
+- 헬스체크: `http://localhost:8000/health`
+- 메트릭: `http://localhost:8000/metrics`
+
+파이프라인 실행:
+
+```bash
+python scripts/news/pipeline.py                            # 뉴스 수집·분석
+python scripts/ecos/ingest_ecos_incremental.py --recheck-days 7   # 경제지표 증분 수집
+```
+
+## API
+
+| Method | Endpoint | 설명 |
+| --- | --- | --- |
+| GET | `/health` | 서버·DB 연결 확인 |
+| GET | `/api/articles/today` | 최신 처리완료 기사 목록 |
+| GET | `/api/articles/category/{category}` | 카테고리별 기사 |
+| GET | `/api/articles/search?q=` | 제목/설명/해시태그 검색 |
+| GET | `/api/articles/{id}` | 기사 상세(분석 결과 포함) |
+| GET | `/api/letters/{sector}/{key}` | 최신 뉴스레터 초안 |
+| DELETE | `/api/articles/admin/{id}` | 기사 소프트 삭제 (`X-ADMIN-KEY`) |
+
+전체 스펙은 실행 후 `/docs`(Swagger)에서 확인할 수 있습니다.
+
+## Project Structure
 
 ```
 fin_sight_server/
 ├── app/
-│   ├── api/
-│   │   ├── health.py         # /health 헬스체크(API+DB)
-│   │   ├── articles.py       # 기사 조회/검색 + 관리자 엔드포인트
-│   │   └── letters.py        # 뉴스레터(초안/배치) 조회/발행
-│   ├── core/
-│   │   ├── config.py         # 설정 로딩(.env 우선순위)
-│   │   └── monitoring.py     # 성능/시스템 메트릭 유틸
-│   ├── models/               # ORM 모델
-│   ├── schemas/              # Pydantic 스키마
-│   ├── database.py           # DB 엔진/세션 + get_db
-│   └── main.py               # FastAPI 앱, CORS, /metrics, 라우터 등록
-├── alembic/                  # DB 마이그레이션
+│   ├── api/            # articles, health, letters 라우터
+│   ├── core/           # 설정 로딩, 모니터링 유틸
+│   ├── models/         # SQLAlchemy ORM 모델
+│   ├── schemas/        # Pydantic 스키마
+│   ├── database.py     # DB 엔진/세션
+│   └── main.py         # FastAPI 앱 · CORS · /metrics
+├── alembic/            # DB 마이그레이션
+├── scripts/            # 뉴스/ECOS/레터 파이프라인
 ├── Dockerfile
-├── docker-compose.yml        # 모니터링 스택(prometheus/grafana/node-exporter)
-├── docker-compose.prod.yml   # 앱+DB(+옵션: 모니터링) 운영용 compose
-├── prometheus.yml            # Prometheus 스크레이프 설정
-├── requirements.txt          # 의존성 목록
-├── pyproject.toml            # 패키징/의존성 메타
-└── .github/workflows/deploy.yml  # Docker 빌드/EC2 배포
+├── docker-compose.prod.yml
+└── .github/workflows/deploy.yml   # CI/CD
 ```
-
-## 요구 사항
-
-- Python 3.10+
-- PostgreSQL 15 (또는 호환 버전)
-- pip, virtualenv(선택)
-
-## 시작하기
-
-1) 의존성 설치
-
-```bash
-cd fin_sight_server
-python -m venv .venv && source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install --upgrade pip
-pip install -r requirements.txt
-```
-
-2) 환경 변수 설정
-
-`app/core/config.py`는 다음 우선순위로 설정 파일을 로드합니다.
-
-1. ENV_FILE 환경변수로 지정된 경로
-2. ./.env
-3. ./.env.dev
-4. ./.env.prod (기본값은 .env.dev)
-
-필수/주요 항목(예시 형식만 제시, 값은 환경에 맞게 설정):
-
-샘플 복사(로컬 개발):
-
-```bash
-cp .env.example .env
-# 이후 .env 파일을 열어 각 값을 채워 넣으세요.
-```
-
-```env
-# Database
-DATABASE_URL=postgresql://USER:PASS@HOST:5432/DBNAME
-
-# External APIs
-OPENAI_API_KEY=...
-NAVER_CLIENT_ID=...
-NAVER_CLIENT_SECRET=...
-ECOS_API_KEY=...
-NEWS_DATA_API_KEY=...
-
-# App
-DEBUG=true
-LOG_LEVEL=INFO
-
-# (옵션)
-REDIS_URL=
-ADMIN_API_KEY=  # 관리자 엔드포인트 보호용 헤더 값(추후 업데이트 예정)
-UNSAFE_ADMIN_MODE=0  # 1이면 관리자 인증 우회(로컬 개발 한정)
-
-# 파이프라인/LLM 관련 설정(코드 참조)
-BATCH_SIZE=
-MAX_WORKERS=
-RETRY_ATTEMPTS=
-LLM_MODEL=
-MAX_TOKENS=
-TEMPERATURE=
-```
-
-3) 데이터베이스 마이그레이션
-
-```bash
-alembic upgrade head
-```
-
-4) 개발 서버 실행
-
-```bash
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-```
-
-접근 포인트:
-- OpenAPI 문서: http://localhost:8000/docs (또는 /redoc)
-- 헬스체크: http://localhost:8000/health
-- 메트릭: http://localhost:8000/metrics
-
-## Docker/Compose
-
-- 단일 컨테이너(이미지) 실행은 Dockerfile + `docker-entrypoint.sh`를 사용합니다.
-- 로컬 모니터링 스택: `docker-compose.yml` (prometheus, grafana, node-exporter)
-- 운영용: `docker-compose.prod.yml` (app + db, 모니터링은 `profiles: ["monitoring"]`로 선택)
-	- 실제 운영에서는 RDS(PostgreSQL)를 사용하며, `DATABASE_URL`을 RDS 엔드포인트로 오버라이드하여 내부 `db` 서비스 없이 구동합니다.
-
-예) 운영 compose 기동(예시)
-
-```bash
-docker compose -f docker-compose.prod.yml up -d --build
-```
-
-## 데이터 파이프라인
-
-파이프라인 스크립트는 `scripts/` 하위에 위치합니다. 아래는 실제 스크립트 기준의 간단 실행 예시이며, 상세한 사용법/운영 절차는 문서 링크를 참고하세요.
-
-### 1) 뉴스 수집·분석
-- 경로: `scripts/news/pipeline.py`
-- 동작: 네이버 검색 → 기사 크롤링 → 본문 길이 필터 → Article 저장 → PENDING 기사 LLM 분석 → Enriched 데이터 저장(관련 통계 조회 포함)
-- 필요 환경: `OPENAI_API_KEY`, `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET`, `DATABASE_URL`
-
-```bash
-python scripts/news/pipeline.py
-```
-
-자세히: [docs/news_pipeline.md](docs/news_pipeline.md)
-
-### 2) ECOS 경제지표
-- 카탈로그 반영: 카탈로그 JSON을 지표 테이블에 반영(+옵션: 상태 테이블 부트스트랩)
-
-```bash
-# 기본 카탈로그 반영
-python scripts/ecos/ingest_catalog.py --bootstrap-state
-
-# 새 카탈로그 파일 사용 + 상태 강제 초기화(주의)
-python scripts/ecos/ingest_catalog.py --file data/catalog_core15.json --bootstrap-state --force-state
-```
-
-- 증분 수집: 최근 구간 재검증(rewind) 옵션으로 누락값 보정
-
-```bash
-python scripts/ecos/ingest_ecos_incremental.py --recheck-days 7
-```
-
-- 내보내기(백업/전달): 관측치 JSONL 생성(카탈로그 기반 또는 전체)
-
-```bash
-# 특정 지표만
-python scripts/ecos/export_observations_core.py --only kr.cpi.headline.m kr.ppi.m
-
-# 전체
-python scripts/ecos/export_observations_core.py --all
-```
-
-자세히: [docs/data_pipeline.md](docs/data_pipeline.md)
-
-### 3) 레터(섹터/회사) 아웃라인
-- 경로: `scripts/letter/run_sector.py`
-- 동작: (sector,key) 구성 기반 뉴스 수집/크롤링 → LLM으로 아웃라인 생성 → DB 저장. `--fresh`로 강제 재생성. `--list`/`--show-config` 제공.
-- 필요 환경: `OPENAI_API_KEY`, `DATABASE_URL` 등
-
-```bash
-# 사용 가능한 (sector,key) 목록
-python scripts/letter/run_sector.py --list
-
-# 섹터 설정 보기
-python scripts/letter/run_sector.py --show-config macro
-
-# 실행 예시
-python scripts/letter/run_sector.py --sector market --key us_market --size 18
-```
-
-자세히: [docs/letter_pipeline.md](docs/letter_pipeline.md)
-
-## API 개요
-
-헬스/루트
-- GET `/` — 단순 서버 상태 메시지
-- GET `/health` — 서버 및 DB 연결 확인(SELECT 1)
-
-기사(Articles) — prefix: `/api/articles`
-- GET `/today` — 최근 처리완료(PROCESSED) 기사 목록 (페이지네이션: skip, limit)
-- GET `/category/{category}` — 카테고리별 기사 목록
-- GET `/search?q=...` — 제목/설명/해시태그 부분 일치 검색
-- GET `/{article_id}` — 기사 상세(EnrichedArticle 포함 정보 조합)
-
-관리자(Admin) — prefix: `/api/articles/admin` (헤더 `X-ADMIN-KEY` 필요)
-- DELETE `/{article_id}` — 소프트 삭제(플래그 처리 + 잠금 시간)
-- POST `/{article_id}/restore` — 소프트 삭제 복구
-- DELETE `/{article_id}/purge` — 영구 삭제(잠금 기한 경과 필요)
-
-뉴스레터(Letters) — prefix: `/api/letters`
-- GET `/{sector}/{key}` — 최신 배치의 초안(Outline) 조회
-- GET `/{sector}/{key}/history` — 배치 이력 목록 조회
-- POST `/{sector}/{key}/{batch_id}/publish` — 특정 배치 발행 처리(status=delivered)
-
-메트릭
-- GET `/metrics` — Prometheus 포맷 메트릭 노출
-
-## 보안/운영 참고
-
-- 관리자 엔드포인트 접근은 `X-ADMIN-KEY` 헤더를 사용합니다. 값은 `ADMIN_API_KEY` 환경변수로 주입하세요.
-- 로컬 개발 편의를 위해 `UNSAFE_ADMIN_MODE=1`이면 관리자 인증이 우회됩니다(실제 운영에는 비권장).
-- `app/main.py`에서 CORS 허용 오리진이 화이트리스트로 설정되어 있습니다(본인 환경에 맞게 조정 권장).
-- `/metrics`는 기본 Instrumentator 설정으로 노출됩니다. 필요 시 라벨/카디널리티 정책을 조정하세요.
-
-## CI/CD(요약)
-
-`.github/workflows/deploy.yml`
-- main 브랜치 푸시 시 Docker 이미지 빌드/푸시
-- 이후 EC2에 SSH로 접속해 컨테이너 교체 실행(`--env-file prod.env` 등)
-
-## 트러블슈팅
-
-- 데이터베이스 연결 오류: `DATABASE_URL` 확인 후 `/health`에서 `database: connected` 여부 확인
-- 마이그레이션 실패: `alembic current` / `alembic history`로 상태 확인 → 충돌 시 정리 후 재시도
-- 메트릭 수집 불가: Prometheus 타깃/metrics_path 확인(`prometheus.yml`)
-
-## 라이선스
-개인 프로젝트
