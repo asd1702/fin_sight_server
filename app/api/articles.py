@@ -15,7 +15,7 @@ SQLAlchemy 예외는 적절한 HTTP 상태 코드로 매핑합니다.
 from fastapi import APIRouter, Depends, HTTPException, status, Header
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import or_, text
+from sqlalchemy import or_, text, func
 from typing import List
 import logging
 import asyncio
@@ -188,8 +188,8 @@ async def search_articles(q: str, db: Session = Depends(get_db), skip: int = 0, 
                 Article.status == ArticleStatus.PROCESSED,
                 Article.is_deleted == False,
                 or_(
-                    Article.title.ilike(pattern),
-                    Article.description.ilike(pattern),
+                    func.lower(Article.title).like(func.lower(pattern)),
+                    func.lower(Article.description).like(func.lower(pattern)),
                     hashtags_exists,
                 ),
             )
