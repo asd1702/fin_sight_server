@@ -9,6 +9,7 @@ secrets.env
 .env
 .env.dev
 .env.prod
+.venv
 
 # Python
 __pycache__/
@@ -65,4 +66,4 @@ logs/*.log
 # 백업 파일
 *.bak
 *.backup
-back_up/
+back_up/.venv/
