@@ -27,39 +27,7 @@ FinSight는 5인 팀 프로젝트의 뉴스 수집·분석 백엔드 서버입�
 
 ## Architecture
 
-```mermaid
-flowchart TB
-    subgraph ext["External APIs"]
-        naver["Naver News API"]
-        ecos["ECOS API<br/>(경제지표)"]
-        openai["OpenAI API<br/>(LLM 분석)"]
-    end
-
-    subgraph batch["Data Pipeline · 매일 자동 배치"]
-        pipe["수집 → 본문 크롤링 → LLM 분석 → 저장"]
-    end
-
-    subgraph ec2["AWS EC2 · Docker"]
-        api["FastAPI Server<br/>REST API · /metrics"]
-    end
-
-    db[("Amazon RDS<br/>PostgreSQL")]
-    client["Client<br/>(finview.kr)"]
-    prom["Prometheus"]
-
-    subgraph cicd["CI/CD"]
-        gha["GitHub Actions"] --> img["Docker Hub<br/>Image"] --> dep["EC2 Deploy"]
-    end
-
-    naver --> pipe
-    ecos --> pipe
-    openai --> pipe
-    pipe -->|write| db
-    client <-->|REST| api
-    api <-->|SQLAlchemy| db
-    prom -.scrape.-> api
-    dep -.deploy.-> ec2
-```
+![FinSight 전체 아키텍처](docs/images/finsight-architecture.svg)
 
 ## Tech Stack
 
