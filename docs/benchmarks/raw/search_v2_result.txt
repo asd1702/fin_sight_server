@@ -1,0 +1,343 @@
+FinSight search v2 PostgreSQL benchmark
+DB: postgresql://postgres:1234@localhost:5432/benchdb
+Dataset: 100000 rows, title contains 삼성 for 1000 rows (1%)
+
+===== Selectivity check =====
+ total  | match_samsung 
+--------+---------------
+ 100000 |          1000
+(1 row)
+
+
+===== Experiment 1 BEFORE no index run 1 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4131.00 rows=1020 width=154) (actual time=0.078..94.526 rows=1000 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99000
+   Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=132
+ Planning Time: 0.540 ms
+ Execution Time: 94.780 ms
+(8 rows)
+
+
+===== Experiment 1 BEFORE no index run 2 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4131.00 rows=1020 width=154) (actual time=0.107..107.886 rows=1000 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99000
+   Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=132
+ Planning Time: 0.562 ms
+ Execution Time: 108.010 ms
+(8 rows)
+
+
+===== Experiment 1 BEFORE no index run 3 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4131.00 rows=1020 width=154) (actual time=0.113..104.128 rows=1000 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99000
+   Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=132
+ Planning Time: 0.585 ms
+ Execution Time: 104.242 ms
+(8 rows)
+
+
+===== Experiment 1 AFTER trgm GIN run 1 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4131.00 rows=1020 width=154) (actual time=0.081..79.548 rows=1000 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99000
+   Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=184
+ Planning Time: 0.928 ms
+ Execution Time: 79.665 ms
+(8 rows)
+
+
+===== Experiment 1 AFTER trgm GIN run 2 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4131.00 rows=1020 width=154) (actual time=0.110..90.407 rows=1000 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99000
+   Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=174
+ Planning Time: 1.032 ms
+ Execution Time: 90.545 ms
+(8 rows)
+
+
+===== Experiment 1 AFTER trgm GIN run 3 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4131.00 rows=1020 width=154) (actual time=0.115..105.639 rows=1000 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99000
+   Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=174
+ Planning Time: 1.093 ms
+ Execution Time: 105.791 ms
+(8 rows)
+
+
+===== Experiment 2 app query trgm plus list indexes run 1 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.42..98.98 rows=20 width=154) (actual time=0.165..2.251 rows=20 loops=1)
+   Buffers: shared hit=48 read=12
+   ->  Index Scan using idx_articles_list on articles  (cost=0.42..10004.17 rows=2030 width=154) (actual time=0.164..2.248 rows=20 loops=1)
+         Index Cond: ((status = 'PROCESSED'::text) AND (is_deleted = false))
+         Filter: ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text))
+         Rows Removed by Filter: 1980
+         Buffers: shared hit=48 read=12
+ Planning:
+   Buffers: shared hit=237 read=1
+ Planning Time: 1.260 ms
+ Execution Time: 2.290 ms
+(11 rows)
+
+
+===== Experiment 2 app query trgm plus list indexes run 2 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.42..98.98 rows=20 width=154) (actual time=0.090..1.537 rows=20 loops=1)
+   Buffers: shared hit=60
+   ->  Index Scan using idx_articles_list on articles  (cost=0.42..10004.17 rows=2030 width=154) (actual time=0.089..1.534 rows=20 loops=1)
+         Index Cond: ((status = 'PROCESSED'::text) AND (is_deleted = false))
+         Filter: ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text))
+         Rows Removed by Filter: 1980
+         Buffers: shared hit=60
+ Planning:
+   Buffers: shared hit=234
+ Planning Time: 0.815 ms
+ Execution Time: 1.563 ms
+(11 rows)
+
+
+===== Experiment 2 app query trgm plus list indexes run 3 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.42..98.98 rows=20 width=154) (actual time=0.154..2.197 rows=20 loops=1)
+   Buffers: shared hit=60
+   ->  Index Scan using idx_articles_list on articles  (cost=0.42..10004.17 rows=2030 width=154) (actual time=0.153..2.193 rows=20 loops=1)
+         Index Cond: ((status = 'PROCESSED'::text) AND (is_deleted = false))
+         Filter: ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text))
+         Rows Removed by Filter: 1980
+         Buffers: shared hit=60
+ Planning:
+   Buffers: shared hit=234
+ Planning Time: 1.032 ms
+ Execution Time: 2.230 ms
+(11 rows)
+
+
+===== 0.2% selectivity rerun note =====
+Experiment 1 AFTER at 1% selectivity still used Seq Scan, so rebuilt data with g % 500.
+ total  | match_samsung 
+--------+---------------
+ 100000 |           200
+(1 row)
+
+
+===== Experiment 1 BEFORE no index 0.2pct run 1 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4131.00 rows=1020 width=154) (actual time=0.513..120.333 rows=200 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99800
+   Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=133
+ Planning Time: 0.620 ms
+ Execution Time: 120.416 ms
+(8 rows)
+
+
+===== Experiment 1 BEFORE no index 0.2pct run 2 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4131.00 rows=1020 width=154) (actual time=0.627..116.086 rows=200 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99800
+   Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=133
+ Planning Time: 0.637 ms
+ Execution Time: 116.165 ms
+(8 rows)
+
+
+===== Experiment 1 BEFORE no index 0.2pct run 3 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4131.00 rows=1020 width=154) (actual time=0.791..113.384 rows=200 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99800
+   Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=133
+ Planning Time: 0.753 ms
+ Execution Time: 113.474 ms
+(8 rows)
+
+CREATE EXTENSION
+CREATE INDEX
+CREATE INDEX
+ANALYZE
+
+===== Experiment 1 AFTER trgm GIN 0.2pct run 1 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4131.00 rows=20 width=154) (actual time=0.365..81.901 rows=200 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99800
+   Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=173
+ Planning Time: 0.928 ms
+ Execution Time: 81.961 ms
+(8 rows)
+
+
+===== Experiment 1 AFTER trgm GIN 0.2pct run 2 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4131.00 rows=20 width=154) (actual time=0.526..108.031 rows=200 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99800
+   Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=173
+ Planning Time: 1.036 ms
+ Execution Time: 108.114 ms
+(8 rows)
+
+
+===== Experiment 1 AFTER trgm GIN 0.2pct run 3 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4131.00 rows=20 width=154) (actual time=0.569..113.268 rows=200 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99800
+   Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=173
+ Planning Time: 1.091 ms
+ Execution Time: 113.360 ms
+(8 rows)
+
+CREATE INDEX
+ANALYZE
+
+===== Experiment 2 app query trgm plus list indexes 0.2pct run 1 =====
+                                                                   QUERY PLAN                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=4131.43..4131.48 rows=20 width=154) (actual time=107.405..107.410 rows=20 loops=1)
+   Buffers: shared hit=2384
+   ->  Sort  (cost=4131.43..4131.48 rows=20 width=154) (actual time=107.402..107.406 rows=20 loops=1)
+         Sort Key: published_at DESC
+         Sort Method: top-N heapsort  Memory: 30kB
+         Buffers: shared hit=2384
+         ->  Seq Scan on articles  (cost=0.00..4131.00 rows=20 width=154) (actual time=0.519..107.281 rows=200 loops=1)
+               Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+               Rows Removed by Filter: 99800
+               Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=236 read=1
+ Planning Time: 1.178 ms
+ Execution Time: 107.455 ms
+(14 rows)
+
+
+===== Experiment 2 app query trgm plus list indexes 0.2pct run 2 =====
+                                                                   QUERY PLAN                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=4131.43..4131.48 rows=20 width=154) (actual time=112.272..112.279 rows=20 loops=1)
+   Buffers: shared hit=2384
+   ->  Sort  (cost=4131.43..4131.48 rows=20 width=154) (actual time=112.269..112.274 rows=20 loops=1)
+         Sort Key: published_at DESC
+         Sort Method: top-N heapsort  Memory: 30kB
+         Buffers: shared hit=2384
+         ->  Seq Scan on articles  (cost=0.00..4131.00 rows=20 width=154) (actual time=0.531..112.112 rows=200 loops=1)
+               Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+               Rows Removed by Filter: 99800
+               Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=235
+ Planning Time: 1.109 ms
+ Execution Time: 112.322 ms
+(14 rows)
+
+
+===== Experiment 2 app query trgm plus list indexes 0.2pct run 3 =====
+                                                                   QUERY PLAN                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=4131.43..4131.48 rows=20 width=154) (actual time=110.062..110.068 rows=20 loops=1)
+   Buffers: shared hit=2384
+   ->  Sort  (cost=4131.43..4131.48 rows=20 width=154) (actual time=110.060..110.063 rows=20 loops=1)
+         Sort Key: published_at DESC
+         Sort Method: top-N heapsort  Memory: 30kB
+         Buffers: shared hit=2384
+         ->  Seq Scan on articles  (cost=0.00..4131.00 rows=20 width=154) (actual time=0.513..109.892 rows=200 loops=1)
+               Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+               Rows Removed by Filter: 99800
+               Buffers: shared hit=2381
+ Planning:
+   Buffers: shared hit=235
+ Planning Time: 1.183 ms
+ Execution Time: 110.110 ms
+(14 rows)
+
+
+===== Diagnostic: force non-seqscan with trgm indexes, list index temporarily dropped =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on articles  (cost=72105.26..72180.11 rows=20 width=154) (actual time=81.501..161.985 rows=200 loops=1)
+   Recheck Cond: ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text))
+   Rows Removed by Index Recheck: 99800
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text))
+   Heap Blocks: exact=2381
+   Buffers: shared hit=4132
+   ->  BitmapOr  (cost=72105.26..72105.26 rows=20 width=0) (actual time=80.887..80.889 rows=0 loops=1)
+         Buffers: shared hit=1751
+         ->  Bitmap Index Scan on idx_articles_title_trgm  (cost=0.00..11612.17 rows=10 width=0) (actual time=13.142..13.142 rows=100000 loops=1)
+               Index Cond: (title ~~* '%삼성%'::text)
+               Buffers: shared hit=359
+         ->  Bitmap Index Scan on idx_articles_desc_trgm  (cost=0.00..60493.07 rows=10 width=0) (actual time=67.742..67.743 rows=100000 loops=1)
+               Index Cond: (description ~~* '%삼성%'::text)
+               Buffers: shared hit=1392
+ Planning:
+   Buffers: shared hit=164
+ Planning Time: 0.988 ms
+ Execution Time: 162.171 ms
+(18 rows)
+
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on articles  (cost=11612.18..11650.36 rows=10 width=154) (actual time=12.883..49.858 rows=200 loops=1)
+   Recheck Cond: (title ~~* '%삼성%'::text)
+   Rows Removed by Index Recheck: 99800
+   Heap Blocks: exact=2381
+   Buffers: shared hit=2740
+   ->  Bitmap Index Scan on idx_articles_title_trgm  (cost=0.00..11612.17 rows=10 width=0) (actual time=12.476..12.477 rows=100000 loops=1)
+         Index Cond: (title ~~* '%삼성%'::text)
+         Buffers: shared hit=359
+ Planning:
+   Buffers: shared hit=1
+ Planning Time: 0.111 ms
+ Execution Time: 49.927 ms
+(12 rows)
+

@@ -1,0 +1,321 @@
+FinSight pg_bigm PostgreSQL benchmark
+DB: postgresql://postgres:postgres@localhost:5434/benchdb
+Image: pg16-bigm
+Container: bigm-bench
+
+===== pg_bigm extension check =====
+ extname | extversion 
+---------+------------
+ pg_bigm | 1.2
+(1 row)
+
+
+===== Dataset selectivity check =====
+ total  | match_samsung 
+--------+---------------
+ 100000 |          1000
+(1 row)
+
+
+===== BEFORE no bigm index run 1 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4130.00 rows=20 width=153) (actual time=0.112..103.486 rows=1000 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99000
+   Buffers: shared hit=2380
+ Planning:
+   Buffers: shared hit=133
+ Planning Time: 0.602 ms
+ Execution Time: 103.608 ms
+(8 rows)
+
+
+===== BEFORE no bigm index run 2 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4130.00 rows=20 width=153) (actual time=0.140..108.300 rows=1000 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99000
+   Buffers: shared hit=2380
+ Planning:
+   Buffers: shared hit=133
+ Planning Time: 0.524 ms
+ Execution Time: 108.426 ms
+(8 rows)
+
+
+===== BEFORE no bigm index run 3 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4130.00 rows=20 width=153) (actual time=0.129..110.201 rows=1000 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99000
+   Buffers: shared hit=2380
+ Planning:
+   Buffers: shared hit=133
+ Planning Time: 0.581 ms
+ Execution Time: 110.335 ms
+(8 rows)
+
+
+===== AFTER pg_bigm GIN run 1 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4130.00 rows=1020 width=153) (actual time=0.080..80.084 rows=1000 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99000
+   Buffers: shared hit=2380
+ Planning:
+   Buffers: shared hit=179 read=4
+ Planning Time: 0.522 ms
+ Execution Time: 80.176 ms
+(8 rows)
+
+
+===== AFTER pg_bigm GIN run 2 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4130.00 rows=1020 width=153) (actual time=0.116..104.214 rows=1000 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99000
+   Buffers: shared hit=2380
+ Planning:
+   Buffers: shared hit=169
+ Planning Time: 0.740 ms
+ Execution Time: 104.372 ms
+(8 rows)
+
+
+===== AFTER pg_bigm GIN run 3 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on articles  (cost=0.00..4130.00 rows=1020 width=153) (actual time=0.112..101.718 rows=1000 loops=1)
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+   Rows Removed by Filter: 99000
+   Buffers: shared hit=2380
+ Planning:
+   Buffers: shared hit=169
+ Planning Time: 0.644 ms
+ Execution Time: 101.839 ms
+(8 rows)
+
+
+===== App query pg_bigm plus list index run 1 =====
+                                                                   QUERY PLAN                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=4130.43..4130.48 rows=20 width=153) (actual time=79.407..79.411 rows=20 loops=1)
+   Buffers: shared hit=2383
+   ->  Sort  (cost=4130.43..4130.48 rows=20 width=153) (actual time=79.405..79.407 rows=20 loops=1)
+         Sort Key: published_at DESC
+         Sort Method: top-N heapsort  Memory: 30kB
+         Buffers: shared hit=2383
+         ->  Seq Scan on articles  (cost=0.00..4130.00 rows=20 width=153) (actual time=0.080..79.237 rows=1000 loops=1)
+               Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+               Rows Removed by Filter: 99000
+               Buffers: shared hit=2380
+ Planning:
+   Buffers: shared hit=228 read=1
+ Planning Time: 0.572 ms
+ Execution Time: 79.442 ms
+(14 rows)
+
+
+===== App query pg_bigm plus list index run 2 =====
+                                                                   QUERY PLAN                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=4130.43..4130.48 rows=20 width=153) (actual time=103.671..103.677 rows=20 loops=1)
+   Buffers: shared hit=2383
+   ->  Sort  (cost=4130.43..4130.48 rows=20 width=153) (actual time=103.668..103.672 rows=20 loops=1)
+         Sort Key: published_at DESC
+         Sort Method: top-N heapsort  Memory: 30kB
+         Buffers: shared hit=2383
+         ->  Seq Scan on articles  (cost=0.00..4130.00 rows=20 width=153) (actual time=0.110..103.437 rows=1000 loops=1)
+               Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+               Rows Removed by Filter: 99000
+               Buffers: shared hit=2380
+ Planning:
+   Buffers: shared hit=232
+ Planning Time: 0.688 ms
+ Execution Time: 103.713 ms
+(14 rows)
+
+
+===== App query pg_bigm plus list index run 3 =====
+                                                                   QUERY PLAN                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=4130.43..4130.48 rows=20 width=153) (actual time=102.377..102.382 rows=20 loops=1)
+   Buffers: shared hit=2383
+   ->  Sort  (cost=4130.43..4130.48 rows=20 width=153) (actual time=102.374..102.378 rows=20 loops=1)
+         Sort Key: published_at DESC
+         Sort Method: top-N heapsort  Memory: 30kB
+         Buffers: shared hit=2383
+         ->  Seq Scan on articles  (cost=0.00..4130.00 rows=20 width=153) (actual time=0.128..102.139 rows=1000 loops=1)
+               Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text) AND ((title ~~* '%삼성%'::text) OR (description ~~* '%삼성%'::text)))
+               Rows Removed by Filter: 99000
+               Buffers: shared hit=2380
+ Planning:
+   Buffers: shared hit=232
+ Planning Time: 0.758 ms
+ Execution Time: 102.420 ms
+(14 rows)
+
+
+===== lower() function bigm index note =====
+Direct ILIKE used Seq Scan, so retried with lower(column) LIKE lower(pattern) and function-based gin_bigm_ops indexes.
+
+===== AFTER pg_bigm lower() GIN run 1 =====
+                                                               QUERY PLAN                                                               
+----------------------------------------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on articles  (cost=33.70..108.65 rows=20 width=153) (actual time=0.243..2.260 rows=1000 loops=1)
+   Recheck Cond: ((lower(title) ~~ '%삼성%'::text) OR (lower(description) ~~ '%삼성%'::text))
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text))
+   Heap Blocks: exact=1000
+   Buffers: shared hit=1005
+   ->  BitmapOr  (cost=33.70..33.70 rows=20 width=0) (actual time=0.158..0.160 rows=0 loops=1)
+         Buffers: shared hit=5
+         ->  Bitmap Index Scan on idx_title_bigm_lower  (cost=0.00..12.72 rows=10 width=0) (actual time=0.154..0.155 rows=1000 loops=1)
+               Index Cond: (lower(title) ~~ '%삼성%'::text)
+               Buffers: shared hit=3
+         ->  Bitmap Index Scan on idx_desc_bigm_lower  (cost=0.00..20.97 rows=10 width=0) (actual time=0.003..0.003 rows=0 loops=1)
+               Index Cond: (lower(description) ~~ '%삼성%'::text)
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=241
+ Planning Time: 0.876 ms
+ Execution Time: 2.395 ms
+(17 rows)
+
+
+===== AFTER pg_bigm lower() GIN run 2 =====
+                                                               QUERY PLAN                                                               
+----------------------------------------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on articles  (cost=33.70..108.65 rows=20 width=153) (actual time=0.342..2.695 rows=1000 loops=1)
+   Recheck Cond: ((lower(title) ~~ '%삼성%'::text) OR (lower(description) ~~ '%삼성%'::text))
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text))
+   Heap Blocks: exact=1000
+   Buffers: shared hit=1005
+   ->  BitmapOr  (cost=33.70..33.70 rows=20 width=0) (actual time=0.224..0.225 rows=0 loops=1)
+         Buffers: shared hit=5
+         ->  Bitmap Index Scan on idx_title_bigm_lower  (cost=0.00..12.72 rows=10 width=0) (actual time=0.218..0.218 rows=1000 loops=1)
+               Index Cond: (lower(title) ~~ '%삼성%'::text)
+               Buffers: shared hit=3
+         ->  Bitmap Index Scan on idx_desc_bigm_lower  (cost=0.00..20.97 rows=10 width=0) (actual time=0.005..0.005 rows=0 loops=1)
+               Index Cond: (lower(description) ~~ '%삼성%'::text)
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=241
+ Planning Time: 1.053 ms
+ Execution Time: 2.856 ms
+(17 rows)
+
+
+===== AFTER pg_bigm lower() GIN run 3 =====
+                                                               QUERY PLAN                                                               
+----------------------------------------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on articles  (cost=33.70..108.65 rows=20 width=153) (actual time=0.381..2.649 rows=1000 loops=1)
+   Recheck Cond: ((lower(title) ~~ '%삼성%'::text) OR (lower(description) ~~ '%삼성%'::text))
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text))
+   Heap Blocks: exact=1000
+   Buffers: shared hit=1005
+   ->  BitmapOr  (cost=33.70..33.70 rows=20 width=0) (actual time=0.240..0.241 rows=0 loops=1)
+         Buffers: shared hit=5
+         ->  Bitmap Index Scan on idx_title_bigm_lower  (cost=0.00..12.72 rows=10 width=0) (actual time=0.231..0.231 rows=1000 loops=1)
+               Index Cond: (lower(title) ~~ '%삼성%'::text)
+               Buffers: shared hit=3
+         ->  Bitmap Index Scan on idx_desc_bigm_lower  (cost=0.00..20.97 rows=10 width=0) (actual time=0.008..0.008 rows=0 loops=1)
+               Index Cond: (lower(description) ~~ '%삼성%'::text)
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=241
+ Planning Time: 1.383 ms
+ Execution Time: 2.851 ms
+(17 rows)
+
+
+===== App query pg_bigm lower() plus list index run 1 =====
+                                                                     QUERY PLAN                                                                     
+----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=109.08..109.13 rows=20 width=153) (actual time=3.000..3.006 rows=20 loops=1)
+   Buffers: shared hit=1008
+   ->  Sort  (cost=109.08..109.13 rows=20 width=153) (actual time=2.998..3.001 rows=20 loops=1)
+         Sort Key: published_at DESC
+         Sort Method: top-N heapsort  Memory: 30kB
+         Buffers: shared hit=1008
+         ->  Bitmap Heap Scan on articles  (cost=33.70..108.65 rows=20 width=153) (actual time=0.442..2.856 rows=1000 loops=1)
+               Recheck Cond: ((lower(title) ~~ '%삼성%'::text) OR (lower(description) ~~ '%삼성%'::text))
+               Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text))
+               Heap Blocks: exact=1000
+               Buffers: shared hit=1005
+               ->  BitmapOr  (cost=33.70..33.70 rows=20 width=0) (actual time=0.300..0.302 rows=0 loops=1)
+                     Buffers: shared hit=5
+                     ->  Bitmap Index Scan on idx_title_bigm_lower  (cost=0.00..12.72 rows=10 width=0) (actual time=0.286..0.286 rows=1000 loops=1)
+                           Index Cond: (lower(title) ~~ '%삼성%'::text)
+                           Buffers: shared hit=3
+                     ->  Bitmap Index Scan on idx_desc_bigm_lower  (cost=0.00..20.97 rows=10 width=0) (actual time=0.013..0.014 rows=0 loops=1)
+                           Index Cond: (lower(description) ~~ '%삼성%'::text)
+                           Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=267
+ Planning Time: 1.508 ms
+ Execution Time: 3.248 ms
+(23 rows)
+
+
+===== App query pg_bigm lower() plus list index run 2 =====
+                                                                     QUERY PLAN                                                                     
+----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=109.08..109.13 rows=20 width=153) (actual time=2.656..2.661 rows=20 loops=1)
+   Buffers: shared hit=1008
+   ->  Sort  (cost=109.08..109.13 rows=20 width=153) (actual time=2.654..2.657 rows=20 loops=1)
+         Sort Key: published_at DESC
+         Sort Method: top-N heapsort  Memory: 30kB
+         Buffers: shared hit=1008
+         ->  Bitmap Heap Scan on articles  (cost=33.70..108.65 rows=20 width=153) (actual time=0.310..2.545 rows=1000 loops=1)
+               Recheck Cond: ((lower(title) ~~ '%삼성%'::text) OR (lower(description) ~~ '%삼성%'::text))
+               Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text))
+               Heap Blocks: exact=1000
+               Buffers: shared hit=1005
+               ->  BitmapOr  (cost=33.70..33.70 rows=20 width=0) (actual time=0.194..0.194 rows=0 loops=1)
+                     Buffers: shared hit=5
+                     ->  Bitmap Index Scan on idx_title_bigm_lower  (cost=0.00..12.72 rows=10 width=0) (actual time=0.188..0.188 rows=1000 loops=1)
+                           Index Cond: (lower(title) ~~ '%삼성%'::text)
+                           Buffers: shared hit=3
+                     ->  Bitmap Index Scan on idx_desc_bigm_lower  (cost=0.00..20.97 rows=10 width=0) (actual time=0.005..0.005 rows=0 loops=1)
+                           Index Cond: (lower(description) ~~ '%삼성%'::text)
+                           Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=267
+ Planning Time: 1.321 ms
+ Execution Time: 2.788 ms
+(23 rows)
+
+
+===== App query pg_bigm lower() plus list index run 3 =====
+                                                                     QUERY PLAN                                                                     
+----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=109.08..109.13 rows=20 width=153) (actual time=2.669..2.674 rows=20 loops=1)
+   Buffers: shared hit=1008
+   ->  Sort  (cost=109.08..109.13 rows=20 width=153) (actual time=2.667..2.670 rows=20 loops=1)
+         Sort Key: published_at DESC
+         Sort Method: top-N heapsort  Memory: 30kB
+         Buffers: shared hit=1008
+         ->  Bitmap Heap Scan on articles  (cost=33.70..108.65 rows=20 width=153) (actual time=0.352..2.520 rows=1000 loops=1)
+               Recheck Cond: ((lower(title) ~~ '%삼성%'::text) OR (lower(description) ~~ '%삼성%'::text))
+               Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text))
+               Heap Blocks: exact=1000
+               Buffers: shared hit=1005
+               ->  BitmapOr  (cost=33.70..33.70 rows=20 width=0) (actual time=0.234..0.236 rows=0 loops=1)
+                     Buffers: shared hit=5
+                     ->  Bitmap Index Scan on idx_title_bigm_lower  (cost=0.00..12.72 rows=10 width=0) (actual time=0.229..0.229 rows=1000 loops=1)
+                           Index Cond: (lower(title) ~~ '%삼성%'::text)
+                           Buffers: shared hit=3
+                     ->  Bitmap Index Scan on idx_desc_bigm_lower  (cost=0.00..20.97 rows=10 width=0) (actual time=0.005..0.005 rows=0 loops=1)
+                           Index Cond: (lower(description) ~~ '%삼성%'::text)
+                           Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=267
+ Planning Time: 1.056 ms
+ Execution Time: 2.828 ms
+(23 rows)
+

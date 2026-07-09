@@ -1,0 +1,13 @@
+                                                                  QUERY PLAN                                                                  
+----------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.42..2.44 rows=20 width=964) (actual time=0.029..0.035 rows=20 loops=1)
+   Buffers: shared hit=4
+   ->  Index Scan using idx_articles_list on articles  (cost=0.42..10126.23 rows=100000 width=964) (actual time=0.028..0.032 rows=20 loops=1)
+         Index Cond: ((status = 'PROCESSED'::articlestatus) AND (is_deleted = false))
+         Buffers: shared hit=4
+ Planning:
+   Buffers: shared hit=364
+ Planning Time: 0.577 ms
+ Execution Time: 0.051 ms
+(9 rows)
+

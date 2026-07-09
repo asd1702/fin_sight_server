@@ -1,0 +1,90 @@
+FinSight pg_bigm migration verification
+DB: postgresql://postgres:postgres@localhost:5434/benchdb
+Note: local alembic command unavailable because .venv/bin/alembic points to missing /home/asd1702 path; applying equivalent SQL directly in bigm-bench for EXPLAIN verification.
+
+===== reset schema, seed 100000 rows, create old trgm indexes =====
+ total  | match_samsung 
+--------+---------------
+ 100000 |          1000
+(1 row)
+
+
+===== apply new migration SQL =====
+           indexname           
+-------------------------------
+ articles_pkey
+ articles_url_key
+ idx_articles_desc_bigm_lower
+ idx_articles_list
+ idx_articles_title_bigm_lower
+(5 rows)
+
+
+===== EXPLAIN lower LIKE app search SQL =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.42..52.96 rows=20 width=163) (actual time=0.088..1.420 rows=20 loops=1)
+   Buffers: shared hit=51 read=12
+   ->  Index Scan using idx_articles_list on articles  (cost=0.42..10640.60 rows=4050 width=163) (actual time=0.087..1.417 rows=20 loops=1)
+         Index Cond: ((status = 'PROCESSED'::text) AND (is_deleted = false))
+         Filter: ((lower(title) ~~ '%삼성%'::text) OR (lower(description) ~~ '%삼성%'::text))
+         Rows Removed by Filter: 1980
+         Buffers: shared hit=51 read=12
+ Planning:
+   Buffers: shared hit=247 read=1
+ Planning Time: 0.927 ms
+ Execution Time: 1.447 ms
+(11 rows)
+
+
+===== EXPLAIN pure lower LIKE search SQL =====
+                                                                    QUERY PLAN                                                                     
+---------------------------------------------------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on articles  (cost=55.87..2676.07 rows=4050 width=163) (actual time=0.225..2.523 rows=1000 loops=1)
+   Recheck Cond: ((lower(title) ~~ '%삼성%'::text) OR (lower(description) ~~ '%삼성%'::text))
+   Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text))
+   Heap Blocks: exact=1000
+   Buffers: shared hit=1005
+   ->  BitmapOr  (cost=55.87..55.87 rows=4050 width=0) (actual time=0.146..0.147 rows=0 loops=1)
+         Buffers: shared hit=5
+         ->  Bitmap Index Scan on idx_articles_title_bigm_lower  (cost=0.00..32.87 rows=4040 width=0) (actual time=0.143..0.143 rows=1000 loops=1)
+               Index Cond: (lower(title) ~~ '%삼성%'::text)
+               Buffers: shared hit=3
+         ->  Bitmap Index Scan on idx_articles_desc_bigm_lower  (cost=0.00..20.97 rows=10 width=0) (actual time=0.003..0.003 rows=0 loops=1)
+               Index Cond: (lower(description) ~~ '%삼성%'::text)
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=217
+ Planning Time: 1.025 ms
+ Execution Time: 2.632 ms
+(17 rows)
+
+
+===== EXPLAIN lower LIKE app search SQL without idx_articles_list =====
+                                                                          QUERY PLAN                                                                           
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=2783.83..2783.88 rows=20 width=163) (actual time=2.508..2.513 rows=20 loops=1)
+   Buffers: shared hit=1008
+   ->  Sort  (cost=2783.83..2793.96 rows=4050 width=163) (actual time=2.506..2.510 rows=20 loops=1)
+         Sort Key: published_at DESC
+         Sort Method: top-N heapsort  Memory: 30kB
+         Buffers: shared hit=1008
+         ->  Bitmap Heap Scan on articles  (cost=55.87..2676.07 rows=4050 width=163) (actual time=0.240..2.398 rows=1000 loops=1)
+               Recheck Cond: ((lower(title) ~~ '%삼성%'::text) OR (lower(description) ~~ '%삼성%'::text))
+               Filter: ((NOT is_deleted) AND (status = 'PROCESSED'::text))
+               Heap Blocks: exact=1000
+               Buffers: shared hit=1005
+               ->  BitmapOr  (cost=55.87..55.87 rows=4050 width=0) (actual time=0.151..0.152 rows=0 loops=1)
+                     Buffers: shared hit=5
+                     ->  Bitmap Index Scan on idx_articles_title_bigm_lower  (cost=0.00..32.87 rows=4040 width=0) (actual time=0.148..0.148 rows=1000 loops=1)
+                           Index Cond: (lower(title) ~~ '%삼성%'::text)
+                           Buffers: shared hit=3
+                     ->  Bitmap Index Scan on idx_articles_desc_bigm_lower  (cost=0.00..20.97 rows=10 width=0) (actual time=0.003..0.003 rows=0 loops=1)
+                           Index Cond: (lower(description) ~~ '%삼성%'::text)
+                           Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=195
+ Planning Time: 0.764 ms
+ Execution Time: 2.664 ms
+(23 rows)
+
